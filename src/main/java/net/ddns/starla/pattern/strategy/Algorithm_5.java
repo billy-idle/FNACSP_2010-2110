@@ -1,9 +1,11 @@
+package net.ddns.starla.pattern.strategy;
+
 import static java.lang.Math.*;
 
 public class Algorithm_5 extends Algorithm {
     @Override
-    public void computeSunPosition(double hour, int day, int month, int year, double longitude,
-                                   double latitude, double pressure, double temperature) {
+    public void compute(double hour, int day, int month, int year, double longitude,
+                        double latitude, double pressure, double temperature) {
 
         timeScaleComputation(hour, day, month, year);
 
@@ -49,7 +51,7 @@ public class Algorithm_5 extends Algorithm {
         declination = asin(sl * se);
 
         hourAngle = 1.7528311 + 6.300388099 * t + longitude - rightAscension + 0.92 * dlam;
-        shiftHourAngleToItsConventionalRange(latitude, pressure, temperature);
+        shiftHourAngleToItsConventionalRange();
 
         applyFinalComputationallyOptimizedProcedure(latitude, pressure, temperature);
     }

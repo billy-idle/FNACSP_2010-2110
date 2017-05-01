@@ -1,3 +1,5 @@
+package net.ddns.starla.pattern.strategy;
+
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -7,22 +9,17 @@ import static junit.framework.TestCase.assertTrue;
 
 public class AlgorithmFiveTest {
 
+    private final double delta = 0.0001;
     private Algorithm algorithm;
-    private double delta;
-
-    private void computeSunPosition() {
-        algorithm.computeSunPosition(0.0, 25, 1, 2020, 0.21787, 0.73117, 1.0, 20.0);
-    }
-
-    private boolean isInRange(double leftBound, double rightBound, double value) {
-        return value >= leftBound && value <= rightBound;
-    }
 
     @Before
     public void setUp() throws Exception {
         algorithm = new Algorithm_5();
         computeSunPosition();
-        delta = 0.0001;
+    }
+
+    private void computeSunPosition() {
+        algorithm.compute(0.0, 25, 1, 2020, 0.21787, 0.73117, 1.0, 20.0);
     }
 
     @Test
@@ -53,6 +50,10 @@ public class AlgorithmFiveTest {
     @Test
     public void zenithInRange() throws Exception {
         assertTrue(isInRange(0, Algorithm.PI, algorithm.getZenith()));
+    }
+
+    private boolean isInRange(double leftBound, double rightBound, double value) {
+        return value >= leftBound && value <= rightBound;
     }
 
     @Test

@@ -1,10 +1,12 @@
+package net.ddns.starla.pattern.strategy;
+
 import static java.lang.Math.*;
 
 public abstract class Algorithm {
 
-    static final double PI = 3.14159265358979;
+    public static final double PI = 3.14159265358979;
+    public static final double PIM = 1.57079632679490;
     static final double PI2 = 6.28318530717959;
-    static final double PIM = 1.57079632679490;
     double rightAscension;
     double declination;
     double hourAngle;
@@ -15,8 +17,8 @@ public abstract class Algorithm {
     private double ep;
     private double de;
 
-    public abstract void computeSunPosition(double hour, int day, int month, int year, double longitude,
-                                            double latitude, double pressure, double temperature);
+    public abstract void compute(double hour, int day, int month, int year, double longitude,
+                                 double latitude, double pressure, double temperature);
 
 
     void timeScaleComputation(double hour, int day, int month, int year) {
@@ -33,7 +35,7 @@ public abstract class Algorithm {
         te = t + 1.1574e-5 * dt;
     }
 
-    void shiftHourAngleToItsConventionalRange(double latitude, double pressure, double temperature) {
+    void shiftHourAngleToItsConventionalRange() {
         hourAngle = ((hourAngle + PI) % PI2) - PI;
     }
 
