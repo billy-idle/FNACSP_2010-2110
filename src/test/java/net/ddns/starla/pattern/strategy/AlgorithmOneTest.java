@@ -1,51 +1,114 @@
 package net.ddns.starla.pattern.strategy;
 
+import net.ddns.starla.pattern.factory.Accuracy;
+import net.ddns.starla.pattern.factory.AlgorithmFactory;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
 
+@RunWith(Parameterized.class)
 public class AlgorithmOneTest {
 
-    private final double delta = 0.0001;
+    private final double delta = 1.0E-05;
     private Algorithm algorithm;
+    private double hour;
+    private int day;
+    private int month;
+    private int year;
+    private double longitude;
+    private double latitude;
+    private double pressure;
+    private double temperature;
+    private double expectedZenith;
+    private double expectedAzimuth;
+    private double expectedRightAscension;
+    private double expectedDeclination;
+    private double expectedHourAngle;
+
+    public AlgorithmOneTest(double hour, int day, int month, int year, double longitude, double latitude, double pressure,
+                            double temperature, double expectedZenith, double expectedAzimuth, double expectedRightAscension,
+                            double expectedDeclination, double expectedHourAngle) {
+        this.hour = hour;
+        this.day = day;
+        this.month = month;
+        this.year = year;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.pressure = pressure;
+        this.temperature = temperature;
+        this.expectedZenith = expectedZenith;
+        this.expectedAzimuth = expectedAzimuth;
+        this.expectedRightAscension = expectedRightAscension;
+        this.expectedDeclination = expectedDeclination;
+        this.expectedHourAngle = expectedHourAngle;
+    }
+
+    @Parameterized.Parameters
+    public static Collection<Object[]> data() {
+        return Arrays.asList(new Object[][]{
+                {0, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 2.72042, -2.74575, -0.931114, -0.334789, -9.25708},
+                {1, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 2.60326, -2.26739, -0.930352, -0.33462, -8.99533},
+                {2, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 2.43559, -1.9524, -0.929589, -0.33445, -8.73357},
+                {3, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 2.24778, -1.72687, -0.928827, -0.33428, -8.47182},
+                {4, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 2.05348, -1.54347, -0.928065, -0.33411, -8.21006},
+                {5, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.85995, -1.37702, -0.927303, -0.33394, -7.94831},
+                {6, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.67257, -1.21235, -0.926541, -0.333769, -7.68656},
+                {7, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.49366, -1.0383, -0.925779, -0.333599, -7.4248},
+                {8, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.3379, -0.845367, -0.925017, -0.333428, -7.16305},
+                {9, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.20734, -0.625778, -0.924255, -0.333257, -6.90129},
+                {10, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.11359, -0.376131, -0.923493, -0.333086, -6.63954},
+                {11, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.0672, -0.102074, -0.922732, -0.332915, -6.37778},
+                {12, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.07461, 0.179739, -0.92197, -0.332743, -6.11603},
+                {13, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.13472, 0.448445, -0.921209, -0.332572, -5.85427},
+                {14, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.23954, 0.690121, -0.920448, -0.3324, -5.59252},
+                {15, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.37812, 0.902021, -0.919687, -0.332228, -5.33076},
+                {16, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.53759, 1.08917, -0.918925, -0.332056, -5.06901},
+                {17, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.72232, 1.25997, -0.918164, -0.331883, -4.80725},
+                {18, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 1.91178, 1.42433, -0.917403, -0.331711, -4.5455},
+                {19, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 2.1059, 1.5942, -0.916643, -0.331538, -4.28374},
+                {20, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 2.29901, 1.78676, -0.915882, -0.331365, -4.02199},
+                {21, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 2.48262, 2.03176, -0.915121, -0.331192, -3.76023},
+                {22, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 2.63966, 2.38468, -0.91436, -0.331019, -3.49847},
+                {23, 25, 1, 2020, 0.21787, 0.73117, 1, 20, 2.7332, 2.91343, -0.9136, -0.330846, -3.23672}
+        });
+    }
 
     @Before
-    public void setUp() throws Exception {
-        algorithm = new Algorithm_1();
-        computeSunPosition();
-    }
-
-    private void computeSunPosition() {
-        algorithm.compute(0.0, 25, 1, 2020,
-                0.21787, 0.73117, 1.0, 20.0);
+    public void computeSunPosition() {
+        algorithm = new AlgorithmFactory().getInstance(Accuracy.LOWEST);
+        algorithm.compute(hour, day, month, year, longitude, latitude, pressure, temperature);
     }
 
     @Test
-    public void zenithAtZeroUT() throws Exception {
-        assertEquals(2.7204, algorithm.getZenith(), delta);
+    public void zenithAtUT() throws Exception {
+        assertEquals(expectedZenith, algorithm.getZenith(), delta);
     }
 
     @Test
-    public void azimuthAtZeroUT() throws Exception {
-        assertEquals(-2.74575, algorithm.getAzimuth(), delta);
+    public void azimuthAtUT() throws Exception {
+        assertEquals(expectedAzimuth, algorithm.getAzimuth(), delta);
     }
 
     @Test
-    public void rightAscensionAtZeroUT() throws Exception {
-        assertEquals(-0.931113, algorithm.getRightAscension(), delta);
+    public void rightAscensionAtUT() throws Exception {
+        assertEquals(expectedRightAscension, algorithm.getRightAscension(), delta);
     }
 
     @Test
-    public void declinationAtZeroUT() throws Exception {
-        assertEquals(-0.334789, algorithm.getDeclination(), delta);
+    public void declinationAtUT() throws Exception {
+        assertEquals(expectedDeclination, algorithm.getDeclination(), delta);
     }
 
     @Test
-    public void hourAngleAtZeroUT() throws Exception {
-        assertEquals(-9.25708, algorithm.getHourAngle(), delta);
+    public void hourAngleAtUT() throws Exception {
+        assertEquals(expectedHourAngle, algorithm.getHourAngle(), delta);
     }
 
     @Test
@@ -62,8 +125,6 @@ public class AlgorithmOneTest {
         assertTrue(isInRange(-Algorithm.PI, Algorithm.PI, algorithm.getAzimuth()));
     }
 
-    @Test
-    @Ignore
     public void rightAscensionInRange() throws Exception {
         assertTrue(isInRange(0, Algorithm.PI2, algorithm.getRightAscension()));
     }
@@ -73,8 +134,6 @@ public class AlgorithmOneTest {
         assertTrue(isInRange(-Algorithm.PIM, Algorithm.PIM, algorithm.getDeclination()));
     }
 
-    @Test
-    @Ignore
     public void hourAngleInRange() throws Exception {
         assertTrue(isInRange(-Algorithm.PI, Algorithm.PI, algorithm.getHourAngle()));
     }

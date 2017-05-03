@@ -12,8 +12,9 @@ public class LocalSunPositionTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        localSunPosition = new LocalSunPosition();
-        localSunPosition.computePosition("Europe/Rome", 0.21787, 0.73117, 1.0, 20.0);
+        localSunPosition = new LocalSunPosition("Europe/Rome", 0.21787, 0.73117, 1.0,
+                20.0);
+        localSunPosition.computePosition();
     }
 
     @Test
@@ -29,4 +30,5 @@ public class LocalSunPositionTest {
     public void azimuthInRange() throws Exception {
         assertTrue(isInRange(-Algorithm.PI, Algorithm.PI, localSunPosition.getAzimuth()));
     }
+
 }

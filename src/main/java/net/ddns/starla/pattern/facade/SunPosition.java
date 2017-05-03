@@ -46,4 +46,28 @@ public class SunPosition {
     public double getAzimuth() {
         return algorithm.getAzimuth();
     }
+
+    public double getRightAscension() {
+        return algorithm.getRightAscension();
+    }
+
+    public double getDeclination() {
+        return algorithm.getDeclination();
+    }
+
+    public double getHourAngle() {
+        return algorithm.getHourAngle();
+    }
+
+    public boolean isItDay() {
+        return getElevation() > 0.0;
+    }
+
+    public double getElevation() {
+        return Algorithm.PIM - algorithm.getZenith();
+    }
+
+    public ZonedDateTime getZonedDateTime() {
+        return zonedDateTime;
+    }
 }

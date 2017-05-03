@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SunPositionTest {
 
-    private final double delta = 0.0001;
+    private final double delta = 1.0E-05;
     private SunPosition sunPosition;
 
     @BeforeEach
@@ -34,7 +34,22 @@ class SunPositionTest {
 
     @Test
     public void azimuthAtZeroUT() throws Exception {
-        assertEquals(-2.75173, sunPosition.getAzimuth(), delta);
+        assertEquals(-2.75172, sunPosition.getAzimuth(), delta);
+    }
+
+    @Test
+    public void rightAscensionAZerotUT() throws Exception {
+        assertEquals(5.3545, sunPosition.getRightAscension(), delta);
+    }
+
+    @Test
+    public void declinationAtZeroUT() throws Exception {
+        assertEquals(-0.334134, sunPosition.getDeclination(), delta);
+    }
+
+    @Test
+    public void hourAngleAtZeroUT() throws Exception {
+        assertEquals(-9.25957, sunPosition.getHourAngle(), delta);
     }
 
     @Test
@@ -45,4 +60,5 @@ class SunPositionTest {
     private boolean isElevationAnglePositive() {
         return (Algorithm.PIM - sunPosition.getZenith()) > 0.0;
     }
+
 }
