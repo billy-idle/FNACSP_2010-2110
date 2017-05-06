@@ -7,28 +7,21 @@ import java.time.ZonedDateTime;
 
 public class SunPosition {
 
-    private final Algorithm algorithm;
-    private final double longitude;
-    private final double latitude;
-    private final double pressure;
-    private final double temperature;
+    private Algorithm algorithm;
     private ZonedDateTime zonedDateTime;
     private double hour;
 
-    public SunPosition(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude, double pressure, double temperature) {
+    public void computePosition(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
+                                double pressure, double temperature) {
+
         this.algorithm = algorithm;
         this.zonedDateTime = zonedDateTime;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.pressure = pressure;
-        this.temperature = temperature;
-    }
 
-    public void computePosition() {
         timeZoneToUTC();
         timeToDecimal();
-        algorithm.compute(hour, zonedDateTime.getDayOfMonth(), zonedDateTime.getMonthValue(),
-                zonedDateTime.getYear(), longitude, latitude, pressure, temperature);
+
+        this.algorithm.compute(hour, this.zonedDateTime.getDayOfMonth(), this.zonedDateTime.getMonthValue(),
+                this.zonedDateTime.getYear(), longitude, latitude, pressure, temperature);
     }
 
     private void timeZoneToUTC() {

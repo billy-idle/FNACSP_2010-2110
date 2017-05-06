@@ -3,27 +3,28 @@ package net.ddns.starla.pattern.facade;
 import net.ddns.starla.pattern.factory.Accuracy;
 import net.ddns.starla.pattern.factory.AlgorithmFactory;
 import net.ddns.starla.pattern.strategy.Algorithm;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 import static junit.framework.TestCase.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.Assert.assertEquals;
 
-class SunPositionTest {
 
+public class SunPositionTest {
+
+    private static SunPosition sunPosition;
     private final double delta = 1.0E-05;
-    private SunPosition sunPosition;
 
-    @BeforeEach
-    void setUp() {
-        sunPosition = new SunPosition(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+    @BeforeClass
+    public static void setUp() {
+        sunPosition = new SunPosition();
+
+        sunPosition.computePosition(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 20.0);
-
-        sunPosition.computePosition();
     }
 
 

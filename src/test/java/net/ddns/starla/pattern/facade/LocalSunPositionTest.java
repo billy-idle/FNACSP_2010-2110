@@ -1,16 +1,17 @@
 package net.ddns.starla.pattern.facade;
 
 import net.ddns.starla.pattern.strategy.Algorithm;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.Before;
+import org.junit.Test;
 
 import static junit.framework.TestCase.assertTrue;
+
 
 public class LocalSunPositionTest {
 
     private LocalSunPosition localSunPosition;
 
-    @BeforeEach
+    @Before
     public void setUp() throws Exception {
         localSunPosition = new LocalSunPosition("Europe/Rome", 0.21787, 0.73117, 1.0,
                 20.0);

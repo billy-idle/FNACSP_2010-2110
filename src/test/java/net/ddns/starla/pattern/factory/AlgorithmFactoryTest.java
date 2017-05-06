@@ -1,7 +1,7 @@
 package net.ddns.starla.pattern.factory;
 
 import net.ddns.starla.pattern.strategy.Algorithm;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 public class AlgorithmFactoryTest {
 
