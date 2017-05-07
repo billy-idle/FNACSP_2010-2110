@@ -3,19 +3,18 @@ package net.ddns.starla.fnacsp.pattern.facade;
 
 import net.ddns.starla.fnacsp.pattern.factory.Accuracy;
 import net.ddns.starla.fnacsp.pattern.factory.AlgorithmFactory;
+import net.ddns.starla.fnacsp.pattern.strategy.SunPosition;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-public class LocalSunPosition {
+public class SunPositionNow {
     private final SunPosition sunPosition;
 
-    public LocalSunPosition(String zoneId, double longitude, double latitude, double pressure, double temperature) {
+    public SunPositionNow(String zoneId, double longitude, double latitude, double pressure, double temperature) {
         sunPosition = new SunPosition(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.now(ZoneId.of(zoneId)), longitude, latitude, pressure, temperature);
-    }
 
-    public void computePosition() {
         sunPosition.computePosition();
     }
 
@@ -25,6 +24,10 @@ public class LocalSunPosition {
 
     public double getAzimuth() {
         return sunPosition.getAzimuth();
+    }
+
+    public String getZonedDateTime() {
+        return sunPosition.getZonedDateTime();
     }
 
     public boolean isItDay() {

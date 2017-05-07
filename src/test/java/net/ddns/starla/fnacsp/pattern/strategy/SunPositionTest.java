@@ -1,8 +1,7 @@
-package net.ddns.starla.fnacsp.pattern.facade;
+package net.ddns.starla.fnacsp.pattern.strategy;
 
 import net.ddns.starla.fnacsp.pattern.factory.Accuracy;
 import net.ddns.starla.fnacsp.pattern.factory.AlgorithmFactory;
-import net.ddns.starla.fnacsp.pattern.strategy.Algorithm;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

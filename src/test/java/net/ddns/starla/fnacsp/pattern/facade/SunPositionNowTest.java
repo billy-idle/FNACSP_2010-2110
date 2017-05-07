@@ -7,20 +7,19 @@ import org.junit.Test;
 import static junit.framework.TestCase.assertTrue;
 
 
-public class LocalSunPositionTest {
+public class SunPositionNowTest {
 
-    private LocalSunPosition localSunPosition;
+    private SunPositionNow sunPositionNow;
 
     @Before
     public void setUp() throws Exception {
-        localSunPosition = new LocalSunPosition("Europe/Rome", 0.21787, 0.73117, 1.0,
+        sunPositionNow = new SunPositionNow("Europe/Rome", 0.21787, 0.73117, 1.0,
                 20.0);
-        localSunPosition.computePosition();
     }
 
     @Test
     public void zenithInRange() throws Exception {
-        assertTrue(isInRange(0, Algorithm.PI, localSunPosition.getZenith()));
+        assertTrue(isInRange(0, Algorithm.PI, sunPositionNow.getZenith()));
     }
 
     private boolean isInRange(double leftBound, double rightBound, double value) {
@@ -29,7 +28,7 @@ public class LocalSunPositionTest {
 
     @Test
     public void azimuthInRange() throws Exception {
-        assertTrue(isInRange(-Algorithm.PI, Algorithm.PI, localSunPosition.getAzimuth()));
+        assertTrue(isInRange(-Algorithm.PI, Algorithm.PI, sunPositionNow.getAzimuth()));
     }
 
 }

@@ -1,6 +1,4 @@
-package net.ddns.starla.fnacsp.pattern.facade;
-
-import net.ddns.starla.fnacsp.pattern.strategy.Algorithm;
+package net.ddns.starla.fnacsp.pattern.strategy;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -12,7 +10,8 @@ public class SunPosition {
     private final double latitude;
     private final double pressure;
     private final double temperature;
-    private ZonedDateTime zonedDateTime;
+    private final ZonedDateTime zonedDateTime;
+    private ZonedDateTime zonedDateTimeAtUTC;
     private double hour;
 
     public SunPosition(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
@@ -30,16 +29,16 @@ public class SunPosition {
         timeZoneToUTC();
         timeToDecimal();
 
-        this.algorithm.compute(hour, this.zonedDateTime.getDayOfMonth(), this.zonedDateTime.getMonthValue(),
-                this.zonedDateTime.getYear(), longitude, latitude, pressure, temperature);
+        this.algorithm.compute(hour, this.zonedDateTimeAtUTC.getDayOfMonth(), this.zonedDateTimeAtUTC.getMonthValue(),
+                this.zonedDateTimeAtUTC.getYear(), longitude, latitude, pressure, temperature);
     }
 
     private void timeZoneToUTC() {
-        zonedDateTime = zonedDateTime.withZoneSameInstant(ZoneId.of("UTC"));
+        zonedDateTimeAtUTC = zonedDateTime.withZoneSameInstant(ZoneId.of("UTC"));
     }
 
     private void timeToDecimal() {
-        hour = zonedDateTime.getHour() + zonedDateTime.getMinute() / 60.0 + zonedDateTime.getSecond() / 3600.0;
+        hour = zonedDateTimeAtUTC.getHour() + zonedDateTimeAtUTC.getMinute() / 60.0 + zonedDateTimeAtUTC.getSecond() / 3600.0;
     }
 
     public double getZenith() {
@@ -70,7 +69,7 @@ public class SunPosition {
         return Algorithm.PIM - algorithm.getZenith();
     }
 
-    public ZonedDateTime getZonedDateTime() {
-        return zonedDateTime;
+    public String getZonedDateTime() {
+        return zonedDateTime.toString();
     }
 }
