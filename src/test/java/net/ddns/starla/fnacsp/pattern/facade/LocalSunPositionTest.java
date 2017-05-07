@@ -1,6 +1,6 @@
-package net.ddns.starla.pattern.facade;
+package net.ddns.starla.fnacsp.pattern.facade;
 
-import net.ddns.starla.pattern.strategy.Algorithm;
+import net.ddns.starla.fnacsp.pattern.strategy.Algorithm;
 import org.junit.Before;
 import org.junit.Test;
 

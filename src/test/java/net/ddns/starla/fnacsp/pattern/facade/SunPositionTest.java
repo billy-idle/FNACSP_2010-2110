@@ -1,8 +1,8 @@
-package net.ddns.starla.pattern.facade;
+package net.ddns.starla.fnacsp.pattern.facade;
 
-import net.ddns.starla.pattern.factory.Accuracy;
-import net.ddns.starla.pattern.factory.AlgorithmFactory;
-import net.ddns.starla.pattern.strategy.Algorithm;
+import net.ddns.starla.fnacsp.pattern.factory.Accuracy;
+import net.ddns.starla.fnacsp.pattern.factory.AlgorithmFactory;
+import net.ddns.starla.fnacsp.pattern.strategy.Algorithm;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -20,11 +20,11 @@ public class SunPositionTest {
 
     @BeforeClass
     public static void setUp() {
-        sunPosition = new SunPosition();
-
-        sunPosition.computePosition(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+        sunPosition = new SunPosition(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 20.0);
+
+        sunPosition.computePosition();
     }
 
 

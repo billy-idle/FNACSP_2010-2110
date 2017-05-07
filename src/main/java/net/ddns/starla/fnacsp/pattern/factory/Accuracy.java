@@ -1,4 +1,4 @@
-package net.ddns.starla.pattern.factory;
+package net.ddns.starla.fnacsp.pattern.factory;
 
 
 public enum Accuracy {

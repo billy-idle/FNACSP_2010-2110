@@ -2,4 +2,4 @@
 **Proposed by [Dr. Roberto Grena.](https://www.researchgate.net/profile/Roberto_Grena)**  
 **Implemented by [Guillermo Guzmán Sánchez.](https://plus.google.com/u/0/+GuillermoGuzmánSánchez)**
 
-Heavily based in the original C++ source code, but using TDD.  
+Heavily based in the original C++ source code, but applying design patterns and TDD.  

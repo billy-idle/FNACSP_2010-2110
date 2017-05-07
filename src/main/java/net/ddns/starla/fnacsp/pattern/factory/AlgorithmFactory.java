@@ -1,6 +1,6 @@
-package net.ddns.starla.pattern.factory;
+package net.ddns.starla.fnacsp.pattern.factory;
 
-import net.ddns.starla.pattern.strategy.*;
+import net.ddns.starla.fnacsp.pattern.strategy.*;
 
 public class AlgorithmFactory {
 

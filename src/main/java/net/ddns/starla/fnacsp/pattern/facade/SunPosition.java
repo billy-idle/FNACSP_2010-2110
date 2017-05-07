@@ -1,22 +1,32 @@
-package net.ddns.starla.pattern.facade;
+package net.ddns.starla.fnacsp.pattern.facade;
 
-import net.ddns.starla.pattern.strategy.Algorithm;
+import net.ddns.starla.fnacsp.pattern.strategy.Algorithm;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 public class SunPosition {
 
-    private Algorithm algorithm;
+    private final Algorithm algorithm;
+    private final double longitude;
+    private final double latitude;
+    private final double pressure;
+    private final double temperature;
     private ZonedDateTime zonedDateTime;
     private double hour;
 
-    public void computePosition(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
-                                double pressure, double temperature) {
+    public SunPosition(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
+                       double pressure, double temperature) {
 
         this.algorithm = algorithm;
         this.zonedDateTime = zonedDateTime;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.pressure = pressure;
+        this.temperature = temperature;
+    }
 
+    public void computePosition() {
         timeZoneToUTC();
         timeToDecimal();
 
@@ -56,7 +66,7 @@ public class SunPosition {
         return getElevation() > 0.0;
     }
 
-    public double getElevation() {
+    private double getElevation() {
         return Algorithm.PIM - algorithm.getZenith();
     }
 

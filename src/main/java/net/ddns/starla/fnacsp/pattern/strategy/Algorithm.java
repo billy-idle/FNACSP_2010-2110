@@ -1,8 +1,8 @@
-package net.ddns.starla.pattern.strategy;
+package net.ddns.starla.fnacsp.pattern.strategy;
 
 import static java.lang.Math.*;
 
-public abstract class Algorithm {
+public abstract class Algorithm implements Cloneable {
 
     public static final double PI = 3.14159265358979;
     public static final double PIM = 1.57079632679490;
@@ -84,5 +84,17 @@ public abstract class Algorithm {
 
     public double getHourAngle() {
         return hourAngle;
+    }
+
+    /**
+     * @return A shallow copy of this object.
+     */
+    public Algorithm clone() {
+        try {
+            return (Algorithm) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

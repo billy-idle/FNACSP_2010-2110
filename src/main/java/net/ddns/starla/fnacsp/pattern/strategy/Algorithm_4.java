@@ -1,8 +1,8 @@
-package net.ddns.starla.pattern.strategy;
+package net.ddns.starla.fnacsp.pattern.strategy;
 
 import static java.lang.Math.*;
 
-public class Algorithm_3 extends Algorithm {
+public class Algorithm_4 extends Algorithm {
     @Override
     public void compute(double hour, int day, int month, int year, double longitude,
                         double latitude, double pressure, double temperature) {
@@ -11,9 +11,13 @@ public class Algorithm_3 extends Algorithm {
 
         double wte = 0.0172019715 * te;
 
-        double lambda = -1.388803 + 1.720279216e-2 * te + 3.3366e-2 * sin(wte - 0.06172) + 3.53e-4 * sin(2.0 * wte - 0.1163);
+        double l = 1.752790 + 1.720279216e-2 * te + 3.3366e-2 * sin(wte - 0.06172) + 3.53e-4 * sin(2.0 * wte - 0.1163);
 
-        double epsi = 4.089567e-1 - 6.19e-9 * te;
+        double nu = 9.282e-4 * te - 0.8;
+        double dlam = 8.34e-5 * sin(nu);
+        double lambda = l + PI + dlam;
+
+        double epsi = 4.089567e-1 - 6.19e-9 * te + 4.46e-5 * cos(nu);
 
         double sl = sin(lambda);
         double cl = cos(lambda);
@@ -27,7 +31,7 @@ public class Algorithm_3 extends Algorithm {
 
         declination = asin(sl * se);
 
-        hourAngle = 1.7528311 + 6.300388099 * t + longitude - rightAscension;
+        hourAngle = 1.7528311 + 6.300388099 * t + longitude - rightAscension + 0.92 * dlam;
         shiftHourAngleToItsConventionalRange();
 
         applyFinalComputationallyOptimizedProcedure(latitude, pressure, temperature);
