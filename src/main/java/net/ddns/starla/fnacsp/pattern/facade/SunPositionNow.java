@@ -12,7 +12,7 @@ public class SunPositionNow {
     private final SunPosition sunPosition;
 
     public SunPositionNow(String zoneId, double longitude, double latitude, double pressure, double temperature) {
-        sunPosition = new SunPosition(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+        sunPosition = SunPosition.Make(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.now(ZoneId.of(zoneId)), longitude, latitude, pressure, temperature);
 
         sunPosition.computePosition();

@@ -5,6 +5,7 @@ import java.time.ZonedDateTime;
 
 public class SunPosition {
 
+    private static final ZoneId UTC = ZoneId.of("UTC");
     private final Algorithm algorithm;
     private final double longitude;
     private final double latitude;
@@ -14,8 +15,8 @@ public class SunPosition {
     private ZonedDateTime zonedDateTimeAtUTC;
     private double hour;
 
-    public SunPosition(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
-                       double pressure, double temperature) {
+    private SunPosition(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
+                        double pressure, double temperature) {
 
         this.algorithm = algorithm;
         this.zonedDateTime = zonedDateTime;
@@ -23,6 +24,35 @@ public class SunPosition {
         this.latitude = latitude;
         this.pressure = pressure;
         this.temperature = temperature;
+    }
+
+    public static SunPosition Make(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
+                                   double pressure, double temperature) {
+
+        assertInputParameters(zonedDateTime, longitude, latitude, pressure, temperature);
+        return new SunPosition(algorithm, zonedDateTime, longitude, latitude, pressure, temperature);
+    }
+
+    private static void assertInputParameters(ZonedDateTime zonedDateTime, double longitude, double latitude, double pressure, double temperature) {
+        ZonedDateTime leftBoundOfValidInterval =
+                ZonedDateTime.of(2010, 1, 1, 0, 0, 0, 0, UTC);
+
+        ZonedDateTime rightBoundOfValidInterval =
+                ZonedDateTime.of(2110, 1, 1, 0, 0, 0, 0, UTC);
+
+        if (zonedDateTime.withZoneSameInstant(UTC).isBefore(leftBoundOfValidInterval) ||
+                zonedDateTime.withZoneSameInstant(UTC).isAfter(rightBoundOfValidInterval))
+            throw new OutOfValidZonedDateTimeInterval();
+
+        if (longitude < 0.0 || longitude > Algorithm.PI2) throw new LongitudeOutOfRange();
+        if (latitude < -Algorithm.PIM || latitude > Algorithm.PIM) throw new LatitudeOutOfRange();
+
+        //https://en.wikipedia.org/wiki/Atmospheric_pressure#Records
+        if (pressure < 0.85862324204293 || pressure > 1.0696274364668) throw new PressureOutOfRange();
+
+        //https://en.wikipedia.org/wiki/List_of_weather_records#Lowest_temperatures_ever_recorded
+        //https://en.wikipedia.org/wiki/List_of_weather_records#Highest_temperatures_ever_recorded
+        if (temperature < -89.2 || temperature > 54.0) throw new TemperatureOutOfRange();
     }
 
     public void computePosition() {
@@ -71,5 +101,20 @@ public class SunPosition {
 
     public String getZonedDateTime() {
         return zonedDateTime.toString();
+    }
+
+    static class OutOfValidZonedDateTimeInterval extends RuntimeException {
+    }
+
+    static class LongitudeOutOfRange extends RuntimeException {
+    }
+
+    static class LatitudeOutOfRange extends RuntimeException {
+    }
+
+    static class PressureOutOfRange extends RuntimeException {
+    }
+
+    static class TemperatureOutOfRange extends RuntimeException {
     }
 }

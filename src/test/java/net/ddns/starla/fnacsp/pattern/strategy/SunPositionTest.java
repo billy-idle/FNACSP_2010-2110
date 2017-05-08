@@ -19,13 +19,12 @@ public class SunPositionTest {
 
     @BeforeClass
     public static void setUp() {
-        sunPosition = new SunPosition(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+        sunPosition = SunPosition.Make(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 20.0);
 
         sunPosition.computePosition();
     }
-
 
     @Test
     public void zenithAtZeroUT() throws Exception {
@@ -61,4 +60,73 @@ public class SunPositionTest {
         return (Algorithm.PIM - sunPosition.getZenith()) > 0.0;
     }
 
+    @Test(expected = SunPosition.OutOfValidZonedDateTimeInterval.class)
+    public void testLeftBound_OutOfValidZonedDateTimeInterval() throws Exception {
+        SunPosition.Make(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+                ZonedDateTime.of(2010, 1, 1, 0, 0, 0, 0,
+                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 20.0);
+    }
+
+    @Test(expected = SunPosition.OutOfValidZonedDateTimeInterval.class)
+    public void testRightBound_OutOfValidZonedDateTimeInterval() throws Exception {
+        SunPosition.Make(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+                ZonedDateTime.of(2110, 1, 1, 2, 0, 0, 0,
+                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 20.0);
+    }
+
+    @Test(expected = SunPosition.LongitudeOutOfRange.class)
+    public void testRightBound_LongitudeOutOfRange() throws Exception {
+        SunPosition.Make(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
+                        ZoneId.of("Europe/Rome")), -1, 0.73117, 1.0, 20.0);
+    }
+
+    @Test(expected = SunPosition.LongitudeOutOfRange.class)
+    public void testLeftBound_LongitudeOutOfRange() throws Exception {
+        SunPosition.Make(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
+                        ZoneId.of("Europe/Rome")), Algorithm.PI2 + .1, 0.73117, 1.0, 20.0);
+    }
+
+    @Test(expected = SunPosition.LatitudeOutOfRange.class)
+    public void testLeftBound_LatitudeOutOfRange() throws Exception {
+        SunPosition.Make(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
+                        ZoneId.of("Europe/Rome")), 0.21787, -Algorithm.PIM - .1, 1.0, 20.0);
+    }
+
+    @Test(expected = SunPosition.LatitudeOutOfRange.class)
+    public void testRightBound_LatitudeOutOfRange() throws Exception {
+        SunPosition.Make(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
+                        ZoneId.of("Europe/Rome")), 0.21787, Algorithm.PIM + .1, 1.0, 20.0);
+    }
+
+    @Test(expected = SunPosition.PressureOutOfRange.class)
+    public void testLeftBound_PressureOutOfRange() throws Exception {
+        SunPosition.Make(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
+                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 0.85862324204293 - .1, 20.0);
+    }
+
+    @Test(expected = SunPosition.PressureOutOfRange.class)
+    public void testRightBound_PressureOutOfRange() throws Exception {
+        SunPosition.Make(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
+                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0696274364668 + .1, 20.0);
+    }
+
+    @Test(expected = SunPosition.TemperatureOutOfRange.class)
+    public void testLeftBound_TemperatureOutOfRange() throws Exception {
+        SunPosition.Make(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
+                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, -89.2 - .1);
+    }
+
+    @Test(expected = SunPosition.TemperatureOutOfRange.class)
+    public void testRightBound_TemperatureOutOfRange() throws Exception {
+        SunPosition.Make(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
+                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
+                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 54.0 + .1);
+    }
 }
