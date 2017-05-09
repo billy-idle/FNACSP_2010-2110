@@ -1,8 +1,8 @@
 package net.ddns.starla.fnacsp.pattern.facade;
 
-import net.ddns.starla.fnacsp.pattern.factory.Accuracy;
-import net.ddns.starla.fnacsp.pattern.factory.AlgorithmFactory;
+import net.ddns.starla.fnacsp.pattern.strategy.Accuracy;
 import net.ddns.starla.fnacsp.pattern.strategy.Algorithm;
+import net.ddns.starla.fnacsp.pattern.strategy.AlgorithmFactory;
 import net.ddns.starla.fnacsp.pattern.strategy.SunPosition;
 
 import java.time.ZoneId;

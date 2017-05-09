@@ -27,7 +27,7 @@ public class SunPosition {
     }
 
     /**
-     * @param algorithm     An instance of Algorithm class, it should be use through AlgorithmFactory
+     * @param algorithm     It must be get it through AlgorithmFactory
      * @param zonedDateTime Between JAN-01-2010[UTC] and JAN-01-2110[UTC]
      * @param longitude     [0, 2PI] rad
      * @param latitude      [-PI/2,PI/2] rad

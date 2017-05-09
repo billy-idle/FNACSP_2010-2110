@@ -1,5 +1,7 @@
 package net.ddns.starla.fnacsp.pattern.factory;
 
+import net.ddns.starla.fnacsp.pattern.strategy.Accuracy;
+import net.ddns.starla.fnacsp.pattern.strategy.AlgorithmFactory;
 import org.junit.Test;
 
 public class AlgorithmFactoryTest {

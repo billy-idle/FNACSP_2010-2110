@@ -2,7 +2,7 @@ package net.ddns.starla.fnacsp.pattern.strategy;
 
 import static java.lang.Math.*;
 
-public class Algorithm_3 extends Algorithm {
+class Algorithm_3 extends Algorithm {
     @Override
     public void compute(double hour, int day, int month, int year, double longitude,
                         double latitude, double pressure, double temperature) {
