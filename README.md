@@ -32,10 +32,10 @@ double azimuth = sunPosition.getAzimuth();                  // Azimuth angle -> 
 double rightAscension = sunPosition.getRightAscension();    // Right ascension -> [0,2PI] rad
 double declination = sunPosition.getDeclination();          // Declination -> [-PI/2, PI/2] rad
 double hourAngle = sunPosition.getHourAngle();              // Hour angle -> [-PI,PI] rad
-boolean isItDay = sunPosition.isItDay();                    // Return True is the sun is above the horizon
+boolean isItDay = sunPosition.isItDay();                    // Return True if the sun is above the horizon
 ```
 Printing the output:
-```bat
+```console
 zdt             => 2017-05-09T23:50:45.514+02:00[Europe/Rome]
 Zenith          => 2.059485464176653
 Azimuth         => 2.7837558034473533
