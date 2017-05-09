@@ -26,6 +26,16 @@ public class SunPosition {
         this.temperature = temperature;
     }
 
+    /**
+     * @param algorithm     An instance of Algorithm class, it should be use through AlgorithmFactory
+     * @param zonedDateTime Between JAN-01-2010[UTC] and JAN-01-2110[UTC]
+     * @param longitude     [0, 2PI] rad
+     * @param latitude      [-PI/2,PI/2] rad
+     * @param pressure      [0.85862324204293, 1.0696274364668] atm
+     * @param temperature   Between [-89.2, 54.0] °C
+     * @return A SunPosition instance
+     * @see Algorithm#compute(double, int, int, int, double, double, double, double)
+     */
     public static SunPosition Make(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
                                    double pressure, double temperature) {
 
@@ -33,25 +43,37 @@ public class SunPosition {
         return new SunPosition(algorithm, zonedDateTime, longitude, latitude, pressure, temperature);
     }
 
-    private static void assertInputParameters(ZonedDateTime zonedDateTime, double longitude, double latitude, double pressure, double temperature) {
-        ZonedDateTime leftBoundOfValidInterval =
-                ZonedDateTime.of(2010, 1, 1, 0, 0, 0, 0, UTC);
+    private static void assertInputParameters(ZonedDateTime zonedDateTime, double longitude, double latitude, double pressure,
+                                              double temperature) {
+        assertZonedDateTime(zonedDateTime);
+        assertLongitude(longitude);
+        assertLatitude(latitude);
+        assertPressure(pressure);
+        assertTemperature(temperature);
+    }
 
-        ZonedDateTime rightBoundOfValidInterval =
-                ZonedDateTime.of(2110, 1, 1, 0, 0, 0, 0, UTC);
+    private static void assertZonedDateTime(ZonedDateTime zonedDateTime) {
+        ZonedDateTime leftBoundOfValidInterval = ZonedDateTime.of(2010, 1, 1, 0, 0, 0, 0, UTC);
+        ZonedDateTime rightBoundOfValidInterval = ZonedDateTime.of(2110, 1, 1, 0, 0, 0, 0, UTC);
 
         if (zonedDateTime.withZoneSameInstant(UTC).isBefore(leftBoundOfValidInterval) ||
                 zonedDateTime.withZoneSameInstant(UTC).isAfter(rightBoundOfValidInterval))
-            throw new OutOfValidZonedDateTimeInterval();
+            throw new ZonedDateTimeOutOfRange();
+    }
 
+    private static void assertLongitude(double longitude) {
         if (longitude < 0.0 || longitude > Algorithm.PI2) throw new LongitudeOutOfRange();
+    }
+
+    private static void assertLatitude(double latitude) {
         if (latitude < -Algorithm.PIM || latitude > Algorithm.PIM) throw new LatitudeOutOfRange();
+    }
 
-        //https://en.wikipedia.org/wiki/Atmospheric_pressure#Records
+    private static void assertPressure(double pressure) {
         if (pressure < 0.85862324204293 || pressure > 1.0696274364668) throw new PressureOutOfRange();
+    }
 
-        //https://en.wikipedia.org/wiki/List_of_weather_records#Lowest_temperatures_ever_recorded
-        //https://en.wikipedia.org/wiki/List_of_weather_records#Highest_temperatures_ever_recorded
+    private static void assertTemperature(double temperature) {
         if (temperature < -89.2 || temperature > 54.0) throw new TemperatureOutOfRange();
     }
 
@@ -71,26 +93,44 @@ public class SunPosition {
         hour = zonedDateTimeAtUTC.getHour() + zonedDateTimeAtUTC.getMinute() / 60.0 + zonedDateTimeAtUTC.getSecond() / 3600.0;
     }
 
+    /**
+     * @return Zenith angle [0,PI] rad
+     */
     public double getZenith() {
         return algorithm.getZenith();
     }
 
+    /**
+     * @return Azimuth angle [-PI,PI] rad
+     */
     public double getAzimuth() {
         return algorithm.getAzimuth();
     }
 
+    /**
+     * @return Right ascension [0,2PI] rad
+     */
     public double getRightAscension() {
         return algorithm.getRightAscension();
     }
 
+    /**
+     * @return Declination [-PI/2, PI/2] rad
+     */
     public double getDeclination() {
         return algorithm.getDeclination();
     }
 
+    /**
+     * @return Hour angle [-PI,PI] rad
+     */
     public double getHourAngle() {
         return algorithm.getHourAngle();
     }
 
+    /**
+     * @return True if the sun is above the horizon
+     */
     public boolean isItDay() {
         return getElevation() > 0.0;
     }
@@ -99,11 +139,14 @@ public class SunPosition {
         return Algorithm.PIM - algorithm.getZenith();
     }
 
+    /**
+     * @return String representation of zonedDateTime
+     */
     public String getZonedDateTime() {
         return zonedDateTime.toString();
     }
 
-    static class OutOfValidZonedDateTimeInterval extends RuntimeException {
+    static class ZonedDateTimeOutOfRange extends RuntimeException {
     }
 
     static class LongitudeOutOfRange extends RuntimeException {

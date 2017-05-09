@@ -4,7 +4,6 @@ import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 public class Algorithm_1 extends Algorithm {
-
     @Override
     public void compute(double hour, int day, int month, int year, double longitude,
                         double latitude, double pressure, double temperature) {

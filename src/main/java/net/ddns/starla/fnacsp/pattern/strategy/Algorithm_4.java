@@ -14,14 +14,14 @@ public class Algorithm_4 extends Algorithm {
         double l = 1.752790 + 1.720279216e-2 * te + 3.3366e-2 * sin(wte - 0.06172) + 3.53e-4 * sin(2.0 * wte - 0.1163);
 
         double nu = 9.282e-4 * te - 0.8;
-        double dlam = 8.34e-5 * sin(nu);
-        double lambda = l + PI + dlam;
+        double deltaLambda = 8.34e-5 * sin(nu);
+        double lambda = l + PI + deltaLambda;
 
-        double epsi = 4.089567e-1 - 6.19e-9 * te + 4.46e-5 * cos(nu);
+        double epsilon = 4.089567e-1 - 6.19e-9 * te + 4.46e-5 * cos(nu);
 
         double sl = sin(lambda);
         double cl = cos(lambda);
-        double se = sin(epsi);
+        double se = sin(epsilon);
         double ce = sqrt(1 - se * se);
 
         rightAscension = atan2(sl * ce, cl);
@@ -31,7 +31,7 @@ public class Algorithm_4 extends Algorithm {
 
         declination = asin(sl * se);
 
-        hourAngle = 1.7528311 + 6.300388099 * t + longitude - rightAscension + 0.92 * dlam;
+        hourAngle = 1.7528311 + 6.300388099 * t + longitude - rightAscension + 0.92 * deltaLambda;
         shiftHourAngleToItsConventionalRange();
 
         applyFinalComputationallyOptimizedProcedure(latitude, pressure, temperature);

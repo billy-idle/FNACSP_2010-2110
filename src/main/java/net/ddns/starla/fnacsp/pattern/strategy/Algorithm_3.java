@@ -13,11 +13,11 @@ public class Algorithm_3 extends Algorithm {
 
         double lambda = -1.388803 + 1.720279216e-2 * te + 3.3366e-2 * sin(wte - 0.06172) + 3.53e-4 * sin(2.0 * wte - 0.1163);
 
-        double epsi = 4.089567e-1 - 6.19e-9 * te;
+        double epsilon = 4.089567e-1 - 6.19e-9 * te;
 
         double sl = sin(lambda);
         double cl = cos(lambda);
-        double se = sin(epsi);
+        double se = sin(epsilon);
         double ce = sqrt(1 - se * se);
 
         rightAscension = atan2(sl * ce, cl);

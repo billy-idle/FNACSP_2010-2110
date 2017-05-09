@@ -3,51 +3,21 @@ package net.ddns.starla.fnacsp.pattern.strategy;
 import net.ddns.starla.fnacsp.pattern.factory.Accuracy;
 import net.ddns.starla.fnacsp.pattern.factory.AlgorithmFactory;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
-
 @RunWith(Parameterized.class)
-public class AlgorithmTwoTest {
-
-    private final double delta = 1.0E-05;
-    private Algorithm algorithm;
-    private double hour;
-    private int day;
-    private int month;
-    private int year;
-    private double longitude;
-    private double latitude;
-    private double pressure;
-    private double temperature;
-    private double expectedZenith;
-    private double expectedAzimuth;
-    private double expectedRightAscension;
-    private double expectedDeclination;
-    private double expectedHourAngle;
+public class AlgorithmTwoTest extends AlgorithmTest {
 
     public AlgorithmTwoTest(double hour, int day, int month, int year, double longitude, double latitude, double pressure,
                             double temperature, double expectedZenith, double expectedAzimuth, double expectedRightAscension,
                             double expectedDeclination, double expectedHourAngle) {
-        this.hour = hour;
-        this.day = day;
-        this.month = month;
-        this.year = year;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.pressure = pressure;
-        this.temperature = temperature;
-        this.expectedZenith = expectedZenith;
-        this.expectedAzimuth = expectedAzimuth;
-        this.expectedRightAscension = expectedRightAscension;
-        this.expectedDeclination = expectedDeclination;
-        this.expectedHourAngle = expectedHourAngle;
+
+        super(hour, day, month, year, longitude, latitude, pressure, temperature, expectedZenith, expectedAzimuth,
+                expectedRightAscension, expectedDeclination, expectedHourAngle);
     }
 
     @Parameterized.Parameters
@@ -84,57 +54,5 @@ public class AlgorithmTwoTest {
     public void computeSunPosition() {
         algorithm = new AlgorithmFactory().getInstance(Accuracy.LOW);
         algorithm.compute(hour, day, month, year, longitude, latitude, pressure, temperature);
-    }
-
-    @Test
-    public void zenithAtUT() throws Exception {
-        assertEquals(expectedZenith, algorithm.getZenith(), delta);
-    }
-
-    @Test
-    public void azimuthAtUT() throws Exception {
-        assertEquals(expectedAzimuth, algorithm.getAzimuth(), delta);
-    }
-
-    @Test
-    public void rightAscensionAtUT() throws Exception {
-        assertEquals(expectedRightAscension, algorithm.getRightAscension(), delta);
-    }
-
-    @Test
-    public void declinationAtUT() throws Exception {
-        assertEquals(expectedDeclination, algorithm.getDeclination(), delta);
-    }
-
-    @Test
-    public void hourAngleAtUT() throws Exception {
-        assertEquals(expectedHourAngle, algorithm.getHourAngle(), delta);
-    }
-
-    @Test
-    public void zenithInRange() throws Exception {
-        assertTrue(isInRange(0, Algorithm.PI, algorithm.getZenith()));
-    }
-
-    private boolean isInRange(double leftBound, double rightBound, double value) {
-        return value >= leftBound && value <= rightBound;
-    }
-
-    @Test
-    public void azimuthInRange() throws Exception {
-        assertTrue(isInRange(-Algorithm.PI, Algorithm.PI, algorithm.getAzimuth()));
-    }
-
-    public void rightAscensionInRange() throws Exception {
-        assertTrue(isInRange(0, Algorithm.PI2, algorithm.getRightAscension()));
-    }
-
-    @Test
-    public void declinationInRange() throws Exception {
-        assertTrue(isInRange(-Algorithm.PIM, Algorithm.PIM, algorithm.getDeclination()));
-    }
-
-    public void hourAngleInRange() throws Exception {
-        assertTrue(isInRange(-Algorithm.PI, Algorithm.PI, algorithm.getHourAngle()));
     }
 }

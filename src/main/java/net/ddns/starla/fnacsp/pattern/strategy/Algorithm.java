@@ -4,8 +4,8 @@ import static java.lang.Math.*;
 
 public abstract class Algorithm implements Cloneable {
 
-    public static final double PI = 3.14159265358979;
-    public static final double PIM = 1.57079632679490;
+    static final double PI = 3.14159265358979;
+    static final double PIM = 1.57079632679490;
     static final double PI2 = 6.28318530717959;
     double rightAscension;
     double declination;
@@ -17,6 +17,19 @@ public abstract class Algorithm implements Cloneable {
     private double ep;
     private double de;
 
+    /**
+     * @param hour        At UT [0-24]
+     * @param day         [1-31]
+     * @param month       [1-12]
+     * @param year        [2010-2110]
+     * @param longitude   [0, 2PI] rad
+     * @param latitude    [-PI/2,PI/2] rad
+     * @param pressure    [0.85862324204293, 1.0696274364668] atm
+     * @param temperature Between [-89.2, 54.0] °C
+     * @see <a href="https://en.wikipedia.org/wiki/List_of_weather_records#Lowest_temperatures_ever_recorded">Lowest temperatures ever recorded</a>
+     * @see <a href="https://en.wikipedia.org/wiki/List_of_weather_records#Highest_temperatures_ever_recorded">Highest temperatures ever recorded</a>
+     * @see <a href="https://en.wikipedia.org/wiki/Atmospheric_pressure#Records">Atmospheric pressure records</a>
+     */
     public abstract void compute(double hour, int day, int month, int year, double longitude,
                                  double latitude, double pressure, double temperature);
 
@@ -66,23 +79,38 @@ public abstract class Algorithm implements Cloneable {
         rightAscension = rightAscension % PI2;
     }
 
-    public double getZenith() {
+    /**
+     * @return Zenith angle [0,PI] rad
+     */
+    double getZenith() {
         return zenith;
     }
 
-    public double getAzimuth() {
+    /**
+     * @return Azimuth angle [-PI,PI] rad
+     */
+    double getAzimuth() {
         return azimuth;
     }
 
-    public double getRightAscension() {
+    /**
+     * @return Right ascension [0,2PI] rad
+     */
+    double getRightAscension() {
         return rightAscension;
     }
 
-    public double getDeclination() {
+    /**
+     * @return Declination [-PI/2, PI/2] rad
+     */
+    double getDeclination() {
         return declination;
     }
 
-    public double getHourAngle() {
+    /**
+     * @return Hour angle [-PI,PI] rad
+     */
+    double getHourAngle() {
         return hourAngle;
     }
 
