@@ -47,7 +47,7 @@ Is it day?      => false
 ## Here is another example
 In this example the instant sun's position is computed with the time-zone ID passed as String, with the highest precision algorithm (Algorithm #5).  
 
-Using SunPositionNow class as facade for SunPosition class:
+Using SunPositionNow class as a facade for SunPosition class:
 ```java
 SunPositionNow sunPositionNow = new SunPositionNow("Europe/Rome", longitude, latitude, pressure, temperature);
 ```
