@@ -9,7 +9,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 /**
- * Computes the instant sun position at the current time-zone ID with the highest precision algorithm (Algorithm #5)
+ * Computes the instant sun position with the time-zone ID passed as String, with the highest precision algorithm (Algorithm #5)
  */
 public class SunPositionNow {
     private final SunPosition sunPosition;
@@ -43,11 +43,26 @@ public class SunPositionNow {
         return sunPosition.getAzimuth();
     }
 
+
     /**
-     * @return String representation of zonedDateTime
+     * @return Right ascension [0,2PI] rad
      */
-    public String getZonedDateTime() {
-        return sunPosition.getZonedDateTime();
+    public double getRightAscension() {
+        return sunPosition.getRightAscension();
+    }
+
+    /**
+     * @return Declination [-PI/2, PI/2] rad
+     */
+    public double getDeclination() {
+        return sunPosition.getDeclination();
+    }
+
+    /**
+     * @return Hour angle [-PI,PI] rad
+     */
+    public double getHourAngle() {
+        return sunPosition.getHourAngle();
     }
 
     /**
@@ -55,5 +70,12 @@ public class SunPositionNow {
      */
     public boolean isItDay() {
         return sunPosition.isItDay();
+    }
+
+    /**
+     * @return String representation of zonedDateTime
+     */
+    public String getZonedDateTime() {
+        return sunPosition.getZonedDateTime();
     }
 }

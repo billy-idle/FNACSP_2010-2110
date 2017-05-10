@@ -44,3 +44,12 @@ Declination     => 0.3069780720546488
 Hour Angle      => -3.4719960498660645
 Is it day?      => false
 ```
+## Here is another example
+In this example the instant sun's position is computed with the time-zone ID passed as String, with the highest precision algorithm (Algorithm #5).  
+
+Using SunPositionNow class as facade for SunPosition class:
+```java
+SunPositionNow sunPositionNow = new SunPositionNow("Europe/Rome", longitude, latitude, pressure, temperature);
+```
+The "getting and printing output" process same as before using the sunPositionNow object instead.
+
