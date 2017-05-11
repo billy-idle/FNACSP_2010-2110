@@ -4,29 +4,34 @@
 
 Heavily based in the [original C++ source code](http://www.solaritaly.enea.it/StrSunPosition/SunPositionEn.php), but applying design patterns and TDD.  
 
-## How-to
+## How to use it
 Below is an example of computing the sun's position at Rome, using the algorithm with the highest precision:
 ```java
 // (Algorithm #5)
 Algorithm algorithm = new AlgorithmFactory().getInstance(Accuracy.HIGHEST); 
 
-// time-zone ID
-ZoneId zoneId = ZoneId.of("Europe/Rome");
+int year = 2020;  
+int month = 1;
+int day = 25;
+int hour = 13;
+int minute = 30;
+int second = 0;
+int nanoSecond = 0;
+String zoneId = "Europe/Rome";
 
-// Between -> [2010-2110] at UTC
-ZonedDateTime zonedDateTime = ZonedDateTime.now(ZoneId.of("Europe/Rome")); 
+ZonedDateTime zonedDateTime = ZonedDateTime.of(year, month, day, hour, minute, second, nanoSecond, ZoneId.of(zoneId));
 
-double longitude = 0.21787; // Between -> [0, 2PI] rad
-double latitude = 0.73117;  // Between -> [-PI/2, PI/2] rad
-double pressure = 1.0;      // Between -> [0.85, 1.069] atm
-double temperature = 20.0;  // Between -> [-89.2, 54.0] °C
+double longitude = 0.21787;     // Between -> [0, 2PI] rad
+double latitude = 0.73117;      // Between -> [-PI/2, PI/2] rad
+double pressure = 1.0;          // Between -> [0.85, 1.069] atm
+double temperature = 20.0;      // Between -> [-89.2, 54.0] °C
 
 SunPosition sunPosition = SunPosition.Make(algorithm, zonedDateTime, longitude, latitude, pressure, temperature);
 sunPosition.computePosition();
 ```
 Getting the computed values:
 ```java
-String zdt = sunPosition.getZonedDateTime();                // String representation of zonedDateTime
+ZonedDateTime zdt = sunPosition.getZonedDateTime();         
 double zenith = sunPosition.getZenith();                    // Zenith angle -> [0,PI] rad
 double azimuth = sunPosition.getAzimuth();                  // Azimuth angle -> [-PI,PI] rad
 double rightAscension = sunPosition.getRightAscension();    // Right ascension -> [0,2PI] rad
@@ -36,13 +41,13 @@ boolean isItDay = sunPosition.isItDay();                    // Return True if th
 ```
 Printing the output:
 ```console
-zdt             => 2017-05-09T23:50:45.514+02:00[Europe/Rome]
-Zenith          => 2.059485464176653
-Azimuth         => 2.7837558034473533
-Right Ascension => 0.8202622695721691
-Declination     => 0.3069780720546488
-Hour Angle      => -3.4719960498660645
-Is it day?      => false
+zdt             => 2020-01-25T13:30+01:00[Europe/Rome]
+Zenith          => 1.097167781330322
+Azimuth         => 0.31452718410556935
+Right Ascension => 5.364004066519731
+Declination     => -0.33191742160701926
+Hour Angle      => -5.98761790109209
+Is it day?      => true
 ```
 ## Here is another example
 In this example the instant sun's position is computed with the time-zone ID passed as String, with the highest precision algorithm (Algorithm #5).  
