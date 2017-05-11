@@ -142,8 +142,8 @@ public class SunPosition {
     /**
      * @return String representation of zonedDateTime
      */
-    public String getZonedDateTime() {
-        return zonedDateTime.toString();
+    public ZonedDateTime getZonedDateTime() {
+        return zonedDateTime;
     }
 
     static class ZonedDateTimeOutOfRange extends RuntimeException {

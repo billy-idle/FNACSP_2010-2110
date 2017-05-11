@@ -87,9 +87,9 @@ public class SunPositionNow {
     }
 
     /**
-     * @return String representation of zonedDateTime
+     * @return ZonedDateTime used to compute the sun's position
      */
-    public String getZonedDateTime() {
+    public ZonedDateTime getZonedDateTime() {
         return sunPosition.getZonedDateTime();
     }
 }
