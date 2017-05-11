@@ -9,7 +9,7 @@ public class SunPositionNowTest {
 
     @Test(expected = ZoneRulesException.class)
     public void whenZoneIdUnknown_ShouldThrowZoneRulesException() throws Exception {
-        new SunPositionNow("Europe/Bogota", 0.21787, 0.73117, 1.0, 20.0);
+        new SunPositionNow("Europe/Bogota", 0.21787, 0.73117, 1.0, 20.0).computePosition();
     }
 
 }

@@ -12,7 +12,12 @@ import java.time.ZonedDateTime;
  * Computes the instant sun position with the time-zone ID passed as String, with the highest precision algorithm (Algorithm #5)
  */
 public class SunPositionNow {
-    private final SunPosition sunPosition;
+    private final String zoneId;
+    private final double longitude;
+    private final double latitude;
+    private final double pressure;
+    private final double temperature;
+    private SunPosition sunPosition;
 
     /**
      * @param zoneId      time-zone ID
@@ -23,6 +28,15 @@ public class SunPositionNow {
      * @see SunPosition#Make(Algorithm, ZonedDateTime, double, double, double, double)
      */
     public SunPositionNow(String zoneId, double longitude, double latitude, double pressure, double temperature) {
+        this.zoneId = zoneId;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.pressure = pressure;
+        this.temperature = temperature;
+
+    }
+
+    public void computePosition() {
         sunPosition = SunPosition.Make(new AlgorithmFactory().getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.now(ZoneId.of(zoneId)), longitude, latitude, pressure, temperature);
 
