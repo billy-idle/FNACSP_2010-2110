@@ -19,7 +19,8 @@ int second = 0;
 int nanoSecond = 0;
 String zoneId = "Europe/Rome";
 
-ZonedDateTime zonedDateTime = ZonedDateTime.of(year, month, day, hour, minute, second, nanoSecond, ZoneId.of(zoneId));
+ZonedDateTime romeZonedDateTime;
+romeZonedDateTime = ZonedDateTime.of(year, month, day, hour, minute, second, nanoSecond, ZoneId.of(zoneId));
 
 double longitude = 0.21787;     // Between -> [0, 2PI] rad
 double latitude = 0.73117;      // Between -> [-PI/2, PI/2] rad
