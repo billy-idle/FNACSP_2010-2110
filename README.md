@@ -50,6 +50,7 @@ In this example the instant sun's position is computed with the time-zone ID pas
 Using SunPositionNow class as a facade for SunPosition class:
 ```java
 SunPositionNow sunPositionNow = new SunPositionNow("Europe/Rome", longitude, latitude, pressure, temperature);
+sunPositionNow.computePosition();
 ```
 The "getting and printing output" process same as before using the sunPositionNow object instead.
 
