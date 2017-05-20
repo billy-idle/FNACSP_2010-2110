@@ -7,8 +7,7 @@ Heavily based in the [original C++ source code](http://www.solaritaly.enea.it/St
 ## How to use it
 Below is an example of computing the sun's position at Rome, using the algorithm with the highest precision:
 ```java
-// (Algorithm #5)
-Algorithm algorithm = new AlgorithmFactory().getInstance(Accuracy.HIGHEST); 
+Algorithm algorithm = new AlgorithmFactory().getInstance(Accuracy.HIGHEST); // LOWEST, LOW, MID, HIGH, HIGHEST
 
 int year = 2020;  
 int month = 1;
