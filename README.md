@@ -21,10 +21,10 @@ String zoneId = "Europe/Rome";
 ZonedDateTime romeZonedDateTime;
 romeZonedDateTime = ZonedDateTime.of(year, month, day, hour, minute, second, nanoSecond, ZoneId.of(zoneId));
 
-double longitude = 0.21787;     // Between -> [0, 2PI] rad
-double latitude = 0.73117;      // Between -> [-PI/2, PI/2] rad
-double pressure = 1.0;          // Between -> [0.85, 1.069] atm
-double temperature = 20.0;      // Between -> [-89.2, 54.0] °C
+double longitude = 0.21787;     // Domain -> [0, 2PI] rad
+double latitude = 0.73117;      // Domain -> [-PI/2, PI/2] rad
+double pressure = 1.0;          // Domain -> [0.85, 1.069] atm
+double temperature = 20.0;      // Domain -> [-89.2, 54.0] °C
 
 SunPosition sunPosition = SunPosition.Make(algorithm, zonedDateTime, longitude, latitude, pressure, temperature);
 sunPosition.computePosition();
