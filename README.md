@@ -32,11 +32,11 @@ sunPosition.computePosition();
 Getting the computed values:
 ```java
 ZonedDateTime zdt = sunPosition.getZonedDateTime();         
-double zenith = sunPosition.getZenith();                    // Zenith angle -> [0,PI] rad
-double azimuth = sunPosition.getAzimuth();                  // Azimuth angle -> [-PI,PI] rad
-double rightAscension = sunPosition.getRightAscension();    // Right ascension -> [0,2PI] rad
-double declination = sunPosition.getDeclination();          // Declination -> [-PI/2, PI/2] rad
-double hourAngle = sunPosition.getHourAngle();              // Hour angle -> [-PI,PI] rad
+double zenith = sunPosition.getZenith();                    // Range -> [0, PI] rad
+double azimuth = sunPosition.getAzimuth();                  // Range -> [-PI, PI] rad
+double rightAscension = sunPosition.getRightAscension();    // Range -> [0, 2PI] rad
+double declination = sunPosition.getDeclination();          // Range -> [-PI/2, PI/2] rad
+double hourAngle = sunPosition.getHourAngle();              // Range -> [-PI, PI] rad
 boolean isItDay = sunPosition.isItDay();                    // Return True if the sun is above the horizon
 ```
 Printing the output:
