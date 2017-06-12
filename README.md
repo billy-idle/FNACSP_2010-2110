@@ -5,10 +5,9 @@
 Heavily based in the [original C++ source code](http://www.solaritaly.enea.it/StrSunPosition/SunPositionEn.php), but applying design patterns and TDD.  
 
 ## How to use it
-Below is an example of computing the sun's position at Rome, using the algorithm with the highest precision:
+Below is an example of computing the sun's position at Rome, using the algorithm with the highest precision: 
 ```java
-// (Algorithm #5)
-Algorithm algorithm = new AlgorithmFactory().getInstance(Accuracy.HIGHEST); 
+Algorithm algorithm = new AlgorithmFactory().getInstance(Accuracy.HIGHEST); // LOWEST, LOW, MID, HIGH, HIGHEST
 
 int year = 2020;  
 int month = 1;
@@ -22,22 +21,24 @@ String zoneId = "Europe/Rome";
 ZonedDateTime romeZonedDateTime;
 romeZonedDateTime = ZonedDateTime.of(year, month, day, hour, minute, second, nanoSecond, ZoneId.of(zoneId));
 
-double longitude = 0.21787;     // Between -> [0, 2PI] rad
-double latitude = 0.73117;      // Between -> [-PI/2, PI/2] rad
-double pressure = 1.0;          // Between -> [0.85, 1.069] atm
-double temperature = 20.0;      // Between -> [-89.2, 54.0] °C
+double longitude = 0.21787;     // Domain -> [0, 2PI] rad
+double latitude = 0.73117;      // Domain -> [-PI/2, PI/2] rad
+double pressure = 1.0;          // Domain -> [0.85, 1.069] atm
+double temperature = 20.0;      // Domain -> [-89.2, 54.0] °C
 
 SunPosition sunPosition = SunPosition.Make(algorithm, zonedDateTime, longitude, latitude, pressure, temperature);
 sunPosition.computePosition();
 ```
+*If you don't know your timezone value, you can look it up (see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)*
+
 Getting the computed values:
 ```java
 ZonedDateTime zdt = sunPosition.getZonedDateTime();         
-double zenith = sunPosition.getZenith();                    // Zenith angle -> [0,PI] rad
-double azimuth = sunPosition.getAzimuth();                  // Azimuth angle -> [-PI,PI] rad
-double rightAscension = sunPosition.getRightAscension();    // Right ascension -> [0,2PI] rad
-double declination = sunPosition.getDeclination();          // Declination -> [-PI/2, PI/2] rad
-double hourAngle = sunPosition.getHourAngle();              // Hour angle -> [-PI,PI] rad
+double zenith = sunPosition.getZenith();                    // Range -> [0, PI] rad
+double azimuth = sunPosition.getAzimuth();                  // Range -> [-PI, PI] rad
+double rightAscension = sunPosition.getRightAscension();    // Range -> [0, 2PI] rad
+double declination = sunPosition.getDeclination();          // Range -> [-PI/2, PI/2] rad
+double hourAngle = sunPosition.getHourAngle();              // Range -> [-PI, PI] rad
 boolean isItDay = sunPosition.isItDay();                    // Return True if the sun is above the horizon
 ```
 Printing the output:
