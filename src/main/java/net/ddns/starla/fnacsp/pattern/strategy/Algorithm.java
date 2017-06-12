@@ -42,8 +42,8 @@ public abstract class Algorithm implements Cloneable {
             year = year - 1;
         }
 
-        t = (double) ((int) (365.25 * (double) (year - 2000)) + (int) (30.6001 * (double) (month + 1)) -
-                (int) (0.01 * (double) (year)) + day) + 0.0416667 * hour - 21958.0;
+        t = (int) (365.25 * (year - 2000)) + (int) (30.6001 * (month + 1)) - (int) (0.01 * year) + day + 0.0416667
+                * hour - 21958.0;
 
         te = t + 1.1574e-5 * dt;
     }
