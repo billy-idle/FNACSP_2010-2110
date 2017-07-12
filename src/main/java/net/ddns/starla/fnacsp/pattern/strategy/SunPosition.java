@@ -3,7 +3,7 @@ package net.ddns.starla.fnacsp.pattern.strategy;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-public class SunPosition {
+public final class SunPosition {
 
     private static final ZoneId UTC = ZoneId.of("UTC");
     private final Algorithm algorithm;
@@ -36,8 +36,8 @@ public class SunPosition {
      * @return A SunPosition instance
      * @see Algorithm#compute(double, int, int, int, double, double, double, double)
      */
-    public static SunPosition Make(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
-                                   double pressure, double temperature) {
+    public static SunPosition of(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
+                                 double pressure, double temperature) {
 
         assertInputParameters(zonedDateTime, longitude, latitude, pressure, temperature);
         return new SunPosition(algorithm, zonedDateTime, longitude, latitude, pressure, temperature);

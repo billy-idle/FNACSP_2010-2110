@@ -1,11 +1,11 @@
 package net.ddns.starla.fnacsp.pattern.strategy;
 
-public class AlgorithmFactory {
+public abstract class AlgorithmFactory {
     /**
      * @param accuracy The allowed values are: LOWEST, LOW, MID, HIGH, HIGHEST
      * @return An instance of Algorithm class
      */
-    public Algorithm getInstance(Accuracy accuracy) {
+    public static Algorithm getInstance(Accuracy accuracy) {
         switch (accuracy) {
             case LOWEST:
                 return new Algorithm_1();

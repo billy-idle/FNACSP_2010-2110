@@ -10,7 +10,6 @@ class Algorithm_5 extends Algorithm {
         timeScaleComputation(hour, day, month, year);
 
         double wte = 0.0172019715 * te;
-
         double s1 = sin(wte);
         double c1 = cos(wte);
         double s2 = 2.0 * s1 * c1;
@@ -35,9 +34,7 @@ class Algorithm_5 extends Algorithm {
         double nu = 9.282e-4 * te - 0.8;
         double deltaLambda = 8.34e-5 * sin(nu);
         double lambda = l + PI + deltaLambda;
-
         double epsilon = 4.089567e-1 - 6.19e-9 * te + 4.46e-5 * cos(nu);
-
         double sl = sin(lambda);
         double cl = cos(lambda);
         double se = sin(epsilon);
@@ -49,10 +46,9 @@ class Algorithm_5 extends Algorithm {
             rightAscension += PI2;
 
         declination = asin(sl * se);
-
         hourAngle = 1.7528311 + 6.300388099 * t + longitude - rightAscension + 0.92 * deltaLambda;
-        shiftHourAngleToItsConventionalRange();
 
+        shiftHourAngleToItsConventionalRange();
         applyFinalComputationallyOptimizedProcedure(latitude, pressure, temperature);
     }
 }

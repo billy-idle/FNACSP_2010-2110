@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
+import static net.ddns.starla.fnacsp.pattern.strategy.Algorithm.*;
 
 public abstract class AlgorithmTest {
 
@@ -45,7 +46,7 @@ public abstract class AlgorithmTest {
 
     @Test
     public void zenithInRange() throws Exception {
-        assertTrue(isInRange(0, Algorithm.PI, algorithm.getZenith()));
+        assertTrue(isInRange(0, PI, algorithm.getZenith()));
     }
 
     private boolean isInRange(double leftBound, double rightBound, double value) {
@@ -54,24 +55,24 @@ public abstract class AlgorithmTest {
 
     @Test
     public void azimuthInRange() throws Exception {
-        assertTrue(isInRange(-Algorithm.PI, Algorithm.PI, algorithm.getAzimuth()));
+        assertTrue(isInRange(-PI, PI, algorithm.getAzimuth()));
     }
 
     @Test
     @Ignore
     public void rightAscensionInRange() throws Exception {
-        assertTrue(isInRange(0, Algorithm.PI2, algorithm.getRightAscension()));
+        assertTrue(isInRange(0, PI2, algorithm.getRightAscension()));
     }
 
     @Test
     public void declinationInRange() throws Exception {
-        assertTrue(isInRange(-Algorithm.PIM, Algorithm.PIM, algorithm.getDeclination()));
+        assertTrue(isInRange(-PIM, PIM, algorithm.getDeclination()));
     }
 
     @Test
     @Ignore
     public void hourAngleInRange() throws Exception {
-        assertTrue(isInRange(-Algorithm.PI, Algorithm.PI, algorithm.getHourAngle()));
+        assertTrue(isInRange(-PI, PI, algorithm.getHourAngle()));
     }
 
     @Test

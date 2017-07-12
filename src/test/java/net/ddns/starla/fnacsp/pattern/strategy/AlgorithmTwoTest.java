@@ -7,6 +7,9 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
+import static net.ddns.starla.fnacsp.pattern.strategy.Accuracy.LOW;
+import static net.ddns.starla.fnacsp.pattern.strategy.AlgorithmFactory.getInstance;
+
 @RunWith(Parameterized.class)
 public class AlgorithmTwoTest extends AlgorithmTest {
 
@@ -50,7 +53,7 @@ public class AlgorithmTwoTest extends AlgorithmTest {
 
     @Before
     public void computeSunPosition() {
-        algorithm = new AlgorithmFactory().getInstance(Accuracy.LOW);
+        algorithm = getInstance(LOW);
         algorithm.compute(hour, day, month, year, longitude, latitude, pressure, temperature);
     }
 }

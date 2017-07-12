@@ -34,12 +34,12 @@ public abstract class Algorithm implements Cloneable {
                                  double latitude, double pressure, double temperature);
 
 
-    void timeScaleComputation(double hour, int day, int month, int year) {
-        double dt = 96.4 + 0.567 * (double) (year - 2061);
+    final void timeScaleComputation(double hour, int day, int month, int year) {
+        double dt = 96.4 + 0.567 * (year - 2061);
 
         if (month <= 2) {
-            month = month + 12;
-            year = year - 1;
+            month += 12;
+            year--;
         }
 
         t = (int) (365.25 * (year - 2000)) + (int) (30.6001 * (month + 1)) - (int) (0.01 * year) + day + 0.0416667
@@ -48,11 +48,11 @@ public abstract class Algorithm implements Cloneable {
         te = t + 1.1574e-5 * dt;
     }
 
-    void shiftHourAngleToItsConventionalRange() {
+    final void shiftHourAngleToItsConventionalRange() {
         hourAngle = ((hourAngle + PI) % PI2) - PI;
     }
 
-    void applyFinalComputationallyOptimizedProcedure(double latitude, double pressure, double temperature) {
+    final void applyFinalComputationallyOptimizedProcedure(double latitude, double pressure, double temperature) {
         double sp = sin(latitude);
         double cp = sqrt((1 - sp * sp));
         double sd = sin(declination);
@@ -75,49 +75,49 @@ public abstract class Algorithm implements Cloneable {
         de = (0.08422 * pressure) / ((273.0 + temperature) * tan(ep + 0.003138 / (ep + 0.08919)));
     }
 
-    void shiftRightAscensionToItsConventionalRange() {
-        rightAscension = rightAscension % PI2;
+    final void shiftRightAscensionToItsConventionalRange() {
+        rightAscension %= PI2;
     }
 
     /**
      * @return Zenith angle [0,PI] rad
      */
-    double getZenith() {
+    final double getZenith() {
         return zenith;
     }
 
     /**
      * @return Azimuth angle [-PI,PI] rad
      */
-    double getAzimuth() {
+    final double getAzimuth() {
         return azimuth;
     }
 
     /**
      * @return Right ascension [0,2PI] rad
      */
-    double getRightAscension() {
+    final double getRightAscension() {
         return rightAscension;
     }
 
     /**
      * @return Declination [-PI/2, PI/2] rad
      */
-    double getDeclination() {
+    final double getDeclination() {
         return declination;
     }
 
     /**
      * @return Hour angle [-PI,PI] rad
      */
-    double getHourAngle() {
+    final double getHourAngle() {
         return hourAngle;
     }
 
     /**
      * @return A shallow copy of this object.
      */
-    public Algorithm clone() {
+    final public Algorithm clone() {
         try {
             return (Algorithm) super.clone();
         } catch (CloneNotSupportedException e) {

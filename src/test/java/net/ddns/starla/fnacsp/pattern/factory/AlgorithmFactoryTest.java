@@ -1,33 +1,34 @@
 package net.ddns.starla.fnacsp.pattern.factory;
 
-import net.ddns.starla.fnacsp.pattern.strategy.Accuracy;
-import net.ddns.starla.fnacsp.pattern.strategy.AlgorithmFactory;
 import org.junit.Test;
+
+import static net.ddns.starla.fnacsp.pattern.strategy.Accuracy.*;
+import static net.ddns.starla.fnacsp.pattern.strategy.AlgorithmFactory.getInstance;
 
 public class AlgorithmFactoryTest {
 
     @Test
     public void canCreateInstanceOfAlgorithmOne() throws Exception {
-        new AlgorithmFactory().getInstance(Accuracy.LOWEST);
+        getInstance(LOWEST);
     }
 
     @Test
     public void canCreateInstanceOfAlgorithmTwo() throws Exception {
-        new AlgorithmFactory().getInstance(Accuracy.LOW);
+        getInstance(LOW);
     }
 
     @Test
     public void canCreateInstanceOfAlgorithmThree() throws Exception {
-        new AlgorithmFactory().getInstance(Accuracy.MID);
+        getInstance(MID);
     }
 
     @Test
     public void canCreateInstanceOfAlgorithmFour() throws Exception {
-        new AlgorithmFactory().getInstance(Accuracy.HIGH);
+        getInstance(HIGH);
     }
 
     @Test
     public void canCreateInstanceOfAlgorithmFive() throws Exception {
-        new AlgorithmFactory().getInstance(Accuracy.HIGHEST);
+        getInstance(HIGHEST);
     }
 }
