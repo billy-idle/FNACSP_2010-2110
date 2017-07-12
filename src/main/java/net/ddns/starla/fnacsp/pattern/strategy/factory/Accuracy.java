@@ -1,4 +1,4 @@
-package net.ddns.starla.fnacsp.pattern.strategy;
+package net.ddns.starla.fnacsp.pattern.strategy.factory;
 
 /**
  * It used in conjunction with AlgorithmFactory class

@@ -1,5 +1,9 @@
 package net.ddns.starla.fnacsp.pattern.strategy;
 
+import net.ddns.starla.fnacsp.pattern.strategy.facade.SunPosition;
+import net.ddns.starla.fnacsp.pattern.strategy.factory.Accuracy;
+import net.ddns.starla.fnacsp.pattern.strategy.factory.AlgorithmFactory;
+import net.ddns.starla.fnacsp.pattern.strategy.top.Algorithm;
 import org.junit.BeforeClass;
 import org.junit.Test;
 

@@ -1,6 +1,9 @@
-package net.ddns.starla.fnacsp.pattern.strategy;
+package net.ddns.starla.fnacsp.pattern.strategy.factory;
 
-public abstract class AlgorithmFactory {
+import net.ddns.starla.fnacsp.pattern.strategy.down.*;
+import net.ddns.starla.fnacsp.pattern.strategy.top.Algorithm;
+
+public class AlgorithmFactory {
     /**
      * @param accuracy The allowed values are: LOWEST, LOW, MID, HIGH, HIGHEST
      * @return An instance of Algorithm class

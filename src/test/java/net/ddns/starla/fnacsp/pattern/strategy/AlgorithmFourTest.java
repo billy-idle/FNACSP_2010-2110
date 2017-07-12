@@ -7,8 +7,8 @@ import org.junit.runners.Parameterized;
 import java.util.Arrays;
 import java.util.Collection;
 
-import static net.ddns.starla.fnacsp.pattern.strategy.Accuracy.HIGH;
-import static net.ddns.starla.fnacsp.pattern.strategy.AlgorithmFactory.getInstance;
+import static net.ddns.starla.fnacsp.pattern.strategy.factory.Accuracy.HIGH;
+import static net.ddns.starla.fnacsp.pattern.strategy.factory.AlgorithmFactory.getInstance;
 
 @RunWith(Parameterized.class)
 public class AlgorithmFourTest extends AlgorithmTest {

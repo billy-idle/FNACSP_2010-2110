@@ -1,13 +1,13 @@
 package net.ddns.starla.fnacsp.pattern.facade;
 
-import net.ddns.starla.fnacsp.pattern.strategy.Algorithm;
-import net.ddns.starla.fnacsp.pattern.strategy.SunPosition;
+import net.ddns.starla.fnacsp.pattern.strategy.facade.SunPosition;
+import net.ddns.starla.fnacsp.pattern.strategy.top.Algorithm;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-import static net.ddns.starla.fnacsp.pattern.strategy.Accuracy.HIGHEST;
-import static net.ddns.starla.fnacsp.pattern.strategy.AlgorithmFactory.getInstance;
+import static net.ddns.starla.fnacsp.pattern.strategy.factory.Accuracy.HIGHEST;
+import static net.ddns.starla.fnacsp.pattern.strategy.factory.AlgorithmFactory.getInstance;
 
 /**
  * Computes the instant sun position with the time-zone ID passed as String, with the highest precision algorithm (Algorithm #5)

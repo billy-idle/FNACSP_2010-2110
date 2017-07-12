@@ -1,4 +1,6 @@
-package net.ddns.starla.fnacsp.pattern.strategy;
+package net.ddns.starla.fnacsp.pattern.strategy.facade;
+
+import net.ddns.starla.fnacsp.pattern.strategy.top.Algorithm;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -146,18 +148,18 @@ public final class SunPosition {
         return zonedDateTime;
     }
 
-    static class ZonedDateTimeOutOfRange extends RuntimeException {
+    public static class ZonedDateTimeOutOfRange extends RuntimeException {
     }
 
-    static class LongitudeOutOfRange extends RuntimeException {
+    public static class LongitudeOutOfRange extends RuntimeException {
     }
 
-    static class LatitudeOutOfRange extends RuntimeException {
+    public static class LatitudeOutOfRange extends RuntimeException {
     }
 
-    static class PressureOutOfRange extends RuntimeException {
+    public static class PressureOutOfRange extends RuntimeException {
     }
 
-    static class TemperatureOutOfRange extends RuntimeException {
+    public static class TemperatureOutOfRange extends RuntimeException {
     }
 }
