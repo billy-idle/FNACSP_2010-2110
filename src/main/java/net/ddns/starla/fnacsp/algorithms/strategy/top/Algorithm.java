@@ -6,58 +6,51 @@ import java.time.ZonedDateTime;
 import static java.lang.Math.*;
 import static java.time.temporal.ChronoUnit.NANOS;
 
-public abstract class Algorithm implements Cloneable {
+public abstract class Algorithm {
 
     public static final double PI = 3.14159265358979;
     public static final double PIM = 1.57079632679490;
     public static final double PI2 = 6.28318530717959;
     private static final ZonedDateTime MIDPOINT_OF_THE_INTERVAL = ZonedDateTime.of(2060, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
+    private static final ZoneId UTC = ZoneId.of("UTC");
     protected double rightAscension;
     protected double declination;
     protected double hourAngle;
     protected double t;
     protected double te;
+    private ZonedDateTime zonedDateTimeAtUTC;
     private double zenith;
     private double azimuth;
     private double ep;
     private double de;
 
     /**
-     * @param hour        At UT [0-24]
-     * @param day         [1-31]
-     * @param month       [1-12]
-     * @param year        [2010-2110]
-     * @param longitude   [0, 2PI] rad
-     * @param latitude    [-PI/2,PI/2] rad
-     * @param pressure    [0.85862324204293, 1.0696274364668] atm
-     * @param temperature Between [-89.2, 54.0] °C
+     * @param zonedDateTime
+     * @param longitude     [0, 2PI] rad
+     * @param latitude      [-PI/2,PI/2] rad
+     * @param pressure      [0.85862324204293, 1.0696274364668] atm
+     * @param temperature   Between [-89.2, 54.0] °C
      * @see <a href="https://en.wikipedia.org/wiki/List_of_weather_records#Lowest_temperatures_ever_recorded">Lowest temperatures ever recorded</a>
      * @see <a href="https://en.wikipedia.org/wiki/List_of_weather_records#Highest_temperatures_ever_recorded">Highest temperatures ever recorded</a>
      * @see <a href="https://en.wikipedia.org/wiki/Atmospheric_pressure#Records">Atmospheric pressure records</a>
      */
-    public abstract void compute(double hour, int day, int month, int year, double longitude,
+    public abstract void compute(ZonedDateTime zonedDateTime, double longitude,
                                  double latitude, double pressure, double temperature);
 
 
-    protected final void timeScaleComputation(double hour, int day, int month, int year) {
-        double dt = 96.4 + 0.567 * (year - 2061);
-
-        int hours;
-        int minutes;
-        int seconds;
-        int nanoseconds;
-
-        hours = (int) hour;
-        minutes = (int) ((hour - (int) hour) * 60.0);
-        seconds = (int) ((((hour - (int) hour) * 60.0) - minutes) * 60.0);
-        nanoseconds = (int) ((((((hour - (int) hour) * 60.0) - minutes) * 60.0) - seconds) * 1e9);
-
-        ZonedDateTime zonedDateTimeAtUTC = ZonedDateTime.of(year, month, day, hours, minutes, seconds, nanoseconds,
-                ZoneId.of("UTC"));
-
-        t = NANOS.between(MIDPOINT_OF_THE_INTERVAL, zonedDateTimeAtUTC) / 8.64e13;
-
+    protected final void timeScaleComputation(ZonedDateTime zonedDateTime) {
+        zonedDateTimeToUTC(zonedDateTime);
+        double dt = 96.4 + 0.567 * (zonedDateTimeAtUTC.getYear() - 2061);
+        t = daysFromTheMidpointOfTheInterval();
         te = t + 1.1574e-5 * dt;
+    }
+
+    private void zonedDateTimeToUTC(ZonedDateTime zonedDateTime) {
+        zonedDateTimeAtUTC = zonedDateTime.withZoneSameInstant(UTC);
+    }
+
+    private double daysFromTheMidpointOfTheInterval() {
+        return NANOS.between(MIDPOINT_OF_THE_INTERVAL, zonedDateTimeAtUTC) / 8.64e13;
     }
 
     protected final void shiftHourAngleToItsConventionalRange() {

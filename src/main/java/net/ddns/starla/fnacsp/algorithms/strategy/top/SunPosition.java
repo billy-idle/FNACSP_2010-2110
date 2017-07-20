@@ -12,8 +12,6 @@ public final class SunPosition {
     private final double pressure;
     private final double temperature;
     private final ZonedDateTime zonedDateTime;
-    private ZonedDateTime zonedDateTimeAtUTC;
-    private double hour;
 
     /**
      * Prevents other classes from instantiating the class.
@@ -38,7 +36,7 @@ public final class SunPosition {
      * @param pressure      [0.85862324204293, 1.0696274364668] atm
      * @param temperature   Between [-89.2, 54.0] °C
      * @return A SunPosition instance
-     * @see Algorithm#compute(double, int, int, int, double, double, double, double)
+     * @see Algorithm#compute(ZonedDateTime, double, double, double, double)
      */
     public static SunPosition of(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
                                  double pressure, double temperature) {
@@ -82,20 +80,7 @@ public final class SunPosition {
     }
 
     public void computePosition() {
-        timeZoneToUTC();
-        timeToDecimal();
-
-        this.algorithm.compute(hour, this.zonedDateTimeAtUTC.getDayOfMonth(), this.zonedDateTimeAtUTC.getMonthValue(),
-                this.zonedDateTimeAtUTC.getYear(), longitude, latitude, pressure, temperature);
-    }
-
-    private void timeZoneToUTC() {
-        zonedDateTimeAtUTC = zonedDateTime.withZoneSameInstant(ZoneId.of("UTC"));
-    }
-
-    private void timeToDecimal() {
-        hour = zonedDateTimeAtUTC.getHour() + zonedDateTimeAtUTC.getMinute() / 60.0 + zonedDateTimeAtUTC.getSecond() / 3600.0
-                + zonedDateTimeAtUTC.getNano() / 3.6e12;
+        this.algorithm.compute(zonedDateTime, longitude, latitude, pressure, temperature);
     }
 
     /**

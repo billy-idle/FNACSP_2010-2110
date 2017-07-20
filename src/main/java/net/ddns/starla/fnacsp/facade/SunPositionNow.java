@@ -1,4 +1,4 @@
-package net.ddns.starla.fnacsp;
+package net.ddns.starla.fnacsp.facade;
 
 import net.ddns.starla.fnacsp.algorithms.strategy.down.Accuracy;
 import net.ddns.starla.fnacsp.algorithms.strategy.down.AlgorithmFactory;

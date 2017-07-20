@@ -4,6 +4,9 @@ import net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import static junit.framework.TestCase.*;
 import static net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm.*;
 
@@ -13,6 +16,7 @@ public abstract class AlgorithmTest {
     final int day;
     final int month;
     final int year;
+    final String zoneId;
     final double longitude;
     final double latitude;
     final double pressure;
@@ -25,10 +29,11 @@ public abstract class AlgorithmTest {
     private final double expectedHourAngle;
     Algorithm algorithm;
 
-    AlgorithmTest(double hour, int day, int month, int year, double longitude, double latitude, double pressure,
-                  double temperature, double expectedZenith, double expectedAzimuth, double expectedRightAscension,
-                  double expectedDeclination, double expectedHourAngle) {
+    AlgorithmTest(String zoneId, double hour, int day, int month, int year, double longitude, double latitude,
+                  double pressure, double temperature, double expectedZenith, double expectedAzimuth,
+                  double expectedRightAscension, double expectedDeclination, double expectedHourAngle) {
 
+        this.zoneId = zoneId;
         this.hour = hour;
         this.day = day;
         this.month = month;
@@ -42,6 +47,19 @@ public abstract class AlgorithmTest {
         this.expectedRightAscension = expectedRightAscension;
         this.expectedDeclination = expectedDeclination;
         this.expectedHourAngle = expectedHourAngle;
+    }
+
+    final void compute() {
+        algorithm.compute(decimalToZonedDateTime(), longitude, latitude, pressure, temperature);
+    }
+
+    private ZonedDateTime decimalToZonedDateTime() {
+        int hour = (int) this.hour;
+        int minute = (int) ((hour - (int) this.hour) * 60.0);
+        int second = (int) ((((hour - (int) this.hour) * 60.0) - minute) * 60.0);
+        int nanoOfSecond = (int) ((((((hour - (int) this.hour) * 60.0) - minute) * 60.0) - second) * 1e9);
+
+        return ZonedDateTime.of(year, month, day, hour, minute, second, nanoOfSecond, ZoneId.of(zoneId));
     }
 
     @Test

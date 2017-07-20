@@ -1,6 +1,6 @@
 package net.ddns.starla.fnacsp.pattern.facade;
 
-import net.ddns.starla.fnacsp.SunPositionNow;
+import net.ddns.starla.fnacsp.facade.SunPositionNow;
 import org.junit.Test;
 
 import java.time.zone.ZoneRulesException;

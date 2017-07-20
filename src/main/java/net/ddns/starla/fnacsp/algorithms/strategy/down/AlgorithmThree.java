@@ -2,14 +2,16 @@ package net.ddns.starla.fnacsp.algorithms.strategy.down;
 
 import net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm;
 
+import java.time.ZonedDateTime;
+
 import static java.lang.Math.*;
 
 final class AlgorithmThree extends Algorithm {
     @Override
-    public void compute(double hour, int day, int month, int year, double longitude,
+    public void compute(ZonedDateTime zonedDateTime, double longitude,
                         double latitude, double pressure, double temperature) {
 
-        timeScaleComputation(hour, day, month, year);
+        timeScaleComputation(zonedDateTime);
 
         double wte = 0.0172019715 * te;
         double lambda = -1.388803 + 1.720279216e-2 * te + 3.3366e-2 * sin(wte - 0.06172) + 3.53e-4 * sin(2.0 * wte - 0.1163);
