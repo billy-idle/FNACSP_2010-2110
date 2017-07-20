@@ -94,7 +94,8 @@ public final class SunPosition {
     }
 
     private void timeToDecimal() {
-        hour = zonedDateTimeAtUTC.getHour() + zonedDateTimeAtUTC.getMinute() / 60.0 + zonedDateTimeAtUTC.getSecond() / 3600.0;
+        hour = zonedDateTimeAtUTC.getHour() + zonedDateTimeAtUTC.getMinute() / 60.0 + zonedDateTimeAtUTC.getSecond() / 3600.0
+                + zonedDateTimeAtUTC.getNano() / 3.6e12;
     }
 
     /**

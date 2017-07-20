@@ -1,12 +1,17 @@
 package net.ddns.starla.fnacsp.algorithms.strategy.top;
 
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+
 import static java.lang.Math.*;
+import static java.time.temporal.ChronoUnit.NANOS;
 
 public abstract class Algorithm implements Cloneable {
 
     public static final double PI = 3.14159265358979;
     public static final double PIM = 1.57079632679490;
     public static final double PI2 = 6.28318530717959;
+    private static final ZonedDateTime MIDPOINT_OF_THE_INTERVAL = ZonedDateTime.of(2060, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
     protected double rightAscension;
     protected double declination;
     protected double hourAngle;
@@ -37,13 +42,27 @@ public abstract class Algorithm implements Cloneable {
     protected final void timeScaleComputation(double hour, int day, int month, int year) {
         double dt = 96.4 + 0.567 * (year - 2061);
 
-        if (month <= 2) {
+        /*if (month <= 2) {
             month += 12;
             year--;
         }
 
         t = (int) (365.25 * (year - 2000)) + (int) (30.6001 * (month + 1)) - (int) (0.01 * year) + day + 0.0416667
-                * hour - 21958.0;
+                * hour - 21958.0;*/
+
+        int hours;
+        int minutes;
+        int seconds;
+        int nanoseconds;
+
+        hours = (int) hour;
+        minutes = (int) ((hour - (int) hour) * 60.0);
+        seconds = (int) ((((hour - (int) hour) * 60.0) - minutes) * 60.0);
+        nanoseconds = (int) ((((((hour - (int) hour) * 60.0) - minutes) * 60.0) - seconds) * 1e9);
+
+        ZonedDateTime zonedDateTimeAtUTC = ZonedDateTime.of(year, month, day, hours, minutes, seconds, nanoseconds, ZoneId.of("UTC"));
+
+        t = NANOS.between(MIDPOINT_OF_THE_INTERVAL, zonedDateTimeAtUTC) / 8.64e+13;
 
         te = t + 1.1574e-5 * dt;
     }
