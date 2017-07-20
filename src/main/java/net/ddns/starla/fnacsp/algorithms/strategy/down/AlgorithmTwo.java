@@ -35,4 +35,9 @@ final class AlgorithmTwo extends Algorithm {
         shiftHourAngleToItsConventionalRange();
         applyFinalComputationallyOptimizedProcedure(latitude, pressure, temperature);
     }
+
+    @Override
+    public Algorithm newInstance() {
+        return new AlgorithmTwo();
+    }
 }

@@ -4,8 +4,7 @@ import net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertEquals;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 import static net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm.*;
 
 public abstract class AlgorithmTest {
@@ -18,7 +17,7 @@ public abstract class AlgorithmTest {
     final double latitude;
     final double pressure;
     final double temperature;
-    private final double delta = 1.0E-05;
+    private final double delta = 1.0E-04;
     private final double expectedZenith;
     private final double expectedAzimuth;
     private final double expectedRightAscension;
@@ -99,5 +98,10 @@ public abstract class AlgorithmTest {
     @Test
     public void hourAngleAtUT() throws Exception {
         assertEquals(expectedHourAngle, algorithm.getHourAngle(), delta);
+    }
+
+    @Test
+    public void clonedObjectsAreNotTheSame() throws Exception {
+        assertNotSame(algorithm, algorithm.newInstance());
     }
 }

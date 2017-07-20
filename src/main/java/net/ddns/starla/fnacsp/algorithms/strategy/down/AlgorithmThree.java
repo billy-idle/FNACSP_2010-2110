@@ -31,4 +31,9 @@ final class AlgorithmThree extends Algorithm {
         shiftHourAngleToItsConventionalRange();
         applyFinalComputationallyOptimizedProcedure(latitude, pressure, temperature);
     }
+
+    @Override
+    public Algorithm newInstance() {
+        return new AlgorithmThree();
+    }
 }

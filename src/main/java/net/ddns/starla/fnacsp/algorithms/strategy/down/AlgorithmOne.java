@@ -28,4 +28,9 @@ final class AlgorithmOne extends Algorithm {
         shiftHourAngleToItsConventionalRange();
         applyFinalComputationallyOptimizedProcedure(latitude, pressure, temperature);
     }
+
+    @Override
+    public Algorithm newInstance() {
+        return new AlgorithmOne();
+    }
 }

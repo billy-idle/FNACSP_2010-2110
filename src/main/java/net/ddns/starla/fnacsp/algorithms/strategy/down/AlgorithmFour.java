@@ -33,4 +33,9 @@ final class AlgorithmFour extends Algorithm {
         shiftHourAngleToItsConventionalRange();
         applyFinalComputationallyOptimizedProcedure(latitude, pressure, temperature);
     }
+
+    @Override
+    public Algorithm newInstance() {
+        return new AlgorithmFour();
+    }
 }
