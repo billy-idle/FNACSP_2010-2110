@@ -1,11 +1,11 @@
-package net.ddns.starla.fnacsp.pattern.strategy.down;
+package net.ddns.starla.fnacsp.algorithms.strategy.down;
 
-import net.ddns.starla.fnacsp.pattern.strategy.top.Algorithm;
+import net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
-public class Algorithm_1 extends Algorithm {
+final class AlgorithmOne extends Algorithm {
     @Override
     public void compute(double hour, int day, int month, int year, double longitude,
                         double latitude, double pressure, double temperature) {

@@ -1,12 +1,12 @@
 package net.ddns.starla.fnacsp.pattern.strategy;
 
-import net.ddns.starla.fnacsp.pattern.strategy.top.Algorithm;
+import net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-import static net.ddns.starla.fnacsp.pattern.strategy.top.Algorithm.*;
+import static net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm.*;
 
 public abstract class AlgorithmTest {
 

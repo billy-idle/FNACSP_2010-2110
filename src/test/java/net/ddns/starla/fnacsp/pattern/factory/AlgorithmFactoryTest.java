@@ -2,8 +2,8 @@ package net.ddns.starla.fnacsp.pattern.factory;
 
 import org.junit.Test;
 
-import static net.ddns.starla.fnacsp.pattern.strategy.factory.Accuracy.*;
-import static net.ddns.starla.fnacsp.pattern.strategy.factory.AlgorithmFactory.getInstance;
+import static net.ddns.starla.fnacsp.algorithms.strategy.down.Accuracy.*;
+import static net.ddns.starla.fnacsp.algorithms.strategy.down.AlgorithmFactory.getInstance;
 
 public class AlgorithmFactoryTest {
 

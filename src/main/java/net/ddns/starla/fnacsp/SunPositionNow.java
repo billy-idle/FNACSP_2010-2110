@@ -1,18 +1,17 @@
-package net.ddns.starla.fnacsp.pattern.facade;
+package net.ddns.starla.fnacsp;
 
-import net.ddns.starla.fnacsp.pattern.strategy.facade.SunPosition;
-import net.ddns.starla.fnacsp.pattern.strategy.top.Algorithm;
+import net.ddns.starla.fnacsp.algorithms.strategy.down.Accuracy;
+import net.ddns.starla.fnacsp.algorithms.strategy.down.AlgorithmFactory;
+import net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm;
+import net.ddns.starla.fnacsp.algorithms.strategy.top.SunPosition;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-import static net.ddns.starla.fnacsp.pattern.strategy.factory.Accuracy.HIGHEST;
-import static net.ddns.starla.fnacsp.pattern.strategy.factory.AlgorithmFactory.getInstance;
-
 /**
  * Computes the instant sun position with the time-zone ID passed as String, with the highest precision algorithm (Algorithm #5)
  */
-public class SunPositionNow {
+public final class SunPositionNow {
     private final String zoneId;
     private final double longitude;
     private final double latitude;
@@ -38,8 +37,8 @@ public class SunPositionNow {
     }
 
     public void computePosition() {
-        sunPosition = SunPosition.of(getInstance(HIGHEST), ZonedDateTime.now(ZoneId.of(zoneId)), longitude, latitude,
-                pressure, temperature);
+        sunPosition = SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST), ZonedDateTime.now(ZoneId.of(zoneId)),
+                longitude, latitude, pressure, temperature);
 
         sunPosition.computePosition();
     }

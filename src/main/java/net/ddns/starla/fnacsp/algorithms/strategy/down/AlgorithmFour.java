@@ -1,10 +1,10 @@
-package net.ddns.starla.fnacsp.pattern.strategy.down;
+package net.ddns.starla.fnacsp.algorithms.strategy.down;
 
-import net.ddns.starla.fnacsp.pattern.strategy.top.Algorithm;
+import net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm;
 
 import static java.lang.Math.*;
 
-public class Algorithm_5 extends Algorithm {
+final class AlgorithmFour extends Algorithm {
     @Override
     public void compute(double hour, int day, int month, int year, double longitude,
                         double latitude, double pressure, double temperature) {
@@ -12,27 +12,7 @@ public class Algorithm_5 extends Algorithm {
         timeScaleComputation(hour, day, month, year);
 
         double wte = 0.0172019715 * te;
-        double s1 = sin(wte);
-        double c1 = cos(wte);
-        double s2 = 2.0 * s1 * c1;
-        double c2 = (c1 + s1) * (c1 - s1);
-        double s3 = s2 * c1 + c2 * s1;
-        double c3 = c2 * c1 - s2 * s1;
-
-        double l = 1.7527901
-                + 1.7202792159e-2 * te
-                + 3.33024e-2 * s1 - 2.0582e-3 * c1
-                + 3.512e-4 * s2 - 4.07e-5 * c2
-                + 5.2e-6 * s3 - 9e-7 * c3
-                - 8.23e-5 * s1 * sin(2.92e-5 * te)
-                + 1.27e-5 * sin(1.49e-3 * te - 2.337)
-                + 1.21e-5 * sin(4.31e-3 * te + 3.065)
-                + 2.33e-5 * sin(1.076e-2 * te - 1.533)
-                + 3.49e-5 * sin(1.575e-2 * te - 2.358)
-                + 2.67e-5 * sin(2.152e-2 * te + 0.074)
-                + 1.28e-5 * sin(3.152e-2 * te + 1.547)
-                + 3.14e-5 * sin(2.1277e-1 * te - 0.488);
-
+        double l = 1.752790 + 1.720279216e-2 * te + 3.3366e-2 * sin(wte - 0.06172) + 3.53e-4 * sin(2.0 * wte - 0.1163);
         double nu = 9.282e-4 * te - 0.8;
         double deltaLambda = 8.34e-5 * sin(nu);
         double lambda = l + PI + deltaLambda;

@@ -1,6 +1,4 @@
-package net.ddns.starla.fnacsp.pattern.strategy.facade;
-
-import net.ddns.starla.fnacsp.pattern.strategy.top.Algorithm;
+package net.ddns.starla.fnacsp.algorithms.strategy.top;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -17,6 +15,10 @@ public final class SunPosition {
     private ZonedDateTime zonedDateTimeAtUTC;
     private double hour;
 
+    /**
+     * Prevents other classes from instantiating the class.
+     * This is useful when a class wants to control all calls to create new instances of itself.
+     */
     private SunPosition(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
                         double pressure, double temperature) {
 
@@ -142,7 +144,7 @@ public final class SunPosition {
     }
 
     /**
-     * @return String representation of zonedDateTime
+     * @return Return a zonedDateTime object
      */
     public ZonedDateTime getZonedDateTime() {
         return zonedDateTime;

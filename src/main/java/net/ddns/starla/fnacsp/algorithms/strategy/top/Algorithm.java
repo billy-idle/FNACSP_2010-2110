@@ -1,4 +1,4 @@
-package net.ddns.starla.fnacsp.pattern.strategy.top;
+package net.ddns.starla.fnacsp.algorithms.strategy.top;
 
 import static java.lang.Math.*;
 
