@@ -39,7 +39,7 @@ double azimuth = sunPosition.getAzimuth();                  // Range -> [-PI, PI
 double rightAscension = sunPosition.getRightAscension();    // Range -> [0, 2PI] rad
 double declination = sunPosition.getDeclination();          // Range -> [-PI/2, PI/2] rad
 double hourAngle = sunPosition.getHourAngle();              // Range -> [-PI, PI] rad
-boolean isItDay = sunPosition.isItDay();                    // Return True if the sun is above the horizon
+boolean isItDaylight = sunPosition.isItDaylight();          // Return True if the sun is above the horizon
 ```
 Printing the output:
 ```console
@@ -49,7 +49,7 @@ Azimuth         => 0.31452718410556935
 Right Ascension => 5.364004066519731
 Declination     => -0.33191742160701926
 Hour Angle      => -5.98761790109209
-Is it day?      => true
+Is it daylight? => true
 ```
 ## Here is another example
 In this example the instant sun's position is computed with the time-zone ID passed as String, with the highest precision algorithm (Algorithm #5).  
