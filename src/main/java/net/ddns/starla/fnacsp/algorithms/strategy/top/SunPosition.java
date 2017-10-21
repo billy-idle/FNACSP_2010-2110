@@ -60,27 +60,38 @@ public final class SunPosition {
 
         if (zonedDateTime.withZoneSameInstant(UTC).isBefore(leftBoundOfValidInterval) ||
                 zonedDateTime.withZoneSameInstant(UTC).isAfter(rightBoundOfValidInterval))
-            throw new ZonedDateTimeOutOfRange();
+            throw new IllegalArgumentException("ZoneDateTime must be between JAN-01-2010[UTC] and JAN-01-2110[UTC]");
     }
 
     private static void assertLongitude(double longitude) {
-        if (longitude < 0.0 || longitude > Algorithm.PI2) throw new LongitudeOutOfRange();
+        if (longitude < 0.0 || longitude > Algorithm.PI2)
+            throw new IllegalArgumentException("Longitude must be between [0, 2PI] rad");
     }
 
     private static void assertLatitude(double latitude) {
-        if (latitude < -Algorithm.PIM || latitude > Algorithm.PIM) throw new LatitudeOutOfRange();
+        if (latitude < -Algorithm.PIM || latitude > Algorithm.PIM)
+            throw new IllegalArgumentException("Latitude must be between [-PI/2, PI/2] rad");
     }
 
     private static void assertPressure(double pressure) {
-        if (pressure < 0.85862324204293 || pressure > 1.0696274364668) throw new PressureOutOfRange();
+        if (pressure < 0.85862324204293 || pressure > 1.0696274364668)
+            throw new IllegalArgumentException("Pressure must be between [0.85862324204293, 1.0696274364668] atm");
     }
 
     private static void assertTemperature(double temperature) {
-        if (temperature < -89.2 || temperature > 54.0) throw new TemperatureOutOfRange();
+        if (temperature < -89.2 || temperature > 54.0)
+            throw new IllegalArgumentException("Temperature must be between [-89.2, 54.0] °C");
     }
 
     public void computePosition() {
         this.algorithm.compute(zonedDateTime, longitude, latitude, pressure, temperature);
+    }
+
+    /**
+     * @return Return a zonedDateTime object
+     */
+    public ZonedDateTime getZonedDateTime() {
+        return zonedDateTime;
     }
 
     /**
@@ -121,33 +132,11 @@ public final class SunPosition {
     /**
      * @return True if the sun is above the horizon
      */
-    public boolean isItDay() {
+    public boolean isItDaylight() {
         return getElevation() > 0.0;
     }
 
     private double getElevation() {
         return Algorithm.PIM - algorithm.getZenith();
-    }
-
-    /**
-     * @return Return a zonedDateTime object
-     */
-    public ZonedDateTime getZonedDateTime() {
-        return zonedDateTime;
-    }
-
-    public static class ZonedDateTimeOutOfRange extends RuntimeException {
-    }
-
-    public static class LongitudeOutOfRange extends RuntimeException {
-    }
-
-    public static class LatitudeOutOfRange extends RuntimeException {
-    }
-
-    public static class PressureOutOfRange extends RuntimeException {
-    }
-
-    public static class TemperatureOutOfRange extends RuntimeException {
     }
 }

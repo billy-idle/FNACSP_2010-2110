@@ -82,8 +82,8 @@ public final class SunPositionNow {
     /**
      * @return True if the sun is above the horizon
      */
-    public boolean isItDay() {
-        return sunPosition.isItDay();
+    public boolean isItDaylight() {
+        return sunPosition.isItDaylight();
     }
 
     /**
@@ -91,5 +91,10 @@ public final class SunPositionNow {
      */
     public ZonedDateTime getZonedDateTime() {
         return sunPosition.getZonedDateTime();
+    }
+
+    @Override
+    public String toString() {
+        return sunPosition.toString();
     }
 }

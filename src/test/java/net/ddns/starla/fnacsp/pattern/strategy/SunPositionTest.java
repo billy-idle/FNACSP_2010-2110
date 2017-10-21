@@ -62,71 +62,71 @@ public class SunPositionTest {
         return (Algorithm.PIM - sunPosition.getZenith()) > 0.0;
     }
 
-    @Test(expected = SunPosition.ZonedDateTimeOutOfRange.class)
-    public void whenZonedDateTimeBefore2010_ShouldThrowZonedDateTimeOutOfRange() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void whenZonedDateTimeBefore2010_ShouldThrowIllegalArgumentException() throws Exception {
         SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.of(2010, 1, 1, 0, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 20.0);
     }
 
-    @Test(expected = SunPosition.ZonedDateTimeOutOfRange.class)
-    public void whenZonedDateTimeAfter2110_ShouldThrowZonedDateTimeOutOfRange() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void whenZonedDateTimeAfter2110_ShouldThrowIllegalArgumentException() throws Exception {
         SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.of(2110, 1, 1, 2, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 20.0);
     }
 
-    @Test(expected = SunPosition.LongitudeOutOfRange.class)
-    public void whenLongitudeNegative_ShouldThrowLongitudeOutOfRange() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void whenLongitudeNegative_ShouldThrowIllegalArgumentException() throws Exception {
         SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), -1, 0.73117, 1.0, 20.0);
     }
 
-    @Test(expected = SunPosition.LongitudeOutOfRange.class)
-    public void whenLongitudeGreaterThanPI2_ShouldThrowLongitudeOutOfRange() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void whenLongitudeGreaterThanPI2_ShouldThrowIllegalArgumentException() throws Exception {
         SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), Algorithm.PI2 + .1, 0.73117, 1.0, 20.0);
     }
 
-    @Test(expected = SunPosition.LatitudeOutOfRange.class)
-    public void whenLatitudeLessThanMinusPIM_ShouldThrowLatitudeOutOfRange() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void whenLatitudeLessThanMinusPIM_ShouldThrowIllegalArgumentException() throws Exception {
         SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, -Algorithm.PIM - .1, 1.0, 20.0);
     }
 
-    @Test(expected = SunPosition.LatitudeOutOfRange.class)
-    public void whenLatitudeGreaterThanMinusPIM_ShouldThrowLatitudeOutOfRange() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void whenLatitudeGreaterThanMinusPIM_ShouldThrowIllegalArgumentException() throws Exception {
         SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, Algorithm.PIM + .1, 1.0, 20.0);
     }
 
-    @Test(expected = SunPosition.PressureOutOfRange.class)
-    public void whenPressureBelowMinRecord_ShouldThrowPressureOutOfRange() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void whenPressureBelowMinRecord_ShouldThrowIllegalArgumentException() throws Exception {
         SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 0.85862324204293 - .1, 20.0);
     }
 
-    @Test(expected = SunPosition.PressureOutOfRange.class)
-    public void whenPressureAboveMaxRecord_ShouldThrowPressureOutOfRange() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void whenPressureAboveMaxRecord_ShouldThrowIllegalArgumentException() throws Exception {
         SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0696274364668 + .1, 20.0);
     }
 
-    @Test(expected = SunPosition.TemperatureOutOfRange.class)
-    public void whenTemperatureBelowMinRecord_ShouldThrowTemperatureOutOfRange() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void whenTemperatureBelowMinRecord_ShouldThrowIllegalArgumentException() throws Exception {
         SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, -89.2 - .1);
     }
 
-    @Test(expected = SunPosition.TemperatureOutOfRange.class)
-    public void whenTemperatureAboveMaxRecord_ShouldThrowTemperatureOutOfRange() throws Exception {
+    @Test(expected = IllegalArgumentException.class)
+    public void whenTemperatureAboveMaxRecord_ShouldThrowIllegalArgumentException() throws Exception {
         SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 54.0 + .1);
