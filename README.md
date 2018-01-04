@@ -7,8 +7,6 @@ Heavily based in the [original C++ source code](http://www.solaritaly.enea.it/St
 ## How to use it
 Below is an example of computing the sun's position at Rome, using the algorithm with the highest precision: 
 ```java
-Algorithm algorithm = AlgorithmFactory.getInstance(Accuracy.HIGHEST); // LOWEST, LOW, MID, HIGH, HIGHEST
-
 int year = 2020;  
 int month = 1;
 int day = 25;
@@ -26,7 +24,8 @@ double latitude = 0.73117;      // Domain -> [-PI/2, PI/2] rad
 double pressure = 1.0;          // Domain -> [0.85, 1.069] atm
 double temperature = 20.0;      // Domain -> [-89.2, 54.0] °C
 
-SunPosition sunPosition = SunPosition.of(algorithm, zonedDateTime, longitude, latitude, pressure, temperature);
+String algorithmClassName = "AlgorithmOne"; // Valid values are any Algorithm subclass.
+SunPosition sunPosition = SunPosition.of(algorithmClassName, zonedDateTime, longitude, latitude, pressure, temperature);
 sunPosition.computePosition();
 ```
 *If you don't know your timezone value, you can look it up (see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)*
@@ -52,11 +51,11 @@ Hour Angle      => -5.98761790109209
 Is it daylight? => true
 ```
 ## Here is another example
-In this example the instant sun's position is computed with the time-zone ID passed as String, with the highest precision algorithm (Algorithm #5).  
+In this example the instant sun-position is computed with the time-zone ID and the algorithm class name both passed as String.  
 
 Using SunPositionNow class as a facade for SunPosition class:
 ```java
-SunPositionNow sunPositionNow = new SunPositionNow("Europe/Rome", longitude, latitude, pressure, temperature);
+SunPositionNow sunPositionNow = new SunPositionNow("AlgorithmTwo", "Europe/Rome", longitude, latitude, pressure, temperature);
 sunPositionNow.computePosition();
 ```
 The "getting and printing output" process same as before using the sunPositionNow object instead.
