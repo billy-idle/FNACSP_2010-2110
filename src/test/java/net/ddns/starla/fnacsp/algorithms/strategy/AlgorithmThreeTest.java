@@ -1,14 +1,12 @@
-package net.ddns.starla.fnacsp.pattern.strategy;
+package net.ddns.starla.fnacsp.algorithms.strategy;
 
+import net.ddns.starla.fnacsp.algorithms.factory.AlgorithmFactory;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 
 import java.util.Arrays;
 import java.util.Collection;
-
-import static net.ddns.starla.fnacsp.algorithms.strategy.down.Accuracy.MID;
-import static net.ddns.starla.fnacsp.algorithms.strategy.down.AlgorithmFactory.getInstance;
 
 @RunWith(Parameterized.class)
 public class AlgorithmThreeTest extends AlgorithmTest {
@@ -53,7 +51,7 @@ public class AlgorithmThreeTest extends AlgorithmTest {
 
     @Before
     public void computeSunPosition() {
-        algorithm = getInstance(MID);
+        algorithm = new AlgorithmFactory().createInstance("AlgorithmThree");
         compute();
     }
 }

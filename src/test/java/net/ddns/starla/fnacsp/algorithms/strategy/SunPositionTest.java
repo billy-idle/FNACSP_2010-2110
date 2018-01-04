@@ -1,9 +1,5 @@
-package net.ddns.starla.fnacsp.pattern.strategy;
+package net.ddns.starla.fnacsp.algorithms.strategy;
 
-import net.ddns.starla.fnacsp.algorithms.strategy.down.Accuracy;
-import net.ddns.starla.fnacsp.algorithms.strategy.down.AlgorithmFactory;
-import net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm;
-import net.ddns.starla.fnacsp.algorithms.strategy.top.SunPosition;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -16,12 +12,13 @@ import static org.junit.Assert.assertEquals;
 
 public class SunPositionTest {
 
+    private final static String algorithmClassName = "AlgorithmFive";
     private static SunPosition sunPosition;
     private final double delta = 1.0E-05;
 
     @BeforeClass
     public static void setUp() {
-        sunPosition = SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
+        sunPosition = SunPosition.of(algorithmClassName,
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 20.0);
 
@@ -29,32 +26,32 @@ public class SunPositionTest {
     }
 
     @Test
-    public void zenithAtZeroUT() throws Exception {
+    public void zenithAtZeroUT() {
         assertEquals(2.7205, sunPosition.getZenith(), delta);
     }
 
     @Test
-    public void azimuthAtZeroUT() throws Exception {
+    public void azimuthAtZeroUT() {
         assertEquals(-2.75172, sunPosition.getAzimuth(), delta);
     }
 
     @Test
-    public void rightAscensionAtZeroUT() throws Exception {
+    public void rightAscensionAtZeroUT() {
         assertEquals(5.3545, sunPosition.getRightAscension(), delta);
     }
 
     @Test
-    public void declinationAtZeroUT() throws Exception {
+    public void declinationAtZeroUT() {
         assertEquals(-0.334134, sunPosition.getDeclination(), delta);
     }
 
     @Test
-    public void hourAngleAtZeroUT() throws Exception {
+    public void hourAngleAtZeroUT() {
         assertEquals(-9.25957, sunPosition.getHourAngle(), delta);
     }
 
     @Test
-    public void isItNight() throws Exception {
+    public void isItNight() {
         assertTrue(!isElevationAnglePositive());
     }
 
@@ -63,72 +60,79 @@ public class SunPositionTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenZonedDateTimeBefore2010_ShouldThrowIllegalArgumentException() throws Exception {
-        SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
+    public void whenZonedDateTimeBefore2010_ShouldThrowIllegalArgumentException() {
+        SunPosition.of(algorithmClassName,
                 ZonedDateTime.of(2010, 1, 1, 0, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenZonedDateTimeAfter2110_ShouldThrowIllegalArgumentException() throws Exception {
-        SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
+    public void whenZonedDateTimeAfter2110_ShouldThrowIllegalArgumentException() {
+        SunPosition.of(algorithmClassName,
                 ZonedDateTime.of(2110, 1, 1, 2, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenLongitudeNegative_ShouldThrowIllegalArgumentException() throws Exception {
-        SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
+    public void whenLongitudeNegative_ShouldThrowIllegalArgumentException() {
+        SunPosition.of(algorithmClassName,
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), -1, 0.73117, 1.0, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenLongitudeGreaterThanPI2_ShouldThrowIllegalArgumentException() throws Exception {
-        SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
+    public void whenLongitudeGreaterThanPI2_ShouldThrowIllegalArgumentException() {
+        SunPosition.of(algorithmClassName,
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), Algorithm.PI2 + .1, 0.73117, 1.0, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenLatitudeLessThanMinusPIM_ShouldThrowIllegalArgumentException() throws Exception {
-        SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
+    public void whenLatitudeLessThanMinusPIM_ShouldThrowIllegalArgumentException() {
+        SunPosition.of(algorithmClassName,
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, -Algorithm.PIM - .1, 1.0, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenLatitudeGreaterThanMinusPIM_ShouldThrowIllegalArgumentException() throws Exception {
-        SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
+    public void whenLatitudeGreaterThanMinusPIM_ShouldThrowIllegalArgumentException() {
+        SunPosition.of(algorithmClassName,
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, Algorithm.PIM + .1, 1.0, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenPressureBelowMinRecord_ShouldThrowIllegalArgumentException() throws Exception {
-        SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
+    public void whenPressureBelowMinRecord_ShouldThrowIllegalArgumentException() {
+        SunPosition.of(algorithmClassName,
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 0.85862324204293 - .1, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenPressureAboveMaxRecord_ShouldThrowIllegalArgumentException() throws Exception {
-        SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
+    public void whenPressureAboveMaxRecord_ShouldThrowIllegalArgumentException() {
+        SunPosition.of(algorithmClassName,
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0696274364668 + .1, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenTemperatureBelowMinRecord_ShouldThrowIllegalArgumentException() throws Exception {
-        SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
+    public void whenTemperatureBelowMinRecord_ShouldThrowIllegalArgumentException() {
+        SunPosition.of(algorithmClassName,
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, -89.2 - .1);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void whenTemperatureAboveMaxRecord_ShouldThrowIllegalArgumentException() throws Exception {
-        SunPosition.of(AlgorithmFactory.getInstance(Accuracy.HIGHEST),
+    public void whenTemperatureAboveMaxRecord_ShouldThrowIllegalArgumentException() {
+        SunPosition.of(algorithmClassName,
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 54.0 + .1);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenAlgorithmClassNameNotFound_ShouldThrowIllegalArgumentException() {
+        SunPosition.of(algorithmClassName.concat("2498#$@%^&("),
+                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
+                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 54.0);
     }
 }

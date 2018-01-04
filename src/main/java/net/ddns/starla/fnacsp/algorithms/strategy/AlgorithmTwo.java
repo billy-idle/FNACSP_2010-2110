@@ -1,13 +1,11 @@
-package net.ddns.starla.fnacsp.algorithms.strategy.down;
-
-import net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm;
+package net.ddns.starla.fnacsp.algorithms.strategy;
 
 import java.time.ZonedDateTime;
 
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
-final class AlgorithmTwo extends Algorithm {
+public final class AlgorithmTwo extends Algorithm {
     @Override
     public void compute(ZonedDateTime zonedDateTime, double longitude,
                         double latitude, double pressure, double temperature) {
@@ -38,8 +36,4 @@ final class AlgorithmTwo extends Algorithm {
         applyFinalComputationallyOptimizedProcedure(latitude, pressure, temperature);
     }
 
-    @Override
-    public Algorithm newInstance() {
-        return new AlgorithmTwo();
-    }
 }

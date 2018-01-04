@@ -1,12 +1,10 @@
-package net.ddns.starla.fnacsp.algorithms.strategy.down;
-
-import net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm;
+package net.ddns.starla.fnacsp.algorithms.strategy;
 
 import java.time.ZonedDateTime;
 
 import static java.lang.Math.*;
 
-final class AlgorithmFour extends Algorithm {
+public final class AlgorithmThree extends Algorithm {
     @Override
     public void compute(ZonedDateTime zonedDateTime, double longitude,
                         double latitude, double pressure, double temperature) {
@@ -14,11 +12,8 @@ final class AlgorithmFour extends Algorithm {
         timeScaleComputation(zonedDateTime);
 
         double wte = 0.0172019715 * te;
-        double l = 1.752790 + 1.720279216e-2 * te + 3.3366e-2 * sin(wte - 0.06172) + 3.53e-4 * sin(2.0 * wte - 0.1163);
-        double nu = 9.282e-4 * te - 0.8;
-        double deltaLambda = 8.34e-5 * sin(nu);
-        double lambda = l + PI + deltaLambda;
-        double epsilon = 4.089567e-1 - 6.19e-9 * te + 4.46e-5 * cos(nu);
+        double lambda = -1.388803 + 1.720279216e-2 * te + 3.3366e-2 * sin(wte - 0.06172) + 3.53e-4 * sin(2.0 * wte - 0.1163);
+        double epsilon = 4.089567e-1 - 6.19e-9 * te;
         double sl = sin(lambda);
         double cl = cos(lambda);
         double se = sin(epsilon);
@@ -30,14 +25,11 @@ final class AlgorithmFour extends Algorithm {
             rightAscension += PI2;
 
         declination = asin(sl * se);
-        hourAngle = 1.7528311 + 6.300388099 * t + longitude - rightAscension + 0.92 * deltaLambda;
+
+        hourAngle = 1.7528311 + 6.300388099 * t + longitude - rightAscension;
 
         shiftHourAngleToItsConventionalRange();
         applyFinalComputationallyOptimizedProcedure(latitude, pressure, temperature);
     }
 
-    @Override
-    public Algorithm newInstance() {
-        return new AlgorithmFour();
-    }
 }

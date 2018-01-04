@@ -1,14 +1,14 @@
-package net.ddns.starla.fnacsp.pattern.strategy;
+package net.ddns.starla.fnacsp.algorithms.strategy;
 
-import net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
-import static junit.framework.TestCase.*;
-import static net.ddns.starla.fnacsp.algorithms.strategy.top.Algorithm.*;
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.assertTrue;
+import static net.ddns.starla.fnacsp.algorithms.strategy.Algorithm.*;
 
 public abstract class AlgorithmTest {
 
@@ -63,7 +63,7 @@ public abstract class AlgorithmTest {
     }
 
     @Test
-    public void zenithInRange() throws Exception {
+    public void zenithInRange() {
         assertTrue(isInRange(0, PI, algorithm.getZenith()));
     }
 
@@ -72,54 +72,50 @@ public abstract class AlgorithmTest {
     }
 
     @Test
-    public void azimuthInRange() throws Exception {
+    public void azimuthInRange() {
         assertTrue(isInRange(-PI, PI, algorithm.getAzimuth()));
     }
 
     @Test
     @Ignore
-    public void rightAscensionInRange() throws Exception {
+    public void rightAscensionInRange() {
         assertTrue(isInRange(0, PI2, algorithm.getRightAscension()));
     }
 
     @Test
-    public void declinationInRange() throws Exception {
+    public void declinationInRange() {
         assertTrue(isInRange(-PIM, PIM, algorithm.getDeclination()));
     }
 
     @Test
     @Ignore
-    public void hourAngleInRange() throws Exception {
+    public void hourAngleInRange() {
         assertTrue(isInRange(-PI, PI, algorithm.getHourAngle()));
     }
 
     @Test
-    public void zenithAtUT() throws Exception {
+    public void zenithAtUT() {
         assertEquals(expectedZenith, algorithm.getZenith(), delta);
     }
 
     @Test
-    public void azimuthAtUT() throws Exception {
+    public void azimuthAtUT() {
         assertEquals(expectedAzimuth, algorithm.getAzimuth(), delta);
     }
 
     @Test
-    public void rightAscensionAtUT() throws Exception {
+    public void rightAscensionAtUT() {
         assertEquals(expectedRightAscension, algorithm.getRightAscension(), delta);
     }
 
     @Test
-    public void declinationAtUT() throws Exception {
+    public void declinationAtUT() {
         assertEquals(expectedDeclination, algorithm.getDeclination(), delta);
     }
 
     @Test
-    public void hourAngleAtUT() throws Exception {
+    public void hourAngleAtUT() {
         assertEquals(expectedHourAngle, algorithm.getHourAngle(), delta);
     }
 
-    @Test
-    public void clonedObjectsAreNotTheSame() throws Exception {
-        assertNotSame(algorithm, algorithm.newInstance());
-    }
 }

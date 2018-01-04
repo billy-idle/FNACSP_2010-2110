@@ -1,4 +1,4 @@
-package net.ddns.starla.fnacsp.algorithms.strategy.top;
+package net.ddns.starla.fnacsp.algorithms.strategy;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -8,16 +8,16 @@ import static java.time.temporal.ChronoUnit.NANOS;
 
 public abstract class Algorithm {
 
-    public static final double PI = 3.14159265358979;
+    static final double PI = 3.14159265358979;
     public static final double PIM = 1.57079632679490;
     public static final double PI2 = 6.28318530717959;
     private static final ZonedDateTime MIDPOINT_OF_THE_INTERVAL = ZonedDateTime.of(2060, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
     private static final ZoneId UTC = ZoneId.of("UTC");
-    protected double rightAscension;
-    protected double declination;
-    protected double hourAngle;
-    protected double t;
-    protected double te;
+    double rightAscension;
+    double declination;
+    double hourAngle;
+    double t;
+    double te;
     private ZonedDateTime zonedDateTimeAtUTC;
     private double zenith;
     private double azimuth;
@@ -25,7 +25,7 @@ public abstract class Algorithm {
     private double de;
 
     /**
-     * @param zonedDateTime
+     * @param zonedDateTime Wrapper of the time's related values.
      * @param longitude     [0, 2PI] rad
      * @param latitude      [-PI/2,PI/2] rad
      * @param pressure      [0.85862324204293, 1.0696274364668] atm
@@ -37,8 +37,7 @@ public abstract class Algorithm {
     public abstract void compute(ZonedDateTime zonedDateTime, double longitude,
                                  double latitude, double pressure, double temperature);
 
-
-    protected final void timeScaleComputation(ZonedDateTime zonedDateTime) {
+    final void timeScaleComputation(ZonedDateTime zonedDateTime) {
         zonedDateTimeToUTC(zonedDateTime);
         double dt = 96.4 + 0.567 * (zonedDateTimeAtUTC.getYear() - 2061);
         t = daysFromTheMidpointOfTheInterval();
@@ -53,11 +52,11 @@ public abstract class Algorithm {
         return NANOS.between(MIDPOINT_OF_THE_INTERVAL, zonedDateTimeAtUTC) / 8.64e13;
     }
 
-    protected final void shiftHourAngleToItsConventionalRange() {
+    final void shiftHourAngleToItsConventionalRange() {
         hourAngle = ((hourAngle + PI) % PI2) - PI;
     }
 
-    protected final void applyFinalComputationallyOptimizedProcedure(double latitude, double pressure, double temperature) {
+    final void applyFinalComputationallyOptimizedProcedure(double latitude, double pressure, double temperature) {
         double sp = sin(latitude);
         double cp = sqrt((1 - sp * sp));
         double sd = sin(declination);
@@ -80,7 +79,7 @@ public abstract class Algorithm {
         de = (0.08422 * pressure) / ((273.0 + temperature) * tan(ep + 0.003138 / (ep + 0.08919)));
     }
 
-    protected final void shiftRightAscensionToItsConventionalRange() {
+    final void shiftRightAscensionToItsConventionalRange() {
         rightAscension %= PI2;
     }
 
@@ -119,8 +118,4 @@ public abstract class Algorithm {
         return hourAngle;
     }
 
-    /**
-     * @return A new instance of this object.
-     */
-    public abstract Algorithm newInstance();
 }
