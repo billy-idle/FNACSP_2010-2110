@@ -135,4 +135,11 @@ public class SunPositionTest {
                 ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
                         ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 54.0);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void whenClassNameFoundButNotAlgorithmType_ShouldThrowIllegalArgumentException() {
+        SunPosition.of("DummyClass",
+                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
+                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 54.0);
+    }
 }

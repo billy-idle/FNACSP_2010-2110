@@ -61,12 +61,12 @@ public final class SunPosition {
         String canonicalName = Algorithm.class.getPackage().getName() + "." + algorithmClassName;
 
         try {
-            Class.forName(canonicalName);
-        } catch (ClassNotFoundException e) {
+            if (!Algorithm.class.isInstance(Class.forName(canonicalName).newInstance())) {
+                throw new IllegalArgumentException("algorithmClassName is not an instance of Algorithm");
+            }
+        } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             throw new IllegalArgumentException("Algorithm Class Name Not Found");
         }
-
-
     }
 
     private static void assertZonedDateTime(ZonedDateTime zonedDateTime) {

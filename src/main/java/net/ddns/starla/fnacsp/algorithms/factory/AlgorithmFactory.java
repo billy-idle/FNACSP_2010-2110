@@ -1,7 +1,7 @@
 package net.ddns.starla.fnacsp.algorithms.factory;
 
 import net.ddns.starla.fnacsp.algorithms.strategy.Algorithm;
-import net.ddns.starla.fnacsp.algorithms.strategy.AlgorithmFive;
+import net.ddns.starla.fnacsp.algorithms.strategy.NullAlgorithm;
 
 public class AlgorithmFactory {
 
@@ -17,17 +17,15 @@ public class AlgorithmFactory {
      */
     public Algorithm createInstance(String algorithmClassName) {
         String canonicalName = packageName.append(algorithmClassName).toString();
-        Class aClass;
-        Algorithm algorithm;
 
         try {
-            aClass = Class.forName(canonicalName);
-            algorithm = (Algorithm) aClass.newInstance();
+            if (Algorithm.class.isInstance(Class.forName(canonicalName).newInstance())) {
+                return (Algorithm) Class.forName(canonicalName).newInstance();
+            }
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
-            e.printStackTrace();
-            return new AlgorithmFive();
+            return NullAlgorithm.getInstance();
         }
 
-        return algorithm;
+        return NullAlgorithm.getInstance();
     }
 }

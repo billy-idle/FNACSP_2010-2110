@@ -8,9 +8,9 @@ import static java.time.temporal.ChronoUnit.NANOS;
 
 public abstract class Algorithm {
 
-    static final double PI = 3.14159265358979;
     public static final double PIM = 1.57079632679490;
     public static final double PI2 = 6.28318530717959;
+    static final double PI = 3.14159265358979;
     private static final ZonedDateTime MIDPOINT_OF_THE_INTERVAL = ZonedDateTime.of(2060, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
     private static final ZoneId UTC = ZoneId.of("UTC");
     double rightAscension;

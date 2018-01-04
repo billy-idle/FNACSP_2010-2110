@@ -43,4 +43,16 @@ public class AlgorithmFactoryTest {
         Algorithm algorithm = algorithmFactory.createInstance("AlgorithmFive");
         assertEquals(AlgorithmFive.class, algorithm.getClass());
     }
+
+    @Test
+    public void createInstanceOfNonExistentClass() {
+        Algorithm algorithm = algorithmFactory.createInstance("NonAClass");
+        assertEquals(NullAlgorithm.class, algorithm.getClass());
+    }
+
+    @Test
+    public void createInstanceOfNonAlgorithmClass() {
+        Algorithm algorithm = algorithmFactory.createInstance("DummyClass");
+        assertEquals(NullAlgorithm.class, algorithm.getClass());
+    }
 }
