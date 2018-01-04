@@ -25,6 +25,7 @@ double pressure = 1.0;          // Domain -> [0.85, 1.069] atm
 double temperature = 20.0;      // Domain -> [-89.2, 54.0] °C
 
 String algorithmClassName = "AlgorithmOne"; // Valid values are any Algorithm subclass.
+
 SunPosition sunPosition = SunPosition.of(algorithmClassName, zonedDateTime, longitude, latitude, pressure, temperature);
 sunPosition.computePosition();
 ```
