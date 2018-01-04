@@ -5,7 +5,7 @@
 Heavily based in the [original C++ source code](http://www.solaritaly.enea.it/StrSunPosition/SunPositionEn.php), but applying design patterns and TDD.  
 
 ## How to use it
-Below is an example of computing the sun's position at Rome, using the algorithm with the highest precision: 
+Below is an example of computing the sun-position at Rome, using the lowest precision algorithm: 
 ```java
 int year = 2020;  
 int month = 1;
