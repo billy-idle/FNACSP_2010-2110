@@ -3,6 +3,9 @@ package net.ddns.starla.fnacsp.algorithms.factory;
 import net.ddns.starla.fnacsp.algorithms.strategy.Algorithm;
 import net.ddns.starla.fnacsp.algorithms.strategy.NullAlgorithm;
 
+/**
+ * Factory Object Pattern
+ */
 public class AlgorithmFactory {
 
     private final StringBuilder packageName;
@@ -19,8 +22,9 @@ public class AlgorithmFactory {
         String canonicalName = packageName.append(algorithmClassName).toString();
 
         try {
-            if (Algorithm.class.isInstance(Class.forName(canonicalName).newInstance())) {
-                return (Algorithm) Class.forName(canonicalName).newInstance();
+            Object object = Class.forName(canonicalName).newInstance();
+            if (Algorithm.class.isInstance(object)) {
+                return (Algorithm) object;
             }
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException e) {
             return NullAlgorithm.getInstance();

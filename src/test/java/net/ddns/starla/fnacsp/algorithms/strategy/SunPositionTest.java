@@ -3,9 +3,6 @@ package net.ddns.starla.fnacsp.algorithms.strategy;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
-
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
@@ -13,14 +10,14 @@ import static org.junit.Assert.assertEquals;
 public class SunPositionTest {
 
     private final static String algorithmClassName = "AlgorithmFive";
+    private final static String zoneId = "Europe/Rome";
     private static SunPosition sunPosition;
     private final double delta = 1.0E-05;
 
     @BeforeClass
     public static void setUp() {
-        sunPosition = SunPosition.of(algorithmClassName,
-                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
-                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 20.0);
+        sunPosition = SunPosition.of(algorithmClassName, 2020, 1, 25, 1, 0,
+                0, 0, zoneId, 0.21787, 0.73117, 1.0, 20.0);
 
         sunPosition.computePosition();
     }
@@ -61,85 +58,76 @@ public class SunPositionTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenZonedDateTimeBefore2010_ShouldThrowIllegalArgumentException() {
-        SunPosition.of(algorithmClassName,
-                ZonedDateTime.of(2010, 1, 1, 0, 0, 0, 0,
-                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 20.0);
+        SunPosition.of(algorithmClassName, 2010, 1, 1, 0, 0, 0,
+                0, zoneId, 0.21787, 0.73117, 1.0, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenZonedDateTimeAfter2110_ShouldThrowIllegalArgumentException() {
-        SunPosition.of(algorithmClassName,
-                ZonedDateTime.of(2110, 1, 1, 2, 0, 0, 0,
-                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 20.0);
+        SunPosition.of(algorithmClassName, 2110, 1, 1, 2, 0, 0,
+                0, zoneId, 0.21787, 0.73117, 1.0, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenLongitudeNegative_ShouldThrowIllegalArgumentException() {
-        SunPosition.of(algorithmClassName,
-                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
-                        ZoneId.of("Europe/Rome")), -1, 0.73117, 1.0, 20.0);
+        SunPosition.of(algorithmClassName, 2020, 1, 25, 1, 0, 0,
+                0, zoneId, -1, 0.73117, 1.0, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenLongitudeGreaterThanPI2_ShouldThrowIllegalArgumentException() {
-        SunPosition.of(algorithmClassName,
-                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
-                        ZoneId.of("Europe/Rome")), Algorithm.PI2 + .1, 0.73117, 1.0, 20.0);
+        SunPosition.of(algorithmClassName, 2020, 1, 25, 1, 0, 0,
+                0, zoneId, Algorithm.PI2 + .1, 0.73117, 1.0, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenLatitudeLessThanMinusPIM_ShouldThrowIllegalArgumentException() {
-        SunPosition.of(algorithmClassName,
-                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
-                        ZoneId.of("Europe/Rome")), 0.21787, -Algorithm.PIM - .1, 1.0, 20.0);
+        SunPosition.of(algorithmClassName, 2020, 1, 25, 1, 0, 0,
+                0, zoneId, 0.21787, -Algorithm.PIM - .1, 1.0, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenLatitudeGreaterThanMinusPIM_ShouldThrowIllegalArgumentException() {
-        SunPosition.of(algorithmClassName,
-                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
-                        ZoneId.of("Europe/Rome")), 0.21787, Algorithm.PIM + .1, 1.0, 20.0);
+        SunPosition.of(algorithmClassName, 2020, 1, 25, 1, 0, 0,
+                0, zoneId, 0.21787, Algorithm.PIM + .1, 1.0, 20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenPressureBelowMinRecord_ShouldThrowIllegalArgumentException() {
-        SunPosition.of(algorithmClassName,
-                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
-                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 0.85862324204293 - .1, 20.0);
+        SunPosition.of(algorithmClassName, 2020, 1, 25, 1, 0, 0,
+                0, zoneId, 0.21787, 0.73117, 0.85862324204293 - .1,
+                20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenPressureAboveMaxRecord_ShouldThrowIllegalArgumentException() {
-        SunPosition.of(algorithmClassName,
-                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
-                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0696274364668 + .1, 20.0);
+        SunPosition.of(algorithmClassName, 2020, 1, 25, 1, 0, 0,
+                0, zoneId, 0.21787, 0.73117, 1.0696274364668 + .1,
+                20.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenTemperatureBelowMinRecord_ShouldThrowIllegalArgumentException() {
-        SunPosition.of(algorithmClassName,
-                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
-                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, -89.2 - .1);
+        SunPosition.of(algorithmClassName, 2020, 1, 25, 1, 0, 0,
+                0, zoneId, 0.21787, 0.73117, 1.0, -89.2 - .1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenTemperatureAboveMaxRecord_ShouldThrowIllegalArgumentException() {
-        SunPosition.of(algorithmClassName,
-                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
-                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 54.0 + .1);
+        SunPosition.of(algorithmClassName, 2020, 1, 25, 1, 0, 0,
+                0, zoneId, 0.21787, 0.73117, 1.0, 54.0 + .1);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenAlgorithmClassNameNotFound_ShouldThrowIllegalArgumentException() {
-        SunPosition.of(algorithmClassName.concat("2498#$@%^&("),
-                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
-                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 54.0);
+        SunPosition.of(algorithmClassName.concat("2498#$@%^&("), 2020, 1, 25, 1,
+                0, 0, 0, zoneId, 0.21787, 0.73117, 1.0,
+                54.0);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void whenClassNameFoundButNotAlgorithmType_ShouldThrowIllegalArgumentException() {
-        SunPosition.of("DummyClass",
-                ZonedDateTime.of(2020, 1, 25, 1, 0, 0, 0,
-                        ZoneId.of("Europe/Rome")), 0.21787, 0.73117, 1.0, 54.0);
+        SunPosition.of("DummyClass", 2020, 1, 25, 1, 0,
+                0, 0, zoneId, 0.21787, 0.73117, 1.0, 54.0);
     }
 }

@@ -11,7 +11,10 @@ public abstract class Algorithm {
     public static final double PIM = 1.57079632679490;
     public static final double PI2 = 6.28318530717959;
     static final double PI = 3.14159265358979;
-    private static final ZonedDateTime MIDPOINT_OF_THE_INTERVAL = ZonedDateTime.of(2060, 1, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
+
+    private static final ZonedDateTime MIDPOINT_OF_THE_INTERVAL = ZonedDateTime.of(2060, 1, 1,
+            0, 0, 0, 0, ZoneId.of("UTC"));
+
     private static final ZoneId UTC = ZoneId.of("UTC");
     double rightAscension;
     double declination;
@@ -25,7 +28,7 @@ public abstract class Algorithm {
     private double de;
 
     /**
-     * @param zonedDateTime Wrapper of the time's related values.
+     * @param zonedDateTime Wrapper of time's related values.
      * @param longitude     [0, 2PI] rad
      * @param latitude      [-PI/2,PI/2] rad
      * @param pressure      [0.85862324204293, 1.0696274364668] atm

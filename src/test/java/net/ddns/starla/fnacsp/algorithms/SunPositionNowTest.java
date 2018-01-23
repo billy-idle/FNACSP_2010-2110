@@ -1,4 +1,4 @@
-package net.ddns.starla.fnacsp.algorithms.facade;
+package net.ddns.starla.fnacsp.algorithms;
 
 import org.junit.Test;
 

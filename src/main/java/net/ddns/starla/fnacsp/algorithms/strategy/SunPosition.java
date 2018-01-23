@@ -5,6 +5,9 @@ import net.ddns.starla.fnacsp.algorithms.factory.AlgorithmFactory;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
+/**
+ * Facade Design Pattern
+ */
 public final class SunPosition {
 
     private static final ZoneId UTC = ZoneId.of("UTC");
@@ -12,17 +15,17 @@ public final class SunPosition {
     private final double latitude;
     private final double pressure;
     private final double temperature;
-    private final ZonedDateTime zonedDateTime;
     private final Algorithm algorithm;
+    private final ZonedDateTime zonedDateTime;
 
     /**
      * Prevents other classes from instantiating the class.
      * This is useful when a class wants to control all calls to create new instances of itself.
      */
-    private SunPosition(String algorithmClassName, ZonedDateTime zonedDateTime, double longitude, double latitude,
+    private SunPosition(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
                         double pressure, double temperature) {
 
-        this.algorithm = new AlgorithmFactory().createInstance(algorithmClassName);
+        this.algorithm = algorithm;
         this.zonedDateTime = zonedDateTime;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -32,7 +35,14 @@ public final class SunPosition {
 
     /**
      * @param algorithmClassName Valid names are any Algorithm subclass
-     * @param zonedDateTime      Between JAN-01-2010[UTC] and JAN-01-2110[UTC]
+     * @param year               Between 2010 - 2110
+     * @param month              Between 1 - 12
+     * @param dayOfMonth         Between 1 - 31
+     * @param hour               Between 0 - 23
+     * @param minute             Between 0 - 59
+     * @param second             Between 0 - 59
+     * @param nanoOfSecond       Between 0 - 999,999,999
+     * @param zoneId             zoneId (time-zone) not null
      * @param longitude          [0, 2PI] rad
      * @param latitude           [-PI/2,PI/2] rad
      * @param pressure           [0.85862324204293, 1.0696274364668] atm
@@ -40,17 +50,24 @@ public final class SunPosition {
      * @return A SunPosition instance
      * @see Algorithm#compute(ZonedDateTime, double, double, double, double)
      */
-    public static SunPosition of(String algorithmClassName, ZonedDateTime zonedDateTime, double longitude, double latitude,
+    public static SunPosition of(String algorithmClassName, int year, int month, int dayOfMonth, int hour, int minute,
+                                 int second, int nanoOfSecond, String zoneId, double longitude, double latitude,
                                  double pressure, double temperature) {
 
-        assertInputParameters(algorithmClassName, zonedDateTime, longitude, latitude, pressure, temperature);
-        return new SunPosition(algorithmClassName, zonedDateTime, longitude, latitude, pressure, temperature);
+        assertInputParameters(algorithmClassName, year, month, dayOfMonth, hour, minute, second, nanoOfSecond, zoneId,
+                longitude, latitude, pressure, temperature);
+
+        return new SunPosition(new AlgorithmFactory().createInstance(algorithmClassName),
+                ZonedDateTime.of(year, month, dayOfMonth, hour, minute, second, nanoOfSecond, ZoneId.of(zoneId)),
+                longitude, latitude, pressure, temperature);
     }
 
-    private static void assertInputParameters(String algorithmClassName, ZonedDateTime zonedDateTime, double longitude,
+    private static void assertInputParameters(String algorithmClassName, int year, int month, int dayOfMonth, int hour,
+                                              int minute, int second, int nanoOfSecond, String zoneId, double longitude,
                                               double latitude, double pressure, double temperature) {
+
         assertAlgorithmClassName(algorithmClassName);
-        assertZonedDateTime(zonedDateTime);
+        assertZonedDateTime(year, month, dayOfMonth, hour, minute, second, nanoOfSecond, zoneId);
         assertLongitude(longitude);
         assertLatitude(latitude);
         assertPressure(pressure);
@@ -69,9 +86,17 @@ public final class SunPosition {
         }
     }
 
-    private static void assertZonedDateTime(ZonedDateTime zonedDateTime) {
-        ZonedDateTime leftBoundOfValidInterval = ZonedDateTime.of(2010, 1, 1, 0, 0, 0, 0, UTC);
-        ZonedDateTime rightBoundOfValidInterval = ZonedDateTime.of(2110, 1, 1, 0, 0, 0, 0, UTC);
+    private static void assertZonedDateTime(int year, int month, int dayOfMonth, int hour, int minute, int second,
+                                            int nanoOfSecond, String zoneId) {
+
+        ZonedDateTime zonedDateTime = ZonedDateTime.of(year, month, dayOfMonth, hour, minute, second, nanoOfSecond,
+                ZoneId.of(zoneId));
+
+        ZonedDateTime leftBoundOfValidInterval = ZonedDateTime.of(2010, 1, 1, 0,
+                0, 0, 0, UTC);
+
+        ZonedDateTime rightBoundOfValidInterval = ZonedDateTime.of(2110, 1, 1, 0,
+                0, 0, 0, UTC);
 
         if (zonedDateTime.withZoneSameInstant(UTC).isBefore(leftBoundOfValidInterval) ||
                 zonedDateTime.withZoneSameInstant(UTC).isAfter(rightBoundOfValidInterval))
