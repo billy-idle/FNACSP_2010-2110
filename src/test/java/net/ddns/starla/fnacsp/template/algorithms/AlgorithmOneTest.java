@@ -1,6 +1,6 @@
-package net.ddns.starla.fnacsp.algorithms.strategy;
+package net.ddns.starla.fnacsp.template.algorithms;
 
-import net.ddns.starla.fnacsp.algorithms.factory.AlgorithmFactory;
+import net.ddns.starla.fnacsp.factory.AlgorithmFactory;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -51,7 +51,7 @@ public class AlgorithmOneTest extends AlgorithmTest {
 
     @Before
     public void computeSunPosition() {
-        algorithm = new AlgorithmFactory().createInstance("AlgorithmOne");
+        algorithm = AlgorithmFactory.createInstance("AlgorithmOne");
         compute();
     }
 }

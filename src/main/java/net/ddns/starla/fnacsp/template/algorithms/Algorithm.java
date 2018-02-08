@@ -1,4 +1,4 @@
-package net.ddns.starla.fnacsp.algorithms.strategy;
+package net.ddns.starla.fnacsp.template.algorithms;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -6,11 +6,14 @@ import java.time.ZonedDateTime;
 import static java.lang.Math.*;
 import static java.time.temporal.ChronoUnit.NANOS;
 
+/**
+ * Template Design Pattern
+ */
 public abstract class Algorithm {
 
     public static final double PIM = 1.57079632679490;
     public static final double PI2 = 6.28318530717959;
-    static final double PI = 3.14159265358979;
+    public static final double PI = 3.14159265358979;
 
     private static final ZonedDateTime MIDPOINT_OF_THE_INTERVAL = ZonedDateTime.of(2060, 1, 1,
             0, 0, 0, 0, ZoneId.of("UTC"));

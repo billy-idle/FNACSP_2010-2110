@@ -1,4 +1,4 @@
-package net.ddns.starla.fnacsp.algorithms.strategy;
+package net.ddns.starla.fnacsp.template.algorithms;
 
 import org.junit.Ignore;
 import org.junit.Test;
@@ -8,7 +8,7 @@ import java.time.ZonedDateTime;
 
 import static junit.framework.TestCase.assertEquals;
 import static junit.framework.TestCase.assertTrue;
-import static net.ddns.starla.fnacsp.algorithms.strategy.Algorithm.*;
+import static net.ddns.starla.fnacsp.template.algorithms.Algorithm.*;
 
 public abstract class AlgorithmTest {
 

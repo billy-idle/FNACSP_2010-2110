@@ -1,6 +1,6 @@
-package net.ddns.starla.fnacsp.algorithms;
+package net.ddns.starla.fnacsp.example;
 
-import net.ddns.starla.fnacsp.algorithms.strategy.SunPosition;
+import net.ddns.starla.fnacsp.template.SunPosition;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -45,7 +45,7 @@ public final class SunPositionNow {
                 zonedDateTime.getSecond(), zonedDateTime.getNano(), zonedDateTime.getZone().toString(), longitude,
                 latitude, pressure, temperature);
 
-        sunPosition.computePosition();
+        sunPosition.compute();
     }
 
     /**

@@ -1,4 +1,4 @@
-package net.ddns.starla.fnacsp.algorithms.strategy;
+package net.ddns.starla.fnacsp.template.algorithms;
 
 import java.time.ZonedDateTime;
 

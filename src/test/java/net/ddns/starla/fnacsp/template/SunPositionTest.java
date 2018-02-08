@@ -1,5 +1,6 @@
-package net.ddns.starla.fnacsp.algorithms.strategy;
+package net.ddns.starla.fnacsp.template;
 
+import net.ddns.starla.fnacsp.template.algorithms.Algorithm;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -19,7 +20,7 @@ public class SunPositionTest {
         sunPosition = SunPosition.of(algorithmClassName, 2020, 1, 25, 1, 0,
                 0, 0, zoneId, 0.21787, 0.73117, 1.0, 20.0);
 
-        sunPosition.computePosition();
+        sunPosition.compute();
     }
 
     @Test
