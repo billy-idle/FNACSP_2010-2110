@@ -1,17 +1,12 @@
 package net.ddns.starla.fnacsp.template.algorithms;
 
-import java.time.ZonedDateTime;
-
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 public final class AlgorithmTwo extends Algorithm {
+
     @Override
-    public void compute(ZonedDateTime zonedDateTime, double longitude,
-                        double latitude, double pressure, double temperature) {
-
-        timeScaleComputation(zonedDateTime);
-
+    public void accuracyLevel(double longitude) {
         double wte = 0.017202786 * te;
         double s1 = sin(wte);
         double c1 = cos(wte);
@@ -31,9 +26,6 @@ public final class AlgorithmTwo extends Algorithm {
                 - 2.58e-3 * c3 + 6e-5 * s4 - 1.3e-4 * c4;
 
         hourAngle = 1.75283 + 6.3003881 * t + longitude - rightAscension;
-
-        shiftHourAngleToItsConventionalRange();
-        applyFinalComputationallyOptimizedProcedure(latitude, pressure, temperature);
     }
 
 }

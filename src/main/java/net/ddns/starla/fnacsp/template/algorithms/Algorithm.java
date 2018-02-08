@@ -13,7 +13,7 @@ public abstract class Algorithm {
 
     public static final double PIM = 1.57079632679490;
     public static final double PI2 = 6.28318530717959;
-    public static final double PI = 3.14159265358979;
+    static final double PI = 3.14159265358979;
 
     private static final ZonedDateTime MIDPOINT_OF_THE_INTERVAL = ZonedDateTime.of(2060, 1, 1,
             0, 0, 0, 0, ZoneId.of("UTC"));
@@ -40,29 +40,33 @@ public abstract class Algorithm {
      * @see <a href="https://en.wikipedia.org/wiki/List_of_weather_records#Highest_temperatures_ever_recorded">Highest temperatures ever recorded</a>
      * @see <a href="https://en.wikipedia.org/wiki/Atmospheric_pressure#Records">Atmospheric pressure records</a>
      */
-    public abstract void compute(ZonedDateTime zonedDateTime, double longitude,
-                                 double latitude, double pressure, double temperature);
+    public void compute(ZonedDateTime zonedDateTime, double longitude,
+                        double latitude, double pressure, double temperature) {
+        timeScaleComputation(zonedDateTime);
+        accuracyLevel(longitude);
+        shiftHourAngleToItsConventionalRange();
+        applyFinalComputationallyOptimizedProcedure(latitude, pressure, temperature);
+    }
 
-    final void timeScaleComputation(ZonedDateTime zonedDateTime) {
+    private void timeScaleComputation(ZonedDateTime zonedDateTime) {
         zonedDateTimeToUTC(zonedDateTime);
         double dt = 96.4 + 0.567 * (zonedDateTimeAtUTC.getYear() - 2061);
         t = daysFromTheMidpointOfTheInterval();
         te = t + 1.1574e-5 * dt;
     }
 
-    private void zonedDateTimeToUTC(ZonedDateTime zonedDateTime) {
-        zonedDateTimeAtUTC = zonedDateTime.withZoneSameInstant(UTC);
-    }
+    /**
+     * Template method
+     *
+     * @param longitude [0, 2PI] rad
+     */
+    protected abstract void accuracyLevel(double longitude);
 
-    private double daysFromTheMidpointOfTheInterval() {
-        return NANOS.between(MIDPOINT_OF_THE_INTERVAL, zonedDateTimeAtUTC) / 8.64e13;
-    }
-
-    final void shiftHourAngleToItsConventionalRange() {
+    private void shiftHourAngleToItsConventionalRange() {
         hourAngle = ((hourAngle + PI) % PI2) - PI;
     }
 
-    final void applyFinalComputationallyOptimizedProcedure(double latitude, double pressure, double temperature) {
+    private void applyFinalComputationallyOptimizedProcedure(double latitude, double pressure, double temperature) {
         double sp = sin(latitude);
         double cp = sqrt((1 - sp * sp));
         double sd = sin(declination);
@@ -79,6 +83,14 @@ public abstract class Algorithm {
             applyRefractionCorrection(pressure, temperature);
 
         zenith = PIM - ep - de;
+    }
+
+    private void zonedDateTimeToUTC(ZonedDateTime zonedDateTime) {
+        zonedDateTimeAtUTC = zonedDateTime.withZoneSameInstant(UTC);
+    }
+
+    private double daysFromTheMidpointOfTheInterval() {
+        return NANOS.between(MIDPOINT_OF_THE_INTERVAL, zonedDateTimeAtUTC) / 8.64e13;
     }
 
     private void applyRefractionCorrection(double pressure, double temperature) {
