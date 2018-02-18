@@ -23,5 +23,4 @@ public final class AlgorithmThree extends Algorithm {
         declination = asin(sl * se);
         hourAngle = 1.7528311 + 6.300388099 * t + longitude - rightAscension;
     }
-
 }

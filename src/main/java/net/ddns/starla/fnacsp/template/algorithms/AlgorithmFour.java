@@ -26,5 +26,4 @@ public final class AlgorithmFour extends Algorithm {
         hourAngle = 1.7528311 + 6.300388099 * t + longitude - rightAscension + 0.92 * deltaLambda;
 
     }
-
 }

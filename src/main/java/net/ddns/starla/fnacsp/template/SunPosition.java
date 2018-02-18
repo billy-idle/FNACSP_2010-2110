@@ -2,8 +2,9 @@ package net.ddns.starla.fnacsp.template;
 
 import net.ddns.starla.fnacsp.factory.AlgorithmFactory;
 import net.ddns.starla.fnacsp.template.algorithms.Algorithm;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 /**
@@ -35,14 +36,7 @@ public final class SunPosition {
 
     /**
      * @param algorithmClassName Valid names are any Algorithm subclass
-     * @param year               Between 2010 - 2110
-     * @param month              Between 1 - 12
-     * @param dayOfMonth         Between 1 - 31
-     * @param hour               Between 0 - 23
-     * @param minute             Between 0 - 59
-     * @param second             Between 0 - 59
-     * @param nanoOfSecond       Between 0 - 999,999,999
-     * @param zoneId             zoneId (time-zone) not null
+     * @param zonedDateTime      From 2010 to 2110 at UTC
      * @param longitude          [0, 2PI] rad
      * @param latitude           [-PI/2,PI/2] rad
      * @param pressure           [0.85862324204293, 1.0696274364668] atm
@@ -50,16 +44,14 @@ public final class SunPosition {
      * @return A SunPosition instance
      * @see Algorithm#compute(ZonedDateTime, double, double, double, double)
      */
-    public static SunPosition of(String algorithmClassName, int year, int month, int dayOfMonth, int hour, int minute,
-                                 int second, int nanoOfSecond, String zoneId, double longitude, double latitude,
+    @NotNull
+    public static SunPosition of(String algorithmClassName, ZonedDateTime zonedDateTime, double longitude, double latitude,
                                  double pressure, double temperature) {
 
-        InputAssessment.assess(algorithmClassName, year, month, dayOfMonth, hour, minute, second, nanoOfSecond,
-                zoneId, longitude, latitude, pressure, temperature);
+        InputAssessment.assess(algorithmClassName, zonedDateTime, longitude, latitude, pressure, temperature);
 
-        return new SunPosition(AlgorithmFactory.createInstance(algorithmClassName),
-                ZonedDateTime.of(year, month, dayOfMonth, hour, minute, second, nanoOfSecond, ZoneId.of(zoneId)),
-                longitude, latitude, pressure, temperature);
+        return new SunPosition(AlgorithmFactory.createInstance(algorithmClassName), zonedDateTime, longitude, latitude,
+                pressure, temperature);
     }
 
     public void compute() {
@@ -67,8 +59,10 @@ public final class SunPosition {
     }
 
     /**
-     * @return Return a zonedDateTime object
+     * @return Return the same zonedDateTime passed.
+     * @see SunPosition#of(String, ZonedDateTime, double, double, double, double)
      */
+    @Contract(pure = true)
     public ZonedDateTime getZonedDateTime() {
         return zonedDateTime;
     }
@@ -76,6 +70,7 @@ public final class SunPosition {
     /**
      * @return Zenith angle [0,PI] rad
      */
+    @Contract(pure = true)
     public double getZenith() {
         return algorithm.getZenith();
     }
@@ -83,6 +78,7 @@ public final class SunPosition {
     /**
      * @return Azimuth angle [-PI,PI] rad
      */
+    @Contract(pure = true)
     public double getAzimuth() {
         return algorithm.getAzimuth();
     }
@@ -90,6 +86,7 @@ public final class SunPosition {
     /**
      * @return Right ascension [0,2PI] rad
      */
+    @Contract(pure = true)
     public double getRightAscension() {
         return algorithm.getRightAscension();
     }
@@ -97,6 +94,7 @@ public final class SunPosition {
     /**
      * @return Declination [-PI/2, PI/2] rad
      */
+    @Contract(pure = true)
     public double getDeclination() {
         return algorithm.getDeclination();
     }
@@ -104,6 +102,7 @@ public final class SunPosition {
     /**
      * @return Hour angle [-PI,PI] rad
      */
+    @Contract(pure = true)
     public double getHourAngle() {
         return algorithm.getHourAngle();
     }
@@ -111,14 +110,16 @@ public final class SunPosition {
     /**
      * @return True if the sun is above the horizon
      */
+    @Contract(pure = true)
     public boolean isItDaylight() {
-        return getElevation() > 0.0;
+        return algorithm.isItDaylight();
     }
 
     /**
      * @return Elevation angle [0,PIM]
      */
+    @Contract(pure = true)
     public double getElevation() {
-        return Algorithm.PIM - algorithm.getZenith();
+        return algorithm.getElevation();
     }
 }

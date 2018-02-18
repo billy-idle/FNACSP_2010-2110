@@ -27,5 +27,4 @@ public final class AlgorithmTwo extends Algorithm {
 
         hourAngle = 1.75283 + 6.3003881 * t + longitude - rightAscension;
     }
-
 }

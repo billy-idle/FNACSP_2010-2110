@@ -1,9 +1,12 @@
 package net.ddns.starla.fnacsp.template.algorithms;
 
-import java.time.ZoneId;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 import java.time.ZonedDateTime;
 
 import static java.lang.Math.*;
+import static java.time.ZoneOffset.UTC;
 import static java.time.temporal.ChronoUnit.NANOS;
 
 /**
@@ -16,9 +19,8 @@ public abstract class Algorithm {
     static final double PI = 3.14159265358979;
 
     private static final ZonedDateTime MIDPOINT_OF_THE_INTERVAL = ZonedDateTime.of(2060, 1, 1,
-            0, 0, 0, 0, ZoneId.of("UTC"));
+            0, 0, 0, 0, UTC);
 
-    private static final ZoneId UTC = ZoneId.of("UTC");
     double rightAscension;
     double declination;
     double hourAngle;
@@ -31,7 +33,9 @@ public abstract class Algorithm {
     private double de;
 
     /**
-     * @param zonedDateTime Wrapper of time's related values.
+     * Template Method
+     *
+     * @param zonedDateTime From 2010 to 2110 at UTC
      * @param longitude     [0, 2PI] rad
      * @param latitude      [-PI/2,PI/2] rad
      * @param pressure      [0.85862324204293, 1.0696274364668] atm
@@ -40,8 +44,8 @@ public abstract class Algorithm {
      * @see <a href="https://en.wikipedia.org/wiki/List_of_weather_records#Highest_temperatures_ever_recorded">Highest temperatures ever recorded</a>
      * @see <a href="https://en.wikipedia.org/wiki/Atmospheric_pressure#Records">Atmospheric pressure records</a>
      */
-    public void compute(ZonedDateTime zonedDateTime, double longitude,
-                        double latitude, double pressure, double temperature) {
+    public final void compute(ZonedDateTime zonedDateTime, double longitude,
+                              double latitude, double pressure, double temperature) {
         timeScaleComputation(zonedDateTime);
         accuracyLevel(longitude);
         shiftHourAngleToItsConventionalRange();
@@ -56,8 +60,6 @@ public abstract class Algorithm {
     }
 
     /**
-     * Template method
-     *
      * @param longitude [0, 2PI] rad
      */
     protected abstract void accuracyLevel(double longitude);
@@ -85,7 +87,7 @@ public abstract class Algorithm {
         zenith = PIM - ep - de;
     }
 
-    private void zonedDateTimeToUTC(ZonedDateTime zonedDateTime) {
+    private void zonedDateTimeToUTC(@NotNull ZonedDateTime zonedDateTime) {
         zonedDateTimeAtUTC = zonedDateTime.withZoneSameInstant(UTC);
     }
 
@@ -102,15 +104,9 @@ public abstract class Algorithm {
     }
 
     /**
-     * @return Zenith angle [0,PI] rad
-     */
-    public final double getZenith() {
-        return zenith;
-    }
-
-    /**
      * @return Azimuth angle [-PI,PI] rad
      */
+    @Contract(pure = true)
     public final double getAzimuth() {
         return azimuth;
     }
@@ -118,6 +114,7 @@ public abstract class Algorithm {
     /**
      * @return Right ascension [0,2PI] rad
      */
+    @Contract(pure = true)
     public final double getRightAscension() {
         return rightAscension;
     }
@@ -125,6 +122,7 @@ public abstract class Algorithm {
     /**
      * @return Declination [-PI/2, PI/2] rad
      */
+    @Contract(pure = true)
     public final double getDeclination() {
         return declination;
     }
@@ -132,8 +130,32 @@ public abstract class Algorithm {
     /**
      * @return Hour angle [-PI,PI] rad
      */
+    @Contract(pure = true)
     public final double getHourAngle() {
         return hourAngle;
     }
 
+    /**
+     * @return True if the sun is above the horizon
+     */
+    @Contract(pure = true)
+    public boolean isItDaylight() {
+        return getElevation() > 0.0;
+    }
+
+    /**
+     * @return Elevation angle [0,PIM]
+     */
+    @Contract(pure = true)
+    public double getElevation() {
+        return Algorithm.PIM - getZenith();
+    }
+
+    /**
+     * @return Zenith angle [0,PI] rad
+     */
+    @Contract(pure = true)
+    public final double getZenith() {
+        return zenith;
+    }
 }

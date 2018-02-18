@@ -2,13 +2,19 @@ package net.ddns.starla.fnacsp.template;
 
 import net.ddns.starla.fnacsp.factory.AlgorithmFactory;
 import net.ddns.starla.fnacsp.template.algorithms.Algorithm;
+import org.jetbrains.annotations.NotNull;
 
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 import static java.time.ZoneOffset.UTC;
 
 class InputAssessment {
+
+    private static final ZonedDateTime LEFT_BOUND_OF_VALID_TIME_INTERVAL = ZonedDateTime.of(2010, 1,
+            1, 0, 0, 0, 0, UTC);
+    private static final ZonedDateTime RIGHT_BOUND_OF_VALID_TIME_INTERVAL = ZonedDateTime.of(2110, 1,
+            1, 0, 0, 0, 0, UTC);
+
     /**
      * Prevents other classes from instantiating the class.
      * This is useful when a class wants to control all calls to create new instances of itself.
@@ -16,12 +22,11 @@ class InputAssessment {
     private InputAssessment() {
     }
 
-    public static void assess(String algorithmClassName, int year, int month, int dayOfMonth, int hour, int minute,
-                              int second, int nanoOfSecond, String zoneId, double longitude, double latitude,
+    public static void assess(String algorithmClassName, ZonedDateTime zonedDateTime, double longitude, double latitude,
                               double pressure, double temperature) {
 
         assessAlgorithmClassName(algorithmClassName);
-        assessZonedDateTime(year, month, dayOfMonth, hour, minute, second, nanoOfSecond, zoneId);
+        assessZonedDateTime(zonedDateTime);
         assessLongitude(longitude);
         assessLatitude(latitude);
         assessPressure(pressure);
@@ -34,19 +39,10 @@ class InputAssessment {
         }
     }
 
-    private static void assessZonedDateTime(int year, int month, int dayOfMonth, int hour, int minute, int second,
-                                            int nanoOfSecond, String zoneId) {
-        ZonedDateTime zonedDateTime = ZonedDateTime.of(year, month, dayOfMonth, hour, minute, second, nanoOfSecond,
-                ZoneId.of(zoneId));
+    private static void assessZonedDateTime(@NotNull ZonedDateTime zonedDateTime) {
 
-        ZonedDateTime leftBoundOfValidInterval = ZonedDateTime.of(2010, 1, 1, 0,
-                0, 0, 0, UTC);
-
-        ZonedDateTime rightBoundOfValidInterval = ZonedDateTime.of(2110, 1, 1, 0,
-                0, 0, 0, UTC);
-
-        if (zonedDateTime.withZoneSameInstant(UTC).isBefore(leftBoundOfValidInterval) ||
-                zonedDateTime.withZoneSameInstant(UTC).isAfter(rightBoundOfValidInterval))
+        if (zonedDateTime.withZoneSameInstant(UTC).isBefore(LEFT_BOUND_OF_VALID_TIME_INTERVAL) ||
+                zonedDateTime.withZoneSameInstant(UTC).isAfter(RIGHT_BOUND_OF_VALID_TIME_INTERVAL))
             throw new IllegalArgumentException("ZoneDateTime must be between JAN-01-2010[UTC] and JAN-01-2110[UTC]");
     }
 

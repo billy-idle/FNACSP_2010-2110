@@ -1,15 +1,16 @@
 package net.ddns.starla.fnacsp.example;
 
 import net.ddns.starla.fnacsp.template.SunPosition;
+import org.jetbrains.annotations.Contract;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 
 /**
- * Computes the instant sun position. It means when the code is execute, it obtains the current date-time from the
- * system clock in the time-zone (zoneId).
+ * Computes the instant sun position using the current date-time from the system clock
+ * in a specific time-zone (zoneId).
  */
-public final class SunPositionNow {
+public final class InstantSunPosition {
 
     private final String algorithmClassName;
     private final ZonedDateTime zonedDateTime;
@@ -26,10 +27,10 @@ public final class SunPositionNow {
      * @param latitude           [-PI/2, PI/2] rad
      * @param pressure           [0.85862324204293, 1.0696274364668] atm
      * @param temperature        Between [-89.2, 54.0] °C
-     * @see SunPosition#of(String, int, int, int, int, int, int, int, String, double, double, double, double)
+     * @see SunPosition#of(String, ZonedDateTime, double, double, double, double)
      */
-    public SunPositionNow(String algorithmClassName, String zoneId, double longitude, double latitude, double pressure,
-                          double temperature) {
+    public InstantSunPosition(String algorithmClassName, String zoneId, double longitude, double latitude,
+                              double pressure, double temperature) {
 
         this.algorithmClassName = algorithmClassName;
         this.zonedDateTime = ZonedDateTime.now().withZoneSameInstant(ZoneId.of(zoneId));
@@ -39,18 +40,15 @@ public final class SunPositionNow {
         this.temperature = temperature;
     }
 
-    public void computePosition() {
-        sunPosition = SunPosition.of(algorithmClassName, zonedDateTime.getYear(), zonedDateTime.getMonthValue(),
-                zonedDateTime.getDayOfMonth(), zonedDateTime.getHour(), zonedDateTime.getMinute(),
-                zonedDateTime.getSecond(), zonedDateTime.getNano(), zonedDateTime.getZone().toString(), longitude,
-                latitude, pressure, temperature);
-
+    public void compute() {
+        sunPosition = SunPosition.of(algorithmClassName, zonedDateTime, longitude, latitude, pressure, temperature);
         sunPosition.compute();
     }
 
     /**
      * @return Zenith angle [0,PI] rad
      */
+    @Contract(pure = true)
     public double getZenith() {
         return sunPosition.getZenith();
     }
@@ -58,6 +56,7 @@ public final class SunPositionNow {
     /**
      * @return Azimuth angle [-PI,PI] rad
      */
+    @Contract(pure = true)
     public double getAzimuth() {
         return sunPosition.getAzimuth();
     }
@@ -65,6 +64,7 @@ public final class SunPositionNow {
     /**
      * @return Right ascension [0,2PI] rad
      */
+    @Contract(pure = true)
     public double getRightAscension() {
         return sunPosition.getRightAscension();
     }
@@ -72,6 +72,7 @@ public final class SunPositionNow {
     /**
      * @return Declination [-PI/2, PI/2] rad
      */
+    @Contract(pure = true)
     public double getDeclination() {
         return sunPosition.getDeclination();
     }
@@ -79,6 +80,7 @@ public final class SunPositionNow {
     /**
      * @return Hour angle [-PI,PI] rad
      */
+    @Contract(pure = true)
     public double getHourAngle() {
         return sunPosition.getHourAngle();
     }
@@ -86,6 +88,7 @@ public final class SunPositionNow {
     /**
      * @return True if the sun is above the horizon
      */
+    @Contract(pure = true)
     public boolean isItDaylight() {
         return sunPosition.isItDaylight();
     }
@@ -93,6 +96,7 @@ public final class SunPositionNow {
     /**
      * @return Elevation angle [0,PIM]
      */
+    @Contract(pure = true)
     public double getElevation() {
         return sunPosition.getElevation();
     }
@@ -100,8 +104,8 @@ public final class SunPositionNow {
     /**
      * @return ZonedDateTime used to compute the sun's position
      */
+    @Contract(pure = true)
     public ZonedDateTime getZonedDateTime() {
         return sunPosition.getZonedDateTime();
     }
-
 }
