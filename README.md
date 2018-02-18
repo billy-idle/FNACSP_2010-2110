@@ -1,13 +1,21 @@
-# Five New Algorithms for the Computation of Sun Position from 2010 to 2110 in Java Language  
-**Proposed by [Dr. Roberto Grena.](https://www.researchgate.net/profile/Roberto_Grena)**  
+# Five New Algorithms for the Computation of Sun Position from 2010 to 2110 in Java Language
+
+**Proposed by [Dr. Roberto Grena.](https://www.researchgate.net/profile/Roberto_Grena)**
+
 **Implemented in java languange by [Guillermo Guzmán Sánchez.](https://plus.google.com/u/0/+GuillermoGuzmánSánchez)**
 
-Based on the [original C++ source code](http://www.solaritaly.enea.it/StrSunPosition/SunPositionEn.php), applying design patterns and TDD.  
+Based on the [original C++ source code](http://www.solaritaly.enea.it/StrSunPosition/SunPositionEn.php), applying design patterns and TDD.
 
-## How to use it
-Below is an example of computing the sun-position at Rome, using the highest precision algorithm: 
+## Overview
+
+// TODO
+
+## Example using SunPosition
+
+In this example the SunPosition computes the position at Rome (Italy), using the highest precision algorithm:
+
 ```java
-int year = 2020;  
+int year = 2020;
 int month = 1;
 int day = 25;
 int hour = 13;
@@ -29,11 +37,13 @@ String algorithmClassName = "AlgorithmFive"; // Valid values are any Algorithm s
 SunPosition sunPosition = SunPosition.of(algorithmClassName, romeZonedDateTime, longitude, latitude, pressure, temperature);
 sunPosition.compute();
 ```
-*If you don't know your timezone value, you can look it up (see: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)*
+
+*For more information about time zones, see:<https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>*
 
 Getting the computed values:
+
 ```java
-ZonedDateTime zdt = sunPosition.getZonedDateTime();         
+ZonedDateTime zdt = sunPosition.getZonedDateTime();
 double zenith = sunPosition.getZenith();                    // Range -> [0, PI] rad
 double azimuth = sunPosition.getAzimuth();                  // Range -> [-PI, PI] rad
 double rightAscension = sunPosition.getRightAscension();    // Range -> [0, 2PI] rad
@@ -41,7 +51,9 @@ double declination = sunPosition.getDeclination();          // Range -> [-PI/2, 
 double hourAngle = sunPosition.getHourAngle();              // Range -> [-PI, PI] rad
 boolean isItDaylight = sunPosition.isItDaylight();          // Return True if the sun is above the horizon
 ```
+
 Printing the output:
+
 ```console
 zdt             => 2020-01-25T13:30+01:00[Europe/Rome]
 Zenith          => 1.097167781330322
@@ -51,8 +63,11 @@ Declination     => -0.33191742160701926
 Hour Angle      => -5.98761790109209
 Is it daylight? => true
 ```
-## This is another example
-In this example InstantSunPosition computes the position using the current date-time from the system clock; the algorithm class name and the time-zone (zoneId) are passed as String.  
+
+## Example using InstantSunPosition
+
+In this example InstantSunPosition computes the position using the current date-time from the system clock; the algorithm class name and the time-zone (zoneId) are passed as String
+
 ```java
 double longitude = 0.21787;     // Domain -> [0, 2PI] rad
 double latitude = 0.73117;      // Domain -> [-PI/2, PI/2] rad
@@ -65,5 +80,5 @@ String zoneId = "Europe/Rome";
 InstantSunPosition instantSunPosition = new InstantSunPosition(algorithmClassName, zoneId, longitude, latitude, pressure, temperature);
 instantSunPosition.compute();
 ```
-The "getting and printing output" process same as before using the sunPositionNow object instead.
 
+The "getting and printing output" process same as before using the sunPositionNow object instead.
