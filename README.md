@@ -32,6 +32,7 @@ String algorithmClassName = "AlgorithmFive"; // Valid names are any Algorithm su
 
 SunPosition sunPosition = 
     SunPosition.of(algorithmClassName, romeZonedDateTime, longitude, latitude, pressure, temperature);
+
 sunPosition.compute();
 ```
 
@@ -71,12 +72,13 @@ double latitude = 0.73117;      // Domain -> [-PI/2, PI/2] rad
 double pressure = 1.0;          // Domain -> [0.85, 1.069] atm
 double temperature = 20.0;      // Domain -> [-89.2, 54.0] °C
 
-String algorithmClassName = "AlgorithmFive"; // Valid values are any Algorithm subclass.
+String algorithmClassName = "AlgorithmFive"; // Valid names are any Algorithm subclass.
 String zoneId = "Europe/Rome";
 
 InstantSunPosition instantSunPosition = 
     new InstantSunPosition(algorithmClassName, zoneId, longitude, latitude, pressure, temperature);
+
 instantSunPosition.compute();
 ```
 
-The "getting and printing output" process same as the previous example using the instantSunPosition object instead.
+The "getting and printing output process" same as the previous example using the instantSunPosition object instead.
