@@ -1,17 +1,15 @@
 # Five New Algorithms for the Computation of Sun Position from 2010 to 2110 in Java Language
 
 **Proposed by [Dr. Roberto Grena.](https://www.researchgate.net/profile/Roberto_Grena)**  
-**Implemented in java languange by [Guillermo Guzmán Sánchez.](https://plus.google.com/u/0/+GuillermoGuzmánSánchez)**
-
-Based on the [original C++ source code](http://www.solaritaly.enea.it/StrSunPosition/SunPositionEn.php), applying design patterns and TDD.
+**Implemented in Java languange by [Guillermo Guzmán Sánchez.](https://plus.google.com/u/0/+GuillermoGuzmánSánchez)**
 
 ## Overview
 
-// TODO
+This project is based on the [original C++ source code](http://www.solaritaly.enea.it/StrSunPosition/SunPositionEn.php), translated and refactored in Java language applying design patterns and TDD.
 
 ## Example using SunPosition
 
-In this example the SunPosition computes the position at Rome (Italy), using the highest precision algorithm:
+In this example SunPosition computes the position at Rome (Italy), using the highest precision algorithm:
 
 ```java
 int year = 2020;
