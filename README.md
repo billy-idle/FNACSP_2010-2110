@@ -5,7 +5,7 @@
 
 ## Overview
 
-This project is based on the [original C++ source code](http://www.solaritaly.enea.it/StrSunPosition/SunPositionEn.php), translated and refactored in Java language applying design patterns and TDD.
+This project is based on the [original C++ source code](http://www.solaritaly.enea.it/StrSunPosition/SunPositionEn.php), translated and refactored in Java language applying truly object-oriented design principles, design patterns and test driven development.
 
 ## Example using SunPosition
 
@@ -35,7 +35,7 @@ SunPosition sunPosition = SunPosition.of(algorithmClassName, romeZonedDateTime, 
 sunPosition.compute();
 ```
 
-*For more information about time zones, see:<https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>*
+*For more information about time zones, see: <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>*
 
 Getting the computed values:
 
@@ -63,7 +63,7 @@ Is it daylight? => true
 
 ## Example using InstantSunPosition
 
-In this example InstantSunPosition computes the position using the current date-time from the system clock; the algorithm class name and the time-zone (zoneId) are passed as String
+In this example InstantSunPosition computes the position using the current date-time from the system clock; the algorithm class name and the time-zone (zoneId) are passed as String:
 
 ```java
 double longitude = 0.21787;     // Domain -> [0, 2PI] rad
@@ -78,4 +78,4 @@ InstantSunPosition instantSunPosition = new InstantSunPosition(algorithmClassNam
 instantSunPosition.compute();
 ```
 
-The "getting and printing output" process same as before using the sunPositionNow object instead.
+The "getting and printing output" process same as the previous example using the instantSunPosition object instead.
