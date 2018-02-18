@@ -20,18 +20,18 @@ int minute = 30;
 int second = 0;
 int nanoSecond = 0;
 String zoneId = "Europe/Rome";
-
-ZonedDateTime romeZonedDateTime;
-romeZonedDateTime = ZonedDateTime.of(year, month, day, hour, minute, second, nanoSecond, ZoneId.of(zoneId));
+ZonedDateTime romeZonedDateTime = 
+    ZonedDateTime.of(year, month, day, hour, minute, second, nanoSecond, ZoneId.of(zoneId));
 
 double longitude = 0.21787;     // Domain -> [0, 2PI] rad
 double latitude = 0.73117;      // Domain -> [-PI/2, PI/2] rad
 double pressure = 1.0;          // Domain -> [0.85, 1.069] atm
 double temperature = 20.0;      // Domain -> [-89.2, 54.0] °C
 
-String algorithmClassName = "AlgorithmFive"; // Valid values are any Algorithm subclass.
+String algorithmClassName = "AlgorithmFive"; // Valid names are any Algorithm subclass.
 
-SunPosition sunPosition = SunPosition.of(algorithmClassName, romeZonedDateTime, longitude, latitude, pressure, temperature);
+SunPosition sunPosition = 
+    SunPosition.of(algorithmClassName, romeZonedDateTime, longitude, latitude, pressure, temperature);
 sunPosition.compute();
 ```
 
@@ -74,7 +74,8 @@ double temperature = 20.0;      // Domain -> [-89.2, 54.0] °C
 String algorithmClassName = "AlgorithmFive"; // Valid values are any Algorithm subclass.
 String zoneId = "Europe/Rome";
 
-InstantSunPosition instantSunPosition = new InstantSunPosition(algorithmClassName, zoneId, longitude, latitude, pressure, temperature);
+InstantSunPosition instantSunPosition = 
+    new InstantSunPosition(algorithmClassName, zoneId, longitude, latitude, pressure, temperature);
 instantSunPosition.compute();
 ```
 
