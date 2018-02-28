@@ -1,12 +1,21 @@
 package net.ddns.starla.fnacsp.template.algorithms;
 
+import net.ddns.starla.fnacsp.template.entities.AtmPressure;
+import net.ddns.starla.fnacsp.template.entities.Coordinates;
+import net.ddns.starla.fnacsp.template.entities.Temperature;
+import net.ddns.starla.fnacsp.template.entities.Time;
+
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 public final class AlgorithmOne extends Algorithm {
 
+    public AlgorithmOne(Time time, Coordinates coordinates, AtmPressure atmPressure, Temperature temperature) {
+        super(time, coordinates, atmPressure, temperature);
+    }
+
     @Override
-    public void accuracyLevel(double longitude) {
+    public void accuracyLevel() {
         double wte = 0.017202786 * te;
         double s1 = sin(wte);
         double c1 = cos(wte);

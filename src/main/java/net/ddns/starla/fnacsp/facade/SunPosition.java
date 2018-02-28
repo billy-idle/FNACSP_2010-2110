@@ -1,9 +1,8 @@
-package net.ddns.starla.fnacsp.template;
+package net.ddns.starla.fnacsp.facade;
 
 import net.ddns.starla.fnacsp.factory.AlgorithmFactory;
 import net.ddns.starla.fnacsp.template.algorithms.Algorithm;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.time.ZonedDateTime;
 
@@ -12,27 +11,7 @@ import java.time.ZonedDateTime;
  */
 public final class SunPosition {
 
-    private final double longitude;
-    private final double latitude;
-    private final double pressure;
-    private final double temperature;
     private final Algorithm algorithm;
-    private final ZonedDateTime zonedDateTime;
-
-    /**
-     * Prevents other classes from instantiating the class.
-     * This is useful when a class wants to control all calls to create new instances of itself.
-     */
-    private SunPosition(Algorithm algorithm, ZonedDateTime zonedDateTime, double longitude, double latitude,
-                        double pressure, double temperature) {
-
-        this.algorithm = algorithm;
-        this.zonedDateTime = zonedDateTime;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.pressure = pressure;
-        this.temperature = temperature;
-    }
 
     /**
      * @param algorithmClassName Valid names are any Algorithm subclass
@@ -41,30 +20,19 @@ public final class SunPosition {
      * @param latitude           [-PI/2,PI/2] rad
      * @param pressure           [0.85862324204293, 1.0696274364668] atm
      * @param temperature        Between [-89.2, 54.0] °C
-     * @return A SunPosition instance
-     * @see Algorithm#compute(ZonedDateTime, double, double, double, double)
+     * @see Algorithm#compute()
      */
-    @NotNull
-    public static SunPosition of(String algorithmClassName, ZonedDateTime zonedDateTime, double longitude, double latitude,
-                                 double pressure, double temperature) {
-
-        InputAssessment.assess(algorithmClassName, zonedDateTime, longitude, latitude, pressure, temperature);
-
-        return new SunPosition(AlgorithmFactory.createInstance(algorithmClassName), zonedDateTime, longitude, latitude,
+    public SunPosition(String algorithmClassName, ZonedDateTime zonedDateTime, double longitude,
+                       double latitude, double pressure, double temperature) {
+        this.algorithm = AlgorithmFactory.createInstance(algorithmClassName, zonedDateTime, longitude, latitude,
                 pressure, temperature);
     }
 
-    public void compute() {
-        algorithm.compute(zonedDateTime, longitude, latitude, pressure, temperature);
-    }
-
     /**
-     * @return Return the same zonedDateTime passed.
-     * @see SunPosition#of(String, ZonedDateTime, double, double, double, double)
+     * Computes the sun position
      */
-    @Contract(pure = true)
-    public ZonedDateTime getZonedDateTime() {
-        return zonedDateTime;
+    public void compute() {
+        algorithm.compute();
     }
 
     /**
@@ -121,5 +89,45 @@ public final class SunPosition {
     @Contract(pure = true)
     public double getElevation() {
         return algorithm.getElevation();
+    }
+
+    /**
+     * @return zonedDateTime
+     */
+    @Contract(pure = true)
+    public ZonedDateTime getZonedDateTime() {
+        return algorithm.getZonedDateTime();
+    }
+
+    /**
+     * @return longitude
+     */
+    @Contract(pure = true)
+    public double getLongitude() {
+        return algorithm.getLongitude();
+    }
+
+    /**
+     * @return latitude
+     */
+    @Contract(pure = true)
+    public double getLatitude() {
+        return algorithm.getLatitude();
+    }
+
+    /**
+     * @return pressure
+     */
+    @Contract(pure = true)
+    public double getPressure() {
+        return algorithm.getPressure();
+    }
+
+    /**
+     * @return temperature
+     */
+    @Contract(pure = true)
+    public double getTemperature() {
+        return algorithm.getTemperature();
     }
 }

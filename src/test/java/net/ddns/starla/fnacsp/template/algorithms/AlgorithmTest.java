@@ -50,10 +50,10 @@ public abstract class AlgorithmTest {
     }
 
     final void compute() {
-        algorithm.compute(decimalToZonedDateTime(), longitude, latitude, pressure, temperature);
+        algorithm.compute();
     }
 
-    private ZonedDateTime decimalToZonedDateTime() {
+    ZonedDateTime decimalToZonedDateTime() {
         int hour = (int) this.hour;
         int minute = (int) ((hour - (int) this.hour) * 60.0);
         int second = (int) ((((hour - (int) this.hour) * 60.0) - minute) * 60.0);

@@ -1,11 +1,11 @@
-package net.ddns.starla.fnacsp.example;
+package net.ddns.starla.fnacsp.facade;
 
 import org.junit.Test;
 
 import java.time.zone.ZoneRulesException;
 
 
-public class SunPositionNowTest {
+public class InstantSunPositionTest {
 
     @Test(expected = ZoneRulesException.class)
     public void whenZoneIdUnknown_ShouldThrowZoneRulesException() {

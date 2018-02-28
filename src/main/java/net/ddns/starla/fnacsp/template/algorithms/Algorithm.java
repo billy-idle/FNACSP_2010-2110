@@ -1,13 +1,17 @@
 package net.ddns.starla.fnacsp.template.algorithms;
 
+import net.ddns.starla.fnacsp.template.entities.AtmPressure;
+import net.ddns.starla.fnacsp.template.entities.Coordinates;
+import net.ddns.starla.fnacsp.template.entities.Temperature;
+import net.ddns.starla.fnacsp.template.entities.Time;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.time.ZonedDateTime;
 
 import static java.lang.Math.*;
 import static java.time.ZoneOffset.UTC;
 import static java.time.temporal.ChronoUnit.NANOS;
+import static net.ddns.starla.fnacsp.template.entities.Time.MIDPOINT_OF_VALID_TIME_INTERVAL;
 
 /**
  * Template Design Pattern
@@ -17,9 +21,7 @@ public abstract class Algorithm {
     static final double PI = 3.14159265358979;
     static final double PIM = 1.57079632679490;
     static final double PI2 = 6.28318530717959;
-    private static final ZonedDateTime MIDPOINT_OF_THE_INTERVAL = ZonedDateTime.of(2060, 1, 1,
-            0, 0, 0, 0, UTC);
-
+    protected double longitude;
     double rightAscension;
     double declination;
     double hourAngle;
@@ -30,44 +32,57 @@ public abstract class Algorithm {
     private double azimuth;
     private double ep;
     private double de;
+    private ZonedDateTime zonedDateTime;
+    private double latitude;
+    private double pressure;
+    private double temperature;
 
     /**
-     * Template Method
-     *
-     * @param zonedDateTime From 2010 to 2110 at UTC
-     * @param longitude     [0, 2PI] rad
-     * @param latitude      [-PI/2,PI/2] rad
-     * @param pressure      [0.85862324204293, 1.0696274364668] atm
-     * @param temperature   Between [-89.2, 54.0] °C
-     * @see <a href="https://en.wikipedia.org/wiki/List_of_weather_records#Lowest_temperatures_ever_recorded">Lowest temperatures ever recorded</a>
-     * @see <a href="https://en.wikipedia.org/wiki/List_of_weather_records#Highest_temperatures_ever_recorded">Highest temperatures ever recorded</a>
-     * @see <a href="https://en.wikipedia.org/wiki/Atmospheric_pressure#Records">Atmospheric pressure records</a>
+     * @param time        Instance of Time entity class
+     *                    (From 2010 to 2110 at UTC)
+     * @param coordinates Instance of Coordinates entity class.
+     *                    (longitude between [0, 2PI] rad)
+     *                    (latitude between [-PI/2,PI/2] rad)
+     * @param atmPressure Instance of AtmPressure entity class.
+     *                    (Between [0.85862324204293, 1.0696274364668] atm)
+     * @param temperature Instance of Temperature entity class.
+     *                    (Between [-89.2, 54.0] °C)
      */
-    public final void compute(ZonedDateTime zonedDateTime, double longitude,
-                              double latitude, double pressure, double temperature) {
-        timeScaleComputation(zonedDateTime);
-        accuracyLevel(longitude);
-        shiftHourAngleToItsConventionalRange();
-        applyFinalComputationallyOptimizedProcedure(latitude, pressure, temperature);
+    public Algorithm(Time time, Coordinates coordinates, AtmPressure atmPressure, Temperature temperature) {
+        this.zonedDateTime = time.getZonedDateTime();
+        this.latitude = coordinates.getLatitude();
+        this.longitude = coordinates.getLongitude();
+        this.pressure = atmPressure.getPressure();
+        this.temperature = temperature.getDegrees();
     }
 
-    private void timeScaleComputation(ZonedDateTime zonedDateTime) {
-        zonedDateTimeToUTC(zonedDateTime);
+    /**
+     * Computes the sun position
+     */
+    public final void compute() {
+        timeScaleComputation();
+        accuracyLevel();
+        shiftHourAngleToItsConventionalRange();
+        applyFinalComputationallyOptimizedProcedure();
+    }
+
+    private void timeScaleComputation() {
+        zonedDateTimeToUTC();
         double dt = 96.4 + 0.567 * (zonedDateTimeAtUTC.getYear() - 2061);
         t = daysFromTheMidpointOfTheInterval();
         te = t + 1.1574e-5 * dt;
     }
 
     /**
-     * @param longitude [0, 2PI] rad
+     * Template Method
      */
-    protected abstract void accuracyLevel(double longitude);
+    protected abstract void accuracyLevel();
 
     private void shiftHourAngleToItsConventionalRange() {
         hourAngle = ((hourAngle + PI) % PI2) - PI;
     }
 
-    private void applyFinalComputationallyOptimizedProcedure(double latitude, double pressure, double temperature) {
+    private void applyFinalComputationallyOptimizedProcedure() {
         double sp = sin(latitude);
         double cp = sqrt((1 - sp * sp));
         double sd = sin(declination);
@@ -81,20 +96,20 @@ public abstract class Algorithm {
         azimuth = atan2(sH, cH * sp - sd * cp / cd);
 
         if (ep > 0.0)
-            applyRefractionCorrection(pressure, temperature);
+            applyRefractionCorrection();
 
         zenith = PIM - ep - de;
     }
 
-    private void zonedDateTimeToUTC(@NotNull ZonedDateTime zonedDateTime) {
+    private void zonedDateTimeToUTC() {
         zonedDateTimeAtUTC = zonedDateTime.withZoneSameInstant(UTC);
     }
 
     private double daysFromTheMidpointOfTheInterval() {
-        return NANOS.between(MIDPOINT_OF_THE_INTERVAL, zonedDateTimeAtUTC) / 8.64e13;
+        return NANOS.between(MIDPOINT_OF_VALID_TIME_INTERVAL, zonedDateTimeAtUTC) / 8.64e13;
     }
 
-    private void applyRefractionCorrection(double pressure, double temperature) {
+    private void applyRefractionCorrection() {
         de = (0.08422 * pressure) / ((273.0 + temperature) * tan(ep + 0.003138 / (ep + 0.08919)));
     }
 
@@ -156,5 +171,45 @@ public abstract class Algorithm {
     @Contract(pure = true)
     public final double getZenith() {
         return zenith;
+    }
+
+    /**
+     * @return zonedDateTime
+     */
+    @Contract(pure = true)
+    public final ZonedDateTime getZonedDateTime() {
+        return zonedDateTime;
+    }
+
+    /**
+     * @return longitude
+     */
+    @Contract(pure = true)
+    public final double getLongitude() {
+        return longitude;
+    }
+
+    /**
+     * @return latitude
+     */
+    @Contract(pure = true)
+    public final double getLatitude() {
+        return latitude;
+    }
+
+    /**
+     * @return pressure
+     */
+    @Contract(pure = true)
+    public final double getPressure() {
+        return pressure;
+    }
+
+    /**
+     * @return temperature
+     */
+    @Contract(pure = true)
+    public final double getTemperature() {
+        return temperature;
     }
 }

@@ -1,6 +1,5 @@
-package net.ddns.starla.fnacsp.example;
+package net.ddns.starla.fnacsp.facade;
 
-import net.ddns.starla.fnacsp.template.SunPosition;
 import org.jetbrains.annotations.Contract;
 
 import java.time.ZoneId;
@@ -26,8 +25,8 @@ public final class InstantSunPosition {
      * @param longitude          [0, 2PI] rad
      * @param latitude           [-PI/2, PI/2] rad
      * @param pressure           [0.85862324204293, 1.0696274364668] atm
-     * @param temperature        Between [-89.2, 54.0] °C
-     * @see SunPosition#of(String, ZonedDateTime, double, double, double, double)
+     * @param temperature        [-89.2, 54.0] °C
+     * @see SunPosition#SunPosition(String, ZonedDateTime, double, double, double, double)
      */
     public InstantSunPosition(String algorithmClassName, String zoneId, double longitude, double latitude,
                               double pressure, double temperature) {
@@ -40,8 +39,11 @@ public final class InstantSunPosition {
         this.temperature = temperature;
     }
 
+    /**
+     * Computes the sun position
+     */
     public void compute() {
-        sunPosition = SunPosition.of(algorithmClassName, zonedDateTime, longitude, latitude, pressure, temperature);
+        sunPosition = new SunPosition(algorithmClassName, zonedDateTime, longitude, latitude, pressure, temperature);
         sunPosition.compute();
     }
 
@@ -102,10 +104,42 @@ public final class InstantSunPosition {
     }
 
     /**
-     * @return ZonedDateTime used to compute the sun's position
+     * @return zonedDateTime
      */
     @Contract(pure = true)
     public ZonedDateTime getZonedDateTime() {
         return sunPosition.getZonedDateTime();
+    }
+
+    /**
+     * @return longitude
+     */
+    @Contract(pure = true)
+    public double getLongitude() {
+        return sunPosition.getLongitude();
+    }
+
+    /**
+     * @return latitude
+     */
+    @Contract(pure = true)
+    public double getLatitude() {
+        return sunPosition.getLatitude();
+    }
+
+    /**
+     * @return pressure
+     */
+    @Contract(pure = true)
+    public double getPressure() {
+        return sunPosition.getPressure();
+    }
+
+    /**
+     * @return temperature
+     */
+    @Contract(pure = true)
+    public double getTemperature() {
+        return sunPosition.getTemperature();
     }
 }
