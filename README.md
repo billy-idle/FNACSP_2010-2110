@@ -31,7 +31,7 @@ double temperature = 20.0;      // Domain -> [-89.2, 54.0] °C
 String algorithmClassName = "AlgorithmFive"; // Valid names are any Algorithm subclass.
 
 SunPosition sunPosition = 
-    SunPosition.of(algorithmClassName, romeZonedDateTime, longitude, latitude, pressure, temperature);
+    new SunPosition(algorithmClassName, romeZonedDateTime, longitude, latitude, pressure, temperature);
 
 sunPosition.compute();
 ```
