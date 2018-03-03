@@ -5,7 +5,7 @@
 
 ## Overview
 
-This project is based on the [original C++ source code](http://www.solaritaly.enea.it/StrSunPosition/SunPositionEn.php), translated and refactored in Java language applying truly object-oriented design principles, design patterns and test driven development.
+This project is based on the [original C++ source code](http://www.solaritaly.enea.it/StrSunPosition/SunPositionEn.php), translated and refactored in Java language simplifying the extensibility and portability via a pattern-oriented OO design and test-driven development that enables adding new algorithms (e.g: _"Algorithm #6"_) without modifying the structure and implementation.
 
 ## Example using SunPosition
 
