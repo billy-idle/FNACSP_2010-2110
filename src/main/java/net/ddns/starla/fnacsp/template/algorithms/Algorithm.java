@@ -1,9 +1,6 @@
 package net.ddns.starla.fnacsp.template.algorithms;
 
-import net.ddns.starla.fnacsp.template.entities.AtmPressure;
-import net.ddns.starla.fnacsp.template.entities.Coordinates;
-import net.ddns.starla.fnacsp.template.entities.Temperature;
-import net.ddns.starla.fnacsp.template.entities.Time;
+import net.ddns.starla.fnacsp.template.entities.Entity;
 import org.jetbrains.annotations.Contract;
 
 import java.time.ZonedDateTime;
@@ -11,7 +8,6 @@ import java.time.ZonedDateTime;
 import static java.lang.Math.*;
 import static java.time.ZoneOffset.UTC;
 import static java.time.temporal.ChronoUnit.NANOS;
-import static net.ddns.starla.fnacsp.template.entities.Time.MIDPOINT_OF_VALID_TIME_INTERVAL;
 
 /**
  * Template Design Pattern
@@ -21,7 +17,7 @@ public abstract class Algorithm {
     static final double PI = 3.14159265358979;
     static final double PIM = 1.57079632679490;
     static final double PI2 = 6.28318530717959;
-    protected double longitude;
+    final double longitude;
     double rightAscension;
     double declination;
     double hourAngle;
@@ -32,28 +28,28 @@ public abstract class Algorithm {
     private double azimuth;
     private double ep;
     private double de;
-    private ZonedDateTime zonedDateTime;
-    private double latitude;
-    private double pressure;
-    private double temperature;
+    private final ZonedDateTime zonedDateTime;
+    private final double latitude;
+    private final double pressure;
+    private final double temperature;
 
     /**
      * @param time        Instance of Time entity class
      *                    (From 2010 to 2110 at UTC)
-     * @param coordinates Instance of Coordinates entity class.
+     * @param longitude Instance of Longitude entity class.
      *                    (longitude between [0, 2PI] rad)
+     * @param latitude  Instance of Latitude entity class.
      *                    (latitude between [-PI/2,PI/2] rad)
-     * @param atmPressure Instance of AtmPressure entity class.
+     * @param pressure Instance of Pressure entity class.
      *                    (Between [0.85862324204293, 1.0696274364668] atm)
      * @param temperature Instance of Temperature entity class.
-     *                    (Between [-89.2, 54.0] °C)
      */
-    public Algorithm(Time time, Coordinates coordinates, AtmPressure atmPressure, Temperature temperature) {
-        this.zonedDateTime = time.getZonedDateTime();
-        this.latitude = coordinates.getLatitude();
-        this.longitude = coordinates.getLongitude();
-        this.pressure = atmPressure.getPressure();
-        this.temperature = temperature.getDegrees();
+    Algorithm(Entity time, Entity longitude, Entity latitude, Entity pressure, Entity temperature) {
+        this.zonedDateTime = (ZonedDateTime) time.getValue();
+        this.longitude = (double) longitude.getValue();
+        this.latitude = (double) latitude.getValue();
+        this.pressure = (double) pressure.getValue();
+        this.temperature = (double) temperature.getValue();
     }
 
     /**
@@ -106,7 +102,8 @@ public abstract class Algorithm {
     }
 
     private double daysFromTheMidpointOfTheInterval() {
-        return NANOS.between(MIDPOINT_OF_VALID_TIME_INTERVAL, zonedDateTimeAtUTC) / 8.64e13;
+        return NANOS.between(ZonedDateTime.of(2060, 1,
+                1, 0, 0, 0, 0, UTC), zonedDateTimeAtUTC) / 8.64e13;
     }
 
     private void applyRefractionCorrection() {

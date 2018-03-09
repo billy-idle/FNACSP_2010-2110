@@ -1,6 +1,6 @@
 package net.ddns.starla.fnacsp.template.algorithms;
 
-import net.ddns.starla.fnacsp.factory.AlgorithmFactory;
+import net.ddns.starla.fnacsp.template.algorithms.factory.AlgorithmFactory;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

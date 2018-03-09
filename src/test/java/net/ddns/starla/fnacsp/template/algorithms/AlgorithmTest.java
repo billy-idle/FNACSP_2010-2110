@@ -12,11 +12,11 @@ import static net.ddns.starla.fnacsp.template.algorithms.Algorithm.*;
 
 public abstract class AlgorithmTest {
 
-    final double hour;
-    final int day;
-    final int month;
-    final int year;
-    final String zoneId;
+    private final double hour;
+    private final int day;
+    private final int month;
+    private final int year;
+    private final String zoneId;
     final double longitude;
     final double latitude;
     final double pressure;
@@ -117,5 +117,4 @@ public abstract class AlgorithmTest {
     public void hourAngleAtUT() {
         assertEquals(expectedHourAngle, algorithm.getHourAngle(), delta);
     }
-
 }

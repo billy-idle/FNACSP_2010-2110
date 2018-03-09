@@ -1,16 +1,13 @@
 package net.ddns.starla.fnacsp.template.algorithms;
 
-import net.ddns.starla.fnacsp.template.entities.AtmPressure;
-import net.ddns.starla.fnacsp.template.entities.Coordinates;
-import net.ddns.starla.fnacsp.template.entities.Temperature;
-import net.ddns.starla.fnacsp.template.entities.Time;
+import net.ddns.starla.fnacsp.template.entities.Entity;
 
 import static java.lang.Math.*;
 
 public final class AlgorithmFour extends Algorithm {
 
-    public AlgorithmFour(Time time, Coordinates coordinates, AtmPressure atmPressure, Temperature temperature) {
-        super(time, coordinates, atmPressure, temperature);
+    public AlgorithmFour(Entity time, Entity longitude, Entity latitude, Entity atmPressure, Entity temperature) {
+        super(time, longitude, latitude, atmPressure, temperature);
     }
 
     @Override

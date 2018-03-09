@@ -1,10 +1,7 @@
-package net.ddns.starla.fnacsp.factory;
+package net.ddns.starla.fnacsp.template.algorithms.factory;
 
 import net.ddns.starla.fnacsp.template.algorithms.*;
-import net.ddns.starla.fnacsp.template.entities.AtmPressure;
-import net.ddns.starla.fnacsp.template.entities.Coordinates;
-import net.ddns.starla.fnacsp.template.entities.Temperature;
-import net.ddns.starla.fnacsp.template.entities.Time;
+import net.ddns.starla.fnacsp.template.entities.*;
 import org.junit.Test;
 
 import java.time.ZonedDateTime;
@@ -12,12 +9,11 @@ import java.time.ZonedDateTime;
 import static org.junit.Assert.assertEquals;
 
 public class AlgorithmFactoryTest {
-    private static AlgorithmFactory algorithmFactory;
-    private ZonedDateTime zonedDateTime = Time.BEGINNING_OF_VALID_TIME_INTERVAL;
-    private double longitude = Coordinates.MIN_LONGITUDE_VALUE;
-    private double latitude = Coordinates.MIN_LATITUDE_VALUE;
-    private double pressure = AtmPressure.MIN_VALUE;
-    private double temperature = Temperature.MIN_VALUE;
+    private final ZonedDateTime zonedDateTime = Time.BEGINNING_OF_VALID_TIME_INTERVAL;
+    private final double longitude = Longitude.MIN_LONGITUDE_VALUE;
+    private final double latitude = Latitude.MIN_LATITUDE_VALUE;
+    private final double pressure = Pressure.MIN_VALUE;
+    private final double temperature = Temperature.MIN_VALUE;
 
     @Test
     public void createInstanceOfAlgorithmOne() {

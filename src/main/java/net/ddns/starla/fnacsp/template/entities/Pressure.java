@@ -1,19 +1,18 @@
 package net.ddns.starla.fnacsp.template.entities;
 
 /**
- * This class abstracts the Temperature entity
+ * This class abstracts the Pressure entity
  */
-public final class Temperature extends Entity {
-    public static final double MIN_VALUE = -89.2;
-    public static final double MAX_VALUE = 54.0;
+public final class Pressure extends Entity {
+    public static final double MIN_VALUE = 0.85862324204293;
+    public static final double MAX_VALUE = 1.0696274364668;
 
     /**
-     * @param degrees Between [-89.2, 54.0] °C
-     * @see <a href="https://en.wikipedia.org/wiki/List_of_weather_records#Lowest_temperatures_ever_recorded">Lowest temperatures ever recorded</a>
-     * @see <a href="https://en.wikipedia.org/wiki/List_of_weather_records#Highest_temperatures_ever_recorded">Highest temperatures ever recorded</a>
+     * @param magnitude [0.85862324204293, 1.0696274364668] atm
+     * @see <a href="https://en.wikipedia.org/wiki/Atmospheric_pressure#Records">Atmospheric pressure records</a>
      */
-    public Temperature(double degrees) {
-        super(degrees);
+    public Pressure(double magnitude) {
+        super(magnitude);
     }
 
     /**
@@ -22,9 +21,11 @@ public final class Temperature extends Entity {
     @Override
     protected void assesInput() {
         if (!isItValid())
-            throw new TemperatureException(
-                    "Temperature must be between [" + Temperature.MIN_VALUE + ", " + Temperature.MAX_VALUE + "] °C");
+            throw new PressureException(
+                    "Pressure must be between [" + Pressure.MIN_VALUE + ", " + Pressure.MAX_VALUE + "] atm");
+
     }
+
 
     /**
      * @return true, if it belongs to the valid interval or range.
@@ -34,7 +35,7 @@ public final class Temperature extends Entity {
     }
 }
 
-class TemperatureException extends RuntimeException {
+class PressureException extends RuntimeException {
     /**
      * Constructs a new runtime exception with the specified detail message.
      * The cause is not initialized, and may subsequently be initialized by a
@@ -43,7 +44,7 @@ class TemperatureException extends RuntimeException {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    TemperatureException(String message) {
+    PressureException(String message) {
         super(message);
     }
 }
