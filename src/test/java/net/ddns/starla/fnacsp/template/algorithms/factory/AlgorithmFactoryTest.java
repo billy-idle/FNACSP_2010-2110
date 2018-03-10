@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.time.ZonedDateTime;
 
+import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class AlgorithmFactoryTest {
@@ -43,5 +44,11 @@ public class AlgorithmFactoryTest {
     public void createInstanceOfAlgorithmFive() {
         assertEquals(AlgorithmFive.class, AlgorithmFactory.createInstance("AlgorithmFive",
                 zonedDateTime, longitude, latitude, pressure, temperature).getClass());
+    }
+
+    @Test
+    public void getClasses() {
+        String[] classes = new String[]{"AlgorithmOne", "AlgorithmTwo", "AlgorithmThree", "AlgorithmFour", "AlgorithmFive"};
+        assertArrayEquals(classes, AlgorithmFactory.getClasses());
     }
 }

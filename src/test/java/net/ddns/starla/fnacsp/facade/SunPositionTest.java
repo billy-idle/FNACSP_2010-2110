@@ -96,6 +96,6 @@ public class SunPositionTest {
 
     @Test(expected = ZoneRulesException.class)
     public void whenZoneIdUnknown_ShouldThrowZoneRulesException() {
-        new SunPosition("AlgorithmOne", "Europe/Bogota", 0.21787, 0.73117, 1.0, 20.0).compute();
+        new SunPosition("Europe/Bogota", 0.21787, 0.73117, 1.0, 20.0).compute();
     }
 }

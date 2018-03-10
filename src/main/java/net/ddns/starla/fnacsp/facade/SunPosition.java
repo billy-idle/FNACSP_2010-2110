@@ -15,21 +15,19 @@ public final class SunPosition {
     private final Algorithm algorithm;
 
     /**
-     * Computes the instant sun position using the current date-time from the system clock
-     * in a specific time-zone (zoneId).
+     * Computes the instant sun position using the highest precision algorithm (Algorithm #5) in combination with the
+     * current date-time from the system clock in a specific timezone (zoneId).
      *
-     * @param algorithmClassName Valid names are any Algorithm subclass
-     * @param zoneId             zoneId not null (time-zone)
-     * @param longitude          [0, 2PI] rad
-     * @param latitude           [-PI/2,PI/2] rad
-     * @param pressure           [0.85862324204293, 1.0696274364668] atm
-     * @param temperature        Between [-89.2, 54.0] °C
+     * @param zoneId      zoneId not null (time-zone)
+     * @param longitude   [0, 2PI] rad
+     * @param latitude    [-PI/2,PI/2] rad
+     * @param pressure    [0.85862324204293, 1.0696274364668] atm
+     * @param temperature Between [-89.2, 54.0] °C
      * @see Algorithm#compute()
      */
-    public SunPosition(String algorithmClassName, String zoneId, double longitude,
-                       double latitude, double pressure, double temperature) {
-        this(algorithmClassName, ZonedDateTime.now().withZoneSameInstant(ZoneId.of(zoneId)), longitude, latitude,
-                pressure, temperature);
+    public SunPosition(String zoneId, double longitude, double latitude, double pressure, double temperature) {
+        this("AlgorithmFive", ZonedDateTime.now().withZoneSameInstant(ZoneId.of(zoneId)), longitude,
+                latitude, pressure, temperature);
     }
 
     /**

@@ -1,13 +1,47 @@
 # Five New Algorithms for the Computation of Sun Position from 2010 to 2110 in Java Language
 
 **Proposed by [Dr. Roberto Grena.](https://www.researchgate.net/profile/Roberto_Grena)**  
-**Implemented in Java languange by [Guillermo Guzmán Sánchez.](https://plus.google.com/u/0/+GuillermoGuzmánSánchez)**
+**Implemented in Java languange by [Guillermo Guzmán Sánchez.](https://plus.google.com/u/0/+MMcFly)**
 
 ## Overview
 
-This project is based on the [original C++ source code](http://www.solaritaly.enea.it/StrSunPosition/SunPositionEn.php), translated and refactored in Java language simplifying the extensibility and portability via a pattern-oriented OO design and test-driven development that enables adding new algorithms (e.g: _"Algorithm #6"_) without modifying the structure and implementation.
+This project is based on the [original C++ source code](http://www.solaritaly.enea.it/StrSunPosition/SunPositionEn.php), translated and refactored in Java language simplifying the extensibility and portability via a pattern-oriented OO design, SOLID principles and test-driven development allowing the addition of new algorithms (e.g., _"Algorithm #6"_) without modifying the structure and implementation.
 
-## Example using SunPosition
+## How to use it
+
+In order to compute the sun position, you have to create an instance of SunPosition; which it has two constructors:
+
+1. The first one is meant to compute what I call **"instant sun position"** using the highest precision algorithm (Algorithm #5) taking the current date and time from the system clock; the time-zone (zoneId) is passed as String:
+
+```java
+public SunPosition(String zoneId, double longitude, double latitude, double pressure, double temperature)
+```
+
+2. In the second one, you have more control because you can choose the algorithm; zoneId (String) it's replaced with an ZonedDateTime object:
+
+```java
+public SunPosition(String algorithmClassName, ZonedDateTime zonedDateTime, double longitude, double latitude, 
+                        double pressure, double temperature)
+```
+
+*For more information about time zones, see: <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>*
+
+## Example 1
+
+In this example SunPosition computes the position using the current date and time from the system clock; the time-zone (zoneId) is passed as String:
+
+```java
+double longitude = 0.21787;     // Domain -> [0, 2PI] rad
+double latitude = 0.73117;      // Domain -> [-PI/2, PI/2] rad
+double pressure = 1.0;          // Domain -> [0.85, 1.069] atm
+double temperature = 20.0;      // Domain -> [-89.2, 54.0] °C
+String zoneId = "Europe/Rome";
+
+SunPosition sunPosition = new SunPosition(zoneId, longitude, latitude, pressure, temperature);
+sunPosition.compute();
+```
+
+## Example 2
 
 In this example SunPosition computes the position at Rome (Italy), using the highest precision algorithm:
 
@@ -20,6 +54,7 @@ int minute = 30;
 int second = 0;
 int nanoSecond = 0;
 String zoneId = "Europe/Rome";
+
 ZonedDateTime romeZonedDateTime = 
     ZonedDateTime.of(year, month, day, hour, minute, second, nanoSecond, ZoneId.of(zoneId));
 
@@ -35,8 +70,6 @@ SunPosition sunPosition =
 
 sunPosition.compute();
 ```
-
-*For more information about time zones, see: <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>*
 
 Getting the computed values:
 
@@ -61,24 +94,3 @@ Declination     => -0.33191742160701926
 Hour Angle      => -5.98761790109209
 Is it daylight? => true
 ```
-
-## Example using InstantSunPosition
-
-In this example InstantSunPosition computes the position using the current date-time from the system clock; the algorithm class name and the time-zone (zoneId) are passed as String:
-
-```java
-double longitude = 0.21787;     // Domain -> [0, 2PI] rad
-double latitude = 0.73117;      // Domain -> [-PI/2, PI/2] rad
-double pressure = 1.0;          // Domain -> [0.85, 1.069] atm
-double temperature = 20.0;      // Domain -> [-89.2, 54.0] °C
-
-String algorithmClassName = "AlgorithmFive"; // Valid names are any Algorithm subclass.
-String zoneId = "Europe/Rome";
-
-InstantSunPosition instantSunPosition = 
-    new InstantSunPosition(algorithmClassName, zoneId, longitude, latitude, pressure, temperature);
-
-instantSunPosition.compute();
-```
-
-The "getting and printing output process" same as the previous example using the instantSunPosition object instead.

@@ -3,6 +3,8 @@ package net.ddns.starla.fnacsp.template.algorithms.factory;
 import net.ddns.starla.fnacsp.template.algorithms.Algorithm;
 import net.ddns.starla.fnacsp.template.entities.Entity;
 import net.ddns.starla.fnacsp.template.entities.factory.EntityFactory;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.time.ZonedDateTime;
@@ -11,6 +13,7 @@ import java.time.ZonedDateTime;
  * Factory Object Pattern
  */
 public final class AlgorithmFactory {
+
     /**
      * Prevents other classes from instantiating the class.
      * This is useful when a class wants to control all calls to create new instances of itself.
@@ -57,6 +60,15 @@ public final class AlgorithmFactory {
         }
 
         throw new AlgorithmFactoryException("Is not an Algorithm subclass");
+    }
+
+    /**
+     * Returns an array with the valid algorithms classes' names
+     */
+    @NotNull
+    @Contract(pure = true)
+    public static String[] getClasses() {
+        return new String[]{"AlgorithmOne", "AlgorithmTwo", "AlgorithmThree", "AlgorithmFour", "AlgorithmFive"};
     }
 }
 
