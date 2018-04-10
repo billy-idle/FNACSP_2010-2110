@@ -3,7 +3,7 @@
 **Proposed by [Dr. Roberto Grena.](https://www.researchgate.net/profile/Roberto_Grena)**  
 **Implemented in Java languange by [Guillermo Guzmán Sánchez.](https://plus.google.com/u/0/+MMcFly)**
 
-[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=net.ddns.starla%3A5NACSP&metric)](https://sonarcloud.io/dashboard/index/net.ddns.starla%3A5NACSP&metric)
+[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=net.ddns.starla%3A5NACSP&metric=alert_status)](https://sonarcloud.io/dashboard/index/net.ddns.starla%3A5NACSP&metric=alert_status)
 
 ## Overview
 
