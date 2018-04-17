@@ -1,7 +1,7 @@
 # Five New Algorithms for the Computation of Sun Position from 2010 to 2110 in Java Language
 
 **Proposed by [Dr. Roberto Grena.](https://www.researchgate.net/profile/Roberto_Grena)**  
-**Implemented in Java languange by [Guillermo Guzmán Sánchez.](https://plus.google.com/u/0/+MMcFly)**
+**Implemented in Java languange by [Guillermo Guzmán Sánchez.](mailto:guillesupremacy@gmail.com)**
 
 [![Quality Gate](https://sonarcloud.io/api/badges/gate?key=net.ddns.starla%3A5NACSP)](https://sonarcloud.io/dashboard/index/net.ddns.starla%3A5NACSP)
 
