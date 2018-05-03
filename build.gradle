@@ -1,9 +1,10 @@
+plugins{
+    id "java"
+    id "org.sonarqube" version "2.6"
+}
+
 group 'net.ddns.starla'
 version '1.0'
-
-apply plugin: 'java'
-
-sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
@@ -11,7 +12,5 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
-
-    // https://mvnrepository.com/artifact/org.jetbrains/annotations
     compile group: 'org.jetbrains', name: 'annotations', version: '15.0'
 }

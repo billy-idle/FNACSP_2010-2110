@@ -5,6 +5,8 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/5NACSP.iml" filepath="$PROJECT_DIR$/.idea/modules/5NACSP.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/5NACSP_main.iml" filepath="$PROJECT_DIR$/.idea/modules/5NACSP_main.iml" group="5NACSP" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/5NACSP_test.iml" filepath="$PROJECT_DIR$/.idea/modules/5NACSP_test.iml" group="5NACSP" />
+      <module fileurl="file://$PROJECT_DIR$/src/main/main.iml" filepath="$PROJECT_DIR$/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/test/test.iml" filepath="$PROJECT_DIR$/src/test/test.iml" />
     </modules>
   </component>
 </project>
