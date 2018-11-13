@@ -12,7 +12,7 @@ public abstract class Entity {
     }
 
     /**
-     * It should throw a runtime exception if it doesn't belong to the valid interval or range.
+     * It throws a runtime exception if it doesn't belong to the valid interval or range.
      */
     protected abstract void assesInput();
 
@@ -22,6 +22,6 @@ public abstract class Entity {
      * @return The value or magnitude
      */
     public final Object getValue() {
-        return value;
+        return this.value;
     }
 }

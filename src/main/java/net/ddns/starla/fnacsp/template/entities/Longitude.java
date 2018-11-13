@@ -1,33 +1,34 @@
 package net.ddns.starla.fnacsp.template.entities;
 
 public final class Longitude extends Entity {
-    public static final double MAX_LONGITUDE_VALUE = 6.28318530717959;
-    public static final double MIN_LONGITUDE_VALUE = 0.0;
+    public static final double MAX_LONGITUDE_RAD = 6.28318530717959;
+    public static final double MIN_LONGITUDE_RAD = 0.0;
 
     /**
-     * @param angle [0, 2PI] rad
+     * @param value [0, 2PI] rad
      */
-    public Longitude(double angle) {
-        super(angle);
+    public Longitude(double value) {
+        super(value);
     }
 
     /**
-     * It should throw a runtime exception if it doesn't belong to the valid interval or range.
+     * It throws a runtime exception if it doesn't belong to the valid interval or range.
      */
     @Override
     protected void assesInput() {
-        if (!isItValid()) {
+        if (isOutOfBounds()) {
             throw new LongitudeException(
-                    "Longitude must be between [" + MIN_LONGITUDE_VALUE + ", " + MAX_LONGITUDE_VALUE + "] rad");
+                    "Longitude must be between [" + Longitude.MIN_LONGITUDE_RAD + ", " + Longitude.MAX_LONGITUDE_RAD + "] rad");
 
         }
     }
 
     /**
-     * @return true, if it belongs to the valid interval or range.
+     * @return true, if it is out of bounds.
      */
-    private boolean isItValid() {
-        return ((double) value >= MIN_LONGITUDE_VALUE && (double) value <= MAX_LONGITUDE_VALUE);
+    private boolean isOutOfBounds() {
+        double longitude = (double) value;
+        return (longitude < Longitude.MIN_LONGITUDE_RAD || longitude > Longitude.MAX_LONGITUDE_RAD);
     }
 }
 
@@ -40,6 +41,7 @@ class LongitudeException extends RuntimeException {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
+    @SuppressWarnings("SameParameterValue")
     LongitudeException(String message) {
         super(message);
     }

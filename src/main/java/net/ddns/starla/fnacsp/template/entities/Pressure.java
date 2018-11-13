@@ -4,34 +4,34 @@ package net.ddns.starla.fnacsp.template.entities;
  * This class abstracts the Pressure entity
  */
 public final class Pressure extends Entity {
-    public static final double MIN_VALUE = 0.85862324204293;
-    public static final double MAX_VALUE = 1.0696274364668;
+    public static final double MIN_PRESS_IN_ATM = 0.85862324204293;
+    public static final double MAX_PRESS_IN_ATM = 1.0696274364668;
 
     /**
-     * @param magnitude [0.85862324204293, 1.0696274364668] atm
+     * @param value [0.85862324204293, 1.0696274364668] atm
      * @see <a href="https://en.wikipedia.org/wiki/Atmospheric_pressure#Records">Atmospheric pressure records</a>
      */
-    public Pressure(double magnitude) {
-        super(magnitude);
+    public Pressure(double value) {
+        super(value);
     }
 
     /**
-     * It should throw a runtime exception if it doesn't belong to the valid interval or range.
+     * It throws a runtime exception if it doesn't belong to the valid interval or range.
      */
     @Override
     protected void assesInput() {
-        if (!isItValid())
+        if (isOutOfBounds())
             throw new PressureException(
-                    "Pressure must be between [" + Pressure.MIN_VALUE + ", " + Pressure.MAX_VALUE + "] atm");
+                    "Pressure must be between [" + Pressure.MIN_PRESS_IN_ATM + ", " + Pressure.MAX_PRESS_IN_ATM + "] atm");
 
     }
 
-
     /**
-     * @return true, if it belongs to the valid interval or range.
+     * @return true, if it is out of bounds.
      */
-    private boolean isItValid() {
-        return ((double) value >= MIN_VALUE && (double) value <= MAX_VALUE);
+    private boolean isOutOfBounds() {
+        double press = (double) value;
+        return (press < Pressure.MIN_PRESS_IN_ATM || press > Pressure.MAX_PRESS_IN_ATM);
     }
 }
 
@@ -44,6 +44,7 @@ class PressureException extends RuntimeException {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
+    @SuppressWarnings("SameParameterValue")
     PressureException(String message) {
         super(message);
     }

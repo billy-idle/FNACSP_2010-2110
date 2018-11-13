@@ -10,11 +10,11 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;
 
 public class AlgorithmFactoryTest {
-    private final ZonedDateTime zonedDateTime = Time.BEGINNING_OF_VALID_TIME_INTERVAL;
-    private final double longitude = Longitude.MIN_LONGITUDE_VALUE;
-    private final double latitude = Latitude.MIN_LATITUDE_VALUE;
-    private final double pressure = Pressure.MIN_VALUE;
-    private final double temperature = Temperature.MIN_VALUE;
+    private final ZonedDateTime zonedDateTime = Time.BEGINNING_TIME_INTERVAL;
+    private final double longitude = Longitude.MIN_LONGITUDE_RAD;
+    private final double latitude = Latitude.MIN_LATITUDE_RAD;
+    private final double pressure = Pressure.MIN_PRESS_IN_ATM;
+    private final double temperature = Temperature.MIN_TEMP_CELSIUS;
 
     @Test
     public void createInstanceOfAlgorithmOne() {

@@ -55,7 +55,7 @@ public final class AlgorithmFactory {
             throw new AlgorithmFactoryException("Invocation Target Exception: " + e);
         }
 
-        if (Algorithm.class.isInstance(object)) {
+        if (object instanceof Algorithm) {
             return (Algorithm) object;
         }
 

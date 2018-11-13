@@ -51,7 +51,7 @@ public class AlgorithmFourTest extends AlgorithmTest {
 
     @Before
     public void computeSunPosition() {
-        algorithm = AlgorithmFactory.createInstance("AlgorithmFour", decimalToZonedDateTime(),
+        algorithm = AlgorithmFactory.createInstance("AlgorithmFour", decimalTimeToZonedDateTime(),
                 longitude, latitude, pressure, temperature);
         compute();
     }

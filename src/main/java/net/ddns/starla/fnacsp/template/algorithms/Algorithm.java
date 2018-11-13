@@ -1,13 +1,10 @@
 package net.ddns.starla.fnacsp.template.algorithms;
 
 import net.ddns.starla.fnacsp.template.entities.Entity;
-import org.jetbrains.annotations.Contract;
 
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-
-import static java.lang.Math.*;
-import static java.time.ZoneOffset.UTC;
-import static java.time.temporal.ChronoUnit.NANOS;
+import java.time.temporal.ChronoUnit;
 
 /**
  * Template Design Pattern
@@ -18,6 +15,10 @@ public abstract class Algorithm {
     static final double PIM = 1.57079632679490;
     static final double PI2 = 6.28318530717959;
     final double longitude;
+    private final ZonedDateTime zonedDateTime;
+    private final double latitude;
+    private final double pressure;
+    private final double temperature;
     double rightAscension;
     double declination;
     double hourAngle;
@@ -28,19 +29,15 @@ public abstract class Algorithm {
     private double azimuth;
     private double ep;
     private double de;
-    private final ZonedDateTime zonedDateTime;
-    private final double latitude;
-    private final double pressure;
-    private final double temperature;
 
     /**
      * @param time        Instance of Time entity class
      *                    (From 2010 to 2110 at UTC)
-     * @param longitude Instance of Longitude entity class.
+     * @param longitude   Instance of Longitude entity class.
      *                    (longitude between [0, 2PI] rad)
-     * @param latitude  Instance of Latitude entity class.
+     * @param latitude    Instance of Latitude entity class.
      *                    (latitude between [-PI/2,PI/2] rad)
-     * @param pressure Instance of Pressure entity class.
+     * @param pressure    Instance of Pressure entity class.
      *                    (Between [0.85862324204293, 1.0696274364668] atm)
      * @param temperature Instance of Temperature entity class.
      */
@@ -75,49 +72,48 @@ public abstract class Algorithm {
     protected abstract void accuracyLevel();
 
     private void shiftHourAngleToItsConventionalRange() {
-        hourAngle = ((hourAngle + PI) % PI2) - PI;
+        hourAngle = ((hourAngle + Algorithm.PI) % Algorithm.PI2) - Algorithm.PI;
     }
 
     private void applyFinalComputationallyOptimizedProcedure() {
-        double sp = sin(latitude);
-        double cp = sqrt((1 - sp * sp));
-        double sd = sin(declination);
-        double cd = sqrt(1 - sd * sd);
-        double sH = sin(hourAngle);
-        double cH = cos(hourAngle);
+        double sp = Math.sin(latitude);
+        double cp = Math.sqrt((1 - sp * sp));
+        double sd = Math.sin(declination);
+        double cd = Math.sqrt(1 - sd * sd);
+        double sH = Math.sin(hourAngle);
+        double cH = Math.cos(hourAngle);
         double se0 = sp * sd + cp * cd * cH;
 
-        ep = asin(se0) - 4.26e-5 * sqrt(1.0 - se0 * se0);
+        ep = Math.asin(se0) - 4.26e-5 * Math.sqrt(1.0 - se0 * se0);
 
-        azimuth = atan2(sH, cH * sp - sd * cp / cd);
+        azimuth = Math.atan2(sH, cH * sp - sd * cp / cd);
 
         if (ep > 0.0)
             applyRefractionCorrection();
 
-        zenith = PIM - ep - de;
+        zenith = Algorithm.PIM - ep - de;
     }
 
     private void zonedDateTimeToUTC() {
-        zonedDateTimeAtUTC = zonedDateTime.withZoneSameInstant(UTC);
+        zonedDateTimeAtUTC = zonedDateTime.withZoneSameInstant(ZoneOffset.UTC);
     }
 
     private double daysFromTheMidpointOfTheInterval() {
-        return NANOS.between(ZonedDateTime.of(2060, 1,
-                1, 0, 0, 0, 0, UTC), zonedDateTimeAtUTC) / 8.64e13;
+        return ChronoUnit.NANOS.between(ZonedDateTime.of(2060, 1,
+                1, 0, 0, 0, 0, ZoneOffset.UTC), zonedDateTimeAtUTC) / 8.64e13;
     }
 
     private void applyRefractionCorrection() {
-        de = (0.08422 * pressure) / ((273.0 + temperature) * tan(ep + 0.003138 / (ep + 0.08919)));
+        de = (0.08422 * pressure) / ((273.0 + temperature) * Math.tan(ep + 0.003138 / (ep + 0.08919)));
     }
 
     final void shiftRightAscensionToItsConventionalRange() {
-        rightAscension %= PI2;
+        rightAscension %= Algorithm.PI2;
     }
 
     /**
      * @return Azimuth angle [-PI,PI] rad
      */
-    @Contract(pure = true)
     public final double getAzimuth() {
         return azimuth;
     }
@@ -125,7 +121,6 @@ public abstract class Algorithm {
     /**
      * @return Right ascension [0,2PI] rad
      */
-    @Contract(pure = true)
     public final double getRightAscension() {
         return rightAscension;
     }
@@ -133,7 +128,6 @@ public abstract class Algorithm {
     /**
      * @return Declination [-PI/2, PI/2] rad
      */
-    @Contract(pure = true)
     public final double getDeclination() {
         return declination;
     }
@@ -141,7 +135,6 @@ public abstract class Algorithm {
     /**
      * @return Hour angle [-PI,PI] rad
      */
-    @Contract(pure = true)
     public final double getHourAngle() {
         return hourAngle;
     }
@@ -149,7 +142,6 @@ public abstract class Algorithm {
     /**
      * @return True if the sun is above the horizon
      */
-    @Contract(pure = true)
     public boolean isItDaylight() {
         return getElevation() > 0.0;
     }
@@ -157,7 +149,6 @@ public abstract class Algorithm {
     /**
      * @return Elevation angle [0,PIM]
      */
-    @Contract(pure = true)
     public double getElevation() {
         return Algorithm.PIM - getZenith();
     }
@@ -165,7 +156,6 @@ public abstract class Algorithm {
     /**
      * @return Zenith angle [0,PI] rad
      */
-    @Contract(pure = true)
     public final double getZenith() {
         return zenith;
     }
@@ -173,7 +163,6 @@ public abstract class Algorithm {
     /**
      * @return zonedDateTime
      */
-    @Contract(pure = true)
     public final ZonedDateTime getZonedDateTime() {
         return zonedDateTime;
     }
@@ -181,7 +170,6 @@ public abstract class Algorithm {
     /**
      * @return longitude
      */
-    @Contract(pure = true)
     public final double getLongitude() {
         return longitude;
     }
@@ -189,7 +177,6 @@ public abstract class Algorithm {
     /**
      * @return latitude
      */
-    @Contract(pure = true)
     public final double getLatitude() {
         return latitude;
     }
@@ -197,7 +184,6 @@ public abstract class Algorithm {
     /**
      * @return pressure
      */
-    @Contract(pure = true)
     public final double getPressure() {
         return pressure;
     }
@@ -205,7 +191,6 @@ public abstract class Algorithm {
     /**
      * @return temperature
      */
-    @Contract(pure = true)
     public final double getTemperature() {
         return temperature;
     }

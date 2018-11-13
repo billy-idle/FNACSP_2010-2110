@@ -1,8 +1,6 @@
 package net.ddns.starla.fnacsp.template.entities.factory;
 
 import net.ddns.starla.fnacsp.template.entities.Entity;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -53,7 +51,7 @@ public class EntityFactory {
             throw new EntityFactoryException("*Check the input value!* Invocation Target Exception: " + e);
         }
 
-        if (Entity.class.isInstance(object)) {
+        if (object instanceof Entity) {
             return (Entity) object;
         }
 
@@ -63,8 +61,6 @@ public class EntityFactory {
     /**
      * Returns an array with the valid entities classes' names
      */
-    @NotNull
-    @Contract(pure = true)
     public static String[] getClasses() {
         return new String[]{"Time", "Longitude", "Latitude", "Temperature", "Pressure"};
     }

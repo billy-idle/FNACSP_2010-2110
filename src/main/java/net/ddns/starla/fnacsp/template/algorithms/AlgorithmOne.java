@@ -2,9 +2,6 @@ package net.ddns.starla.fnacsp.template.algorithms;
 
 import net.ddns.starla.fnacsp.template.entities.Entity;
 
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
-
 public final class AlgorithmOne extends Algorithm {
 
     public AlgorithmOne(Entity time, Entity longitude, Entity latitude, Entity atmPressure, Entity temperature) {
@@ -14,8 +11,8 @@ public final class AlgorithmOne extends Algorithm {
     @Override
     public void accuracyLevel() {
         double wte = 0.017202786 * te;
-        double s1 = sin(wte);
-        double c1 = cos(wte);
+        double s1 = Math.sin(wte);
+        double c1 = Math.cos(wte);
         double s2 = 2.0 * s1 * c1;
         double c2 = (c1 + s1) * (c1 - s1);
 

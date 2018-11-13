@@ -51,7 +51,7 @@ public class AlgorithmFiveTest extends AlgorithmTest {
 
     @Before
     public void computeSunPosition() {
-        algorithm = AlgorithmFactory.createInstance("AlgorithmFive", decimalToZonedDateTime(),
+        algorithm = AlgorithmFactory.createInstance("AlgorithmFive", decimalTimeToZonedDateTime(),
                 longitude, latitude, pressure, temperature);
         compute();
     }

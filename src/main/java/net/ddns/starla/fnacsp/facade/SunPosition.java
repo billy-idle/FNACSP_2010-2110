@@ -2,7 +2,6 @@ package net.ddns.starla.fnacsp.facade;
 
 import net.ddns.starla.fnacsp.template.algorithms.Algorithm;
 import net.ddns.starla.fnacsp.template.algorithms.factory.AlgorithmFactory;
-import org.jetbrains.annotations.Contract;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -10,6 +9,7 @@ import java.time.ZonedDateTime;
 /**
  * Facade Design Pattern
  */
+@SuppressWarnings("unused")
 public final class SunPosition {
 
     private final Algorithm algorithm;
@@ -55,7 +55,6 @@ public final class SunPosition {
     /**
      * @return Zenith angle [0,PI] rad
      */
-    @Contract(pure = true)
     public double getZenith() {
         return algorithm.getZenith();
     }
@@ -63,7 +62,6 @@ public final class SunPosition {
     /**
      * @return Azimuth angle [-PI,PI] rad
      */
-    @Contract(pure = true)
     public double getAzimuth() {
         return algorithm.getAzimuth();
     }
@@ -71,7 +69,6 @@ public final class SunPosition {
     /**
      * @return Right ascension [0,2PI] rad
      */
-    @Contract(pure = true)
     public double getRightAscension() {
         return algorithm.getRightAscension();
     }
@@ -79,7 +76,6 @@ public final class SunPosition {
     /**
      * @return Declination [-PI/2, PI/2] rad
      */
-    @Contract(pure = true)
     public double getDeclination() {
         return algorithm.getDeclination();
     }
@@ -87,7 +83,6 @@ public final class SunPosition {
     /**
      * @return Hour angle [-PI,PI] rad
      */
-    @Contract(pure = true)
     public double getHourAngle() {
         return algorithm.getHourAngle();
     }
@@ -95,7 +90,6 @@ public final class SunPosition {
     /**
      * @return True if the sun is above the horizon
      */
-    @Contract(pure = true)
     public boolean isItDaylight() {
         return algorithm.isItDaylight();
     }
@@ -103,7 +97,6 @@ public final class SunPosition {
     /**
      * @return Elevation angle [0,PIM]
      */
-    @Contract(pure = true)
     public double getElevation() {
         return algorithm.getElevation();
     }
@@ -111,7 +104,6 @@ public final class SunPosition {
     /**
      * @return zonedDateTime
      */
-    @Contract(pure = true)
     public ZonedDateTime getZonedDateTime() {
         return algorithm.getZonedDateTime();
     }
@@ -119,7 +111,6 @@ public final class SunPosition {
     /**
      * @return longitude
      */
-    @Contract(pure = true)
     public double getLongitude() {
         return algorithm.getLongitude();
     }
@@ -127,7 +118,6 @@ public final class SunPosition {
     /**
      * @return latitude
      */
-    @Contract(pure = true)
     public double getLatitude() {
         return algorithm.getLatitude();
     }
@@ -135,7 +125,6 @@ public final class SunPosition {
     /**
      * @return pressure
      */
-    @Contract(pure = true)
     public double getPressure() {
         return algorithm.getPressure();
     }
@@ -143,7 +132,6 @@ public final class SunPosition {
     /**
      * @return temperature
      */
-    @Contract(pure = true)
     public double getTemperature() {
         return algorithm.getTemperature();
     }
