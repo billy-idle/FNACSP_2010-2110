@@ -3,9 +3,7 @@
 Proposed by [Dr. Roberto Grena.](https://www.researchgate.net/profile/Roberto_Grena)  
 Implemented in Java languange by [Guillermo Guzmán Sánchez.](mailto:guillesupremacy@gmail.com)
 
-[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=guillesup_FNACSP_2010-2110&metric=alert_status)](https://sonarcloud.io/dashboard?id=guillesup_FNACSP_2010-2110)
-
-https://sonarcloud.io/dashboard?id=guillesup_FNACSP_2010-2110
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=net.ddns.starla:5NACSP&metric=alert_status)](https://sonarcloud.io/dashboard?id=net.ddns.starla:5NACSP)
 
 ## Overview
 
