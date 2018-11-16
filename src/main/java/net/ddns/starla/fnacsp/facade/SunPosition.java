@@ -90,7 +90,7 @@ public final class SunPosition {
     /**
      * @return True if the sun is above the horizon
      */
-    public boolean isItDaylight() {
+    public boolean isItDaytime() {
         return algorithm.isItDaylight();
     }
 
@@ -134,5 +134,21 @@ public final class SunPosition {
      */
     public double getTemperature() {
         return algorithm.getTemperature();
+    }
+
+    @Override
+    public String toString() {
+        return ""
+                + "DateTime\t" + this.getZonedDateTime()
+                + "\nZenith\t\t" + round(this.getZenith()) + " rad"
+                + "\nAzimuth\t\t" + round(this.getAzimuth()) + " rad"
+                + "\nRight Asc.\t" + round(this.getRightAscension()) + " rad"
+                + "\nDeclination\t" + round(this.getDeclination()) + " rad"
+                + "\nHour Angle\t" + round(this.getHourAngle()) + " rad"
+                + "\nToD\t\t\t" + (this.isItDaytime() ? "Daytime" : "Night");
+    }
+
+    private double round(double number) {
+        return Math.round(number * 100.0) / 100.0;
     }
 }
