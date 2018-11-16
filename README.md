@@ -22,8 +22,9 @@ double pressure = 1.0;          // Domain -> [0.85, 1.069] atm
 double temperature = 20.0;      // Domain -> [-89.2, 54.0] °C
 String zoneId = "Europe/Rome";
 
-SunPosition sunPosition = new SunPosition(zoneId, longitude, latitude, pressure, temperature);
-sunPosition.compute();
+SunPosition sp = new SunPosition(zoneId, longitude, latitude, pressure, temperature);
+
+sp.compute();
 ```
 
 2. In the second one, you have to pass the algorithm's name as `String` (`AlgorithmOne`, `AlgorithmTwo`, `AlgorithmThree`, `AlgorithmFour`, or, `AlgorithmFive`) along with the specific date-time needed, therefore `zoneId` is replaced with a `ZonedDateTime` object instead:
@@ -38,7 +39,7 @@ int second = 0;
 int nanoSecond = 0;
 String zoneId = "Europe/Rome";
 
-ZonedDateTime romeZonedDateTime =
+ZonedDateTime romeZDT =
     ZonedDateTime.of(year, month, day, hour, minute, second, nanoSecond, ZoneId.of(zoneId));
 
 double longitude = 0.21787;     // Domain -> [0, 2PI] rad
@@ -48,34 +49,26 @@ double temperature = 20.0;      // Domain -> [-89.2, 54.0] °C
 
 String algorithm = "AlgorithmFive"; // "AlgorithmOne", "AlgorithmTwo", "AlgorithmThree", "AlgorithmFour", or, "AlgorithmFive".
 
-SunPosition sunPosition =
-    new SunPosition(algorithm, romeZonedDateTime, longitude, latitude, pressure, temperature);
+SunPosition sp =
+    new SunPosition(algorithm, romeZDT, longitude, latitude, pressure, temperature);
 
-sunPosition.compute();
+sp.compute();
 ```
 
 *For more information about time zones, see: <https://en.wikipedia.org/wiki/List_of_tz_database_time_zones>*
 
-## Getting the computed values
-
-```java
-ZonedDateTime zdt = sunPosition.getZonedDateTime();
-double zenith = sunPosition.getZenith();                    // Range -> [0, PI] rad
-double azimuth = sunPosition.getAzimuth();                  // Range -> [-PI, PI] rad
-double rightAscension = sunPosition.getRightAscension();    // Range -> [0, 2PI] rad
-double declination = sunPosition.getDeclination();          // Range -> [-PI/2, PI/2] rad
-double hourAngle = sunPosition.getHourAngle();              // Range -> [-PI, PI] rad
-boolean isItDaylight = sunPosition.isItDaylight();          // Return True if the sun is above the horizon.
-```
-
 ## Printing the output
 
+```java
+System.out.println(sp);
+```
+
 ```console
-ZonedDateTime   => 2020-01-25T13:30+01:00[Europe/Rome]
-Zenith          => 1.097167781330322
-Azimuth         => 0.31452718410556935
-Right Ascension => 5.364004066519731
-Declination     => -0.33191742160701926
-Hour Angle      => -5.98761790109209
-Is it daylight? => true
+DateTime    2020-01-25T13:30+01:00[Europe/Rome]
+Zenith      1.1 rad     // Range -> [0, PI] rad
+Azimuth     0.31 rad    // Range -> [-PI, PI] rad
+Right Asc.  5.36 rad    // Range -> [0, 2PI] rad
+Declination -0.33 rad   // Range -> [-PI/2, PI/2] rad
+Hour Angle  -5.99 rad   // Range -> [-PI, PI] rad
+ToD         Daytime     // ToD (Time of Day) either Daytime or Night.
 ```
