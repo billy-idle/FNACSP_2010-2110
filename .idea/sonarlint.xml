@@ -2,7 +2,7 @@
 <project version="4">
   <component name="SonarLintProjectSettings">
     <option name="bindingEnabled" value="true" />
-    <option name="projectKey" value="net.ddns.starla:5NACSP" />
+    <option name="projectKey" value="guillesup_FNACSP_2010-2110" />
     <option name="serverId" value="config_sonarcloud" />
   </component>
 </project>
