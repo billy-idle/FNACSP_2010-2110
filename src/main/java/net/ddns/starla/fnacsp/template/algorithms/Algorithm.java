@@ -142,8 +142,8 @@ public abstract class Algorithm {
     /**
      * @return True if the sun is above the horizon
      */
-    public boolean isItDaylight() {
-        return getElevation() > 0.0;
+    public String timeOfDay() {
+        return getElevation() > 0.0 ? "Daytime" : "Night";
     }
 
     /**

@@ -90,8 +90,8 @@ public final class SunPosition {
     /**
      * @return True if the sun is above the horizon
      */
-    public boolean isItDaytime() {
-        return algorithm.isItDaylight();
+    public String getTimeOfDay() {
+        return algorithm.timeOfDay();
     }
 
     /**
@@ -145,7 +145,7 @@ public final class SunPosition {
                 + "\nRight Asc.\t" + round(this.getRightAscension()) + " rad"
                 + "\nDeclination\t" + round(this.getDeclination()) + " rad"
                 + "\nHour Angle\t" + round(this.getHourAngle()) + " rad"
-                + "\nToD\t\t\t" + (this.isItDaytime() ? "Daytime" : "Night");
+                + "\nToD\t\t\t" + (this.getTimeOfDay());
     }
 
     private double round(double number) {

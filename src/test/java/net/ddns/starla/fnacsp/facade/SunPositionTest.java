@@ -119,7 +119,7 @@ public class SunPositionTest {
                 + "\nRight Asc.\t" + round(sp.getRightAscension()) + " rad"
                 + "\nDeclination\t" + round(sp.getDeclination()) + " rad"
                 + "\nHour Angle\t" + round(sp.getHourAngle()) + " rad"
-                + "\nToD\t\t\t" + (sp.isItDaytime() ? "Daytime" : "Night");
+                + "\nToD\t\t\t" + (sp.getTimeOfDay());
 
         assertEquals(expectedString, sp.toString());
     }
