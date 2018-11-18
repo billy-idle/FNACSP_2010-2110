@@ -13,7 +13,7 @@ This project is based on the [original C++ source code](http://www.solaritaly.en
 
 ![alt text][fnacsp-class-diagram]
 
-## How to use `SunPosition`
+## How to compute the sun position
 
 There are two ways to compute the sun position:
 
@@ -83,7 +83,7 @@ ToD         Daytime     // ToD (Time of Day) either Daytime or Night.
 
 ![alt text][se-class-diagram]
 
-## How to use `SunEphemeris`
+## How to compute the sun ephemeris
 
 ```java
 double temperature = 20.0;
@@ -95,7 +95,7 @@ SunEphemeris se = new SunEphemeris("Europe/Rome", longitude, latitude, pressure,
 se.compute();
 ```
 
-## Printing the ephemeris
+## Printing the sun ephemeris
 
 ```java
 System.out.println(se);
