@@ -1,6 +1,6 @@
 plugins{
     id "java"
-    id "org.sonarqube" version "2.6"
+    id "org.sonarqube" version "2.6.2"
 }
 
 group 'net.ddns.starla'
@@ -13,4 +13,10 @@ repositories {
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
     compile group: 'org.jetbrains', name: 'annotations', version: '15.0'
+}
+
+sonarqube{
+    properties{
+        property "sonar.junit.reportPaths", "../FNACSP_2010-2110/build/test-results/test"
+    }
 }
