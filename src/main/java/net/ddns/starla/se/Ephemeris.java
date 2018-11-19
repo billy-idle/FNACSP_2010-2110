@@ -18,8 +18,8 @@ class Ephemeris {
     private final double pressure;
     private final double temperature;
 
-    public Ephemeris(String algorithm, ChronoUnit timeUnit, ZonedDateTime start, ZonedDateTime end,
-                     double longitude, double latitude, double pressure, double temperature) {
+    Ephemeris(String algorithm, ChronoUnit timeUnit, ZonedDateTime start, ZonedDateTime end,
+              double longitude, double latitude, double pressure, double temperature) {
         this.algorithm = algorithm;
         this.timeUnit = timeUnit;
         this.start = start;
@@ -45,47 +45,47 @@ class Ephemeris {
         } while (this.start.isBefore(this.end));
     }
 
-    public double[] getZenith() {
+    double[] getZenith() {
         return this.sunPositions.stream().mapToDouble(SunPosition::getZenith).toArray();
     }
 
-    public double[] getAzimuth() {
+    double[] getAzimuth() {
         return sunPositions.stream().mapToDouble(SunPosition::getAzimuth).toArray();
     }
 
-    public double[] getRightAscension() {
+    double[] getRightAscension() {
         return this.sunPositions.stream().mapToDouble(SunPosition::getRightAscension).toArray();
     }
 
-    public double[] getDeclination() {
+    double[] getDeclination() {
         return this.sunPositions.stream().mapToDouble(SunPosition::getDeclination).toArray();
     }
 
-    public double[] getHourAngle() {
+    double[] getHourAngle() {
         return this.sunPositions.stream().mapToDouble(SunPosition::getHourAngle).toArray();
     }
 
-    public ZonedDateTime[] getTimeInterval() {
+    ZonedDateTime[] getTimeInterval() {
         return this.sunPositions.stream().map(SunPosition::getZonedDateTime).toArray(ZonedDateTime[]::new);
     }
 
-    public String[] getTimeOfDay() {
+    String[] getTimeOfDay() {
         return this.sunPositions.stream().map(SunPosition::getTimeOfDay).toArray(String[]::new);
     }
 
-    public double getLongitude(){
+    double getLongitude(){
         return sunPositions.get(0).getLongitude();
     }
 
-    public double getLatitude(){
+    double getLatitude(){
         return sunPositions.get(0).getLatitude();
     }
 
-    public double[] getPressure() {
+    double[] getPressure() {
         return this.sunPositions.stream().mapToDouble(SunPosition::getPressure).toArray();
     }
 
-    public double[] getTemperature(){
+    double[] getTemperature(){
         return this.sunPositions.stream().mapToDouble(SunPosition::getTemperature).toArray();
     }
 }
