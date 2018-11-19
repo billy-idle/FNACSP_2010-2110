@@ -4,9 +4,17 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$/../..">
       <excludeFolder url="file://$MODULE_DIR$/../../.gradle" />
-      <excludeFolder url="file://$MODULE_DIR$/../../build" />
+      <excludeFolder url="file://$MODULE_DIR$/../../build/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/../../build/libs" />
+      <excludeFolder url="file://$MODULE_DIR$/../../build/reports" />
+      <excludeFolder url="file://$MODULE_DIR$/../../build/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/../../build/tmp/compileJava" />
+      <excludeFolder url="file://$MODULE_DIR$/../../build/tmp/compileTestJava" />
+      <excludeFolder url="file://$MODULE_DIR$/../../build/tmp/jar" />
       <excludeFolder url="file://$MODULE_DIR$/../../out" />
     </content>
+    <content url="file://$MODULE_DIR$/../../build/test-results" />
+    <content url="file://$MODULE_DIR$/../../build/test-results/test" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
