@@ -9,7 +9,6 @@ import java.time.ZonedDateTime;
 /**
  * Facade Design Pattern
  */
-@SuppressWarnings("unused")
 public final class SunPosition {
 
     private final Algorithm algorithm;

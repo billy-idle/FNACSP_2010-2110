@@ -8,13 +8,10 @@ public class SunEphemeris {
     private final Ephemeris ephemeris;
 
     public SunEphemeris(String zoneId, double longitude, double latitude, double pressure, double temperature) {
-        String algorithm = "AlgorithmFive";
-        ZoneId zoneId1 = ZoneId.of(zoneId);
-        ChronoUnit timeUnit = ChronoUnit.MINUTES;
-        ZonedDateTime start = ZonedDateTime.now(zoneId1).withHour(0).withMinute(0).withSecond(0).withNano(0);
-        ZonedDateTime end = start.plusDays(1);
+        ZonedDateTime start = ZonedDateTime.now(ZoneId.of(zoneId)).withHour(0).withMinute(0).withSecond(0).withNano(0);
 
-        this.ephemeris = new Ephemeris(algorithm, timeUnit, start, end, longitude, latitude, pressure, temperature);
+        this.ephemeris = new Ephemeris("AlgorithmFive", ChronoUnit.MINUTES, start, start.plusDays(1), longitude,
+                latitude, pressure, temperature);
     }
 
     public void compute() {

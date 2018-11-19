@@ -52,9 +52,16 @@ public class AlgorithmFactoryTest {
                 zonedDateTime, longitude, latitude, pressure, temperature).getClass());
     }
 
+    @Test(expected = AlgorithmFactoryException.class)
+    public void createInstanceOfUnknownAlgorithm_ShouldThrowAlgorithmFactoryException() {
+        AlgorithmFactory.createInstance("UnknownAlgorithm",
+                zonedDateTime, longitude, latitude, pressure, temperature);
+    }
+
     @Test
     public void getClasses() {
-        String[] classes = new String[]{"AlgorithmOne", "AlgorithmTwo", "AlgorithmThree", "AlgorithmFour", "AlgorithmFive"};
-        assertArrayEquals(classes, AlgorithmFactory.getClasses());
+        String[] classNames =
+                new String[]{"AlgorithmOne", "AlgorithmTwo", "AlgorithmThree", "AlgorithmFour", "AlgorithmFive"};
+        assertArrayEquals(classNames, AlgorithmFactory.getClassNames());
     }
 }

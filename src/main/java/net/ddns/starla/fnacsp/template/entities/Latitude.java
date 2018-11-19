@@ -40,7 +40,6 @@ class LatitudeException extends RuntimeException {
      * @param message the detail message. The detail message is saved for
      *                later retrieval by the {@link #getMessage()} method.
      */
-    @SuppressWarnings("SameParameterValue")
     LatitudeException(String message) {
         super(message);
     }

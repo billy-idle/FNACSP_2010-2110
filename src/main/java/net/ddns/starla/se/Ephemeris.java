@@ -36,7 +36,6 @@ class Ephemeris {
     }
 
     private void setUpList() {
-
         this.sunPositions = new ArrayList<>((int) this.timeUnit.between(start, end));
 
         do {
