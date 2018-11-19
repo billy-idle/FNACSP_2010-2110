@@ -16,6 +16,12 @@ public class AlgorithmFactoryTest {
     private final double pressure = Pressure.MIN_PRESS_IN_ATM;
     private final double temperature = Temperature.MIN_TEMP_CELSIUS;
 
+    @Test(expected = AlgorithmFactoryException.class)
+    public void createInstanceOfAlgorithm_ShouldTrowAlgorithmFactoryException() {
+        assertEquals(Algorithm.class, AlgorithmFactory.createInstance("Algorithm",
+                zonedDateTime, longitude, latitude, pressure, temperature).getClass());
+    }
+
     @Test
     public void createInstanceOfAlgorithmOne() {
         assertEquals(AlgorithmOne.class, AlgorithmFactory.createInstance("AlgorithmOne",

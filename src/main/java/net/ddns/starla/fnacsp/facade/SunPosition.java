@@ -91,14 +91,7 @@ public final class SunPosition {
      * @return True if the sun is above the horizon
      */
     public String getTimeOfDay() {
-        return algorithm.timeOfDay();
-    }
-
-    /**
-     * @return Elevation angle [0,PIM]
-     */
-    public double getElevation() {
-        return algorithm.getElevation();
+        return algorithm.getTimeOfDay();
     }
 
     /**
@@ -138,17 +131,34 @@ public final class SunPosition {
 
     @Override
     public String toString() {
-        return ""
-                + "DateTime\t" + this.getZonedDateTime()
-                + "\nZenith\t\t" + round(this.getZenith()) + " rad"
-                + "\nAzimuth\t\t" + round(this.getAzimuth()) + " rad"
-                + "\nRight Asc.\t" + round(this.getRightAscension()) + " rad"
-                + "\nDeclination\t" + round(this.getDeclination()) + " rad"
-                + "\nHour Angle\t" + round(this.getHourAngle()) + " rad"
-                + "\nToD\t\t\t" + (this.getTimeOfDay());
-    }
+        StringBuilder table = new StringBuilder();
+        StringBuilder row = new StringBuilder();
+        StringBuilder output = new StringBuilder();
 
-    private double round(double number) {
-        return Math.round(number * 100.0) / 100.0;
+        String desc = String.format("Sun Ephemeris for %1$s at Long. %3$f and Lat. %4$f on %2$tB %2$te of %2$tY%n%n",
+                algorithm.getZonedDateTime().getZone(), algorithm.getZonedDateTime(), algorithm.getLongitude(), algorithm.getLatitude());
+
+        String tableHeader = String.format("%-10s %-10s %-10s %-13s %-15s %-10s %8s %8s %8s%n", "Time", "Zenith",
+                "Azimuth", "Right Asc.", "Declination", "Hour Angle", "Pres.", "Temp.", "ToD");
+
+        row.append(String.format("%tT", algorithm.getZonedDateTime()));
+        row.append(String.format("%9.3f", algorithm.getZenith()));
+        row.append(String.format("%12.3f", algorithm.getAzimuth()));
+        row.append(String.format("%12.3f", algorithm.getRightAscension()));
+        row.append(String.format("%15.3f", algorithm.getDeclination()));
+        row.append(String.format("%15.3f", algorithm.getHourAngle()));
+        row.append(String.format("%10.1f", algorithm.getPressure()));
+        row.append(String.format("%10.1f", algorithm.getTemperature()));
+        row.append(String.format("%10s%n", algorithm.getTimeOfDay()));
+
+        table.append(tableHeader).append(row);
+
+        String footer = String.format("%n%s%n%s%n%s%n%s%n", "* angles in radians (rad)",
+                "* Pressure in atmospheres (atm)", "* Temperature in Celsius degrees (°C)",
+                "* ToD stands for \"Time of Day\"");
+
+        output.append(desc).append(table).append(footer);
+
+        return output.toString();
     }
 }

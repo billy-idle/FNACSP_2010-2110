@@ -142,14 +142,14 @@ public abstract class Algorithm {
     /**
      * @return True if the sun is above the horizon
      */
-    public String timeOfDay() {
-        return getElevation() > 0.0 ? "Daytime" : "Night";
+    public String getTimeOfDay() {
+        return this.getElevation() > 0.0 ? "Daytime" : "Night";
     }
 
     /**
      * @return Elevation angle [0,PIM]
      */
-    public double getElevation() {
+    private double getElevation() {
         return Algorithm.PIM - getZenith();
     }
 

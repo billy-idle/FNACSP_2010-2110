@@ -49,27 +49,56 @@ public class SunEphemeris {
         return ephemeris.getTimeOfDay();
     }
 
+    public double getLongitude() {
+        return ephemeris.getLongitude();
+    }
+
+    public double getLatitude() {
+        return ephemeris.getLatitude();
+    }
+
+    public double[] getPressure() {
+        return ephemeris.getPressure();
+    }
+
+    public double[] getTemperature() {
+        return ephemeris.getTemperature();
+    }
+
     @Override
     public String toString() {
+        StringBuilder table = new StringBuilder();
+        StringBuilder row = new StringBuilder();
         StringBuilder output = new StringBuilder();
 
-        output.append(String.format("Sun Ephemeris for %1$s on %2$tB %2$te of %2$tY%n",
-                this.getTimeInterval()[0].getZone(),
-                this.getTimeInterval()[0])).append("\n").append(String.format("%-10s %-10s %-10s %-13s %-15s %-10s %8s", "Time", "Zenith",
-                "Azimuth", "Right Asc.", "Declination", "Hour Angle", "ToD")).append("\n");
+        String desc = String.format("Sun Ephemeris for %1$s at Long. %3$f and Lat. %4$f on %2$tB %2$te of %2$tY%n%n",
+                ephemeris.getTimeInterval()[0].getZone(), ephemeris.getTimeInterval()[0], ephemeris.getLongitude(),
+                ephemeris.getLatitude());
 
-        for (int i = 0; i < this.getTimeInterval().length; i++) {
-            output.append(String.format("%tT", this.getTimeInterval()[i]));
-            output.append(String.format("%10.3f", this.getZenith()[i]));
-            output.append(String.format("%10.3f", this.getAzimuth()[i]));
-            output.append(String.format("%15.3f", this.getRightAscension()[i]));
-            output.append(String.format("%15.3f", this.getDeclination()[i]));
-            output.append(String.format("%15.3f", this.getHourAngle()[i]));
-            output.append(String.format("%10s%n", this.getTimeOfDay()[i]));
+        String tableHeader = String.format("%-10s %-10s %-10s %-13s %-15s %-10s %8s %8s %8s%n", "Time", "Zenith",
+                "Azimuth", "Right Asc.", "Declination", "Hour Angle", "Pres.", "Temp.", "ToD");
+
+        for (int i = 0; i < ephemeris.getTimeInterval().length; i++) {
+            row.append(String.format("%tT", ephemeris.getTimeInterval()[i]));
+            row.append(String.format("%9.3f", ephemeris.getZenith()[i]));
+            row.append(String.format("%12.3f", ephemeris.getAzimuth()[i]));
+            row.append(String.format("%12.3f", ephemeris.getRightAscension()[i]));
+            row.append(String.format("%15.3f", ephemeris.getDeclination()[i]));
+            row.append(String.format("%15.3f", ephemeris.getHourAngle()[i]));
+            row.append(String.format("%10.1f", ephemeris.getPressure()[i]));
+            row.append(String.format("%10.1f", ephemeris.getTemperature()[i]));
+            row.append(String.format("%10s%n", ephemeris.getTimeOfDay()[i]));
         }
 
-        output.append("\n" + "* angles in radians (rad)");
+        table.append(tableHeader).append(row);
+
+        String footer = String.format("%n%s%n%s%n%s%n%s%n", "* angles in radians (rad)",
+                "* Pressure in atmospheres (atm)", "* Temperature in Celsius degrees (°C)",
+                "* ToD stands for \"Time of Day\"");
+
+        output.append(desc).append(table).append(footer);
 
         return output.toString();
     }
+
 }

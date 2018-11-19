@@ -26,6 +26,7 @@ public class SunPositionTest {
     private final double temperature = 20.0;
     private final ZonedDateTime europeRomeBTI = BEGINNING_TIME_INTERVAL.withZoneSameInstant(ZoneId.of("Europe/Rome"));
     private final ZonedDateTime europeRomeETI = END_TIME_INTERVAL.withZoneSameInstant(ZoneId.of("Europe/Rome"));
+    private SunPosition sp;
 
     @Test(expected = RuntimeException.class)
     public void whenBeforeBeginningTimeInterval_ShouldThrowIllegalArgumentException() {
@@ -106,22 +107,47 @@ public class SunPositionTest {
 
     @Test
     public void printingOutput() {
-        SunPosition sp = new SunPosition(algorithmClassName,
+        sp = new SunPosition(algorithmClassName,
                 ZonedDateTime.now().withZoneSameInstant(ZoneId.of("Europe/Rome")), longitude, latitude, pressure,
                 temperature);
 
         sp.compute();
 
-        String expectedString = ""
-                + "DateTime\t" + sp.getZonedDateTime()
-                + "\nZenith\t\t" + round(sp.getZenith()) + " rad"
-                + "\nAzimuth\t\t" + round(sp.getAzimuth()) + " rad"
-                + "\nRight Asc.\t" + round(sp.getRightAscension()) + " rad"
-                + "\nDeclination\t" + round(sp.getDeclination()) + " rad"
-                + "\nHour Angle\t" + round(sp.getHourAngle()) + " rad"
-                + "\nToD\t\t\t" + (sp.getTimeOfDay());
+        String expectedString = output();
 
         assertEquals(expectedString, sp.toString());
+    }
+
+    private String output() {
+        StringBuilder table = new StringBuilder();
+        StringBuilder row = new StringBuilder();
+        StringBuilder output = new StringBuilder();
+
+        String desc = String.format("Sun Ephemeris for %1$s at Long. %3$f and Lat. %4$f on %2$tB %2$te of %2$tY%n%n",
+                sp.getZonedDateTime().getZone(), sp.getZonedDateTime(), sp.getLongitude(), sp.getLatitude());
+
+        String tableHeader = String.format("%-10s %-10s %-10s %-13s %-15s %-10s %8s %8s %8s%n", "Time", "Zenith",
+                "Azimuth", "Right Asc.", "Declination", "Hour Angle", "Pres.", "Temp.", "ToD");
+
+        row.append(String.format("%tT", sp.getZonedDateTime()));
+        row.append(String.format("%9.3f", sp.getZenith()));
+        row.append(String.format("%12.3f", sp.getAzimuth()));
+        row.append(String.format("%12.3f", sp.getRightAscension()));
+        row.append(String.format("%15.3f", sp.getDeclination()));
+        row.append(String.format("%15.3f", sp.getHourAngle()));
+        row.append(String.format("%10.1f", sp.getPressure()));
+        row.append(String.format("%10.1f", sp.getTemperature()));
+        row.append(String.format("%10s%n", sp.getTimeOfDay()));
+
+        table.append(tableHeader).append(row);
+
+        String footer = String.format("%n%s%n%s%n%s%n%s%n", "* angles in radians (rad)",
+                "* Pressure in atmospheres (atm)", "* Temperature in Celsius degrees (°C)",
+                "* ToD stands for \"Time of Day\"");
+
+        output.append(desc).append(table).append(footer);
+
+        return output.toString();
     }
 
     private double round(double number) {

@@ -73,4 +73,20 @@ class Ephemeris {
     public String[] getTimeOfDay() {
         return this.sunPositions.stream().map(SunPosition::getTimeOfDay).toArray(String[]::new);
     }
+
+    public double getLongitude(){
+        return sunPositions.get(0).getLongitude();
+    }
+
+    public double getLatitude(){
+        return sunPositions.get(0).getLatitude();
+    }
+
+    public double[] getPressure() {
+        return this.sunPositions.stream().mapToDouble(SunPosition::getPressure).toArray();
+    }
+
+    public double[] getTemperature(){
+        return this.sunPositions.stream().mapToDouble(SunPosition::getTemperature).toArray();
+    }
 }

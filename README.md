@@ -66,18 +66,20 @@ System.out.println(sp);
 ```
 
 ```console
-DateTime    2020-01-25T13:30+01:00[Europe/Rome]
-Zenith      1.1 rad     // Range -> [0, PI] rad
-Azimuth     0.31 rad    // Range -> [-PI, PI] rad
-Right Asc.  5.36 rad    // Range -> [0, 2PI] rad
-Declination -0.33 rad   // Range -> [-PI/2, PI/2] rad
-Hour Angle  -5.99 rad   // Range -> [-PI, PI] rad
-ToD         Daytime     // ToD (Time of Day) either Daytime or Night.
+Sun Ephemeris for Europe/Rome at Long. 0.217870 and Lat. 0.731170 on January 25 of 2020
+
+Time       Zenith     Azimuth    Right Asc.    Declination     Hour Angle    Pres.    Temp.      ToD
+13:30:00    1.097       0.315       5.364         -0.332         -5.988       1.0      20.0   Daytime
+
+* angles in radians (rad)
+* Pressure in atmospheres (atm)
+* Temperature in Celsius degrees (°C)
+* ToD stands for "Time of Day"
 ```
 
 ## Sun Ephemeris
 
-`SunEphemeris` (as the name implies) allows you to compute the sun ephemeris for one day starting at 00:00:00 hours evenly spaced in minutes. In order to compute the ephemeris you have to pass the `zoneId` along with the `longitude`, `latitude`, `pressure` and `temperature`. `SunEphemeris` gets the current date from the system clock and use the `AlgorithmFive`.
+`SunEphemeris` (as the name implies) allows you to compute the sun ephemeris for one day starting at 00:00:00 hours evenly spaced in minutes. In order to compute the ephemeris you have to pass the `zoneId` along with the `longitude`, `latitude`, `pressure` and `temperature`. `SunEphemeris` gets the current date from the system's clock and uses the `AlgorithmFive`.
 
 ## Sun Ephemeris Class Diagram
 
@@ -102,21 +104,23 @@ System.out.println(se);
 ```
 
 ```console
-Sun Ephemeris for Europe/Rome on November 18 of 2018
+Sun Ephemeris for Europe/Rome at Long. 0.217870 and Lat. 0.731170 on November 19 of 2018
 
-Time       Zenith     Azimuth    Right Asc.    Declination     Hour Angle      ToD
-00:00:00     2.744    -3.089          4.070         -0.334         -9.403     Night
-00:01:00     2.744    -3.079          4.070         -0.334         -9.399     Night
-00:02:00     2.744    -3.068          4.070         -0.334         -9.395     Night
+Time       Zenith     Azimuth    Right Asc.    Declination     Hour Angle    Pres.    Temp.      ToD
+00:00:00    2.748      -3.091       4.088         -0.338         -9.404       1.0      20.0     Night
+00:01:00    2.748      -3.081       4.088         -0.338         -9.400       1.0      20.0     Night
+00:02:00    2.748      -3.070       4.088         -0.338         -9.396       1.0      20.0     Night
 ...
-07:09:00     1.560    -1.110          4.076         -0.335         -7.532   Daytime
-07:10:00     1.558    -1.107          4.076         -0.335         -7.527   Daytime
-07:11:00     1.555    -1.104          4.076         -0.335         -7.523   Daytime
+07:10:00    1.561      -1.105       4.094         -0.339         -7.528       1.0      20.0   Daytime
+07:11:00    1.558      -1.102       4.094         -0.339         -7.524       1.0      20.0   Daytime
+07:12:00    1.556      -1.099       4.094         -0.339         -7.520       1.0      20.0   Daytime
 ...
-23:59:00     2.748    -3.102          4.088         -0.338         -9.409     Night
+23:59:00    2.753      -3.104       4.107         -0.342         -9.410       1.0      20.0     Night
 
 * angles in radians (rad)
-
+* Pressure in atmospheres (atm)
+* Temperature in Celsius degrees (°C)
+* ToD stands for "Time of Day"
 ```
 
 [fnacsp-class-diagram]: images/fnacsp-class-diagram.png "Sun Position Class Diagram"
