@@ -8,7 +8,6 @@ public final class AlgorithmFive extends Algorithm {
         super(time, longitude, latitude, atmPressure, temperature);
     }
 
-    @Override
     public void accuracyLevel() {
         double wte = 0.0172019715 * te;
         double s1 = Math.sin(wte);

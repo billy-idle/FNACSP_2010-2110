@@ -8,7 +8,6 @@ public final class AlgorithmOne extends Algorithm {
         super(time, longitude, latitude, atmPressure, temperature);
     }
 
-    @Override
     public void accuracyLevel() {
         double wte = 0.017202786 * te;
         double s1 = Math.sin(wte);

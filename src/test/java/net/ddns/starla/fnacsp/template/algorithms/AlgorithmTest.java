@@ -76,7 +76,7 @@ public abstract class AlgorithmTest {
     }
 
     @Test
-    @Ignore
+    @Ignore("The right ascension range has to be reviewed")
     public void rightAscensionInRange() {
         assertTrue(isInRange(0, Algorithm.PI2, algorithm.getRightAscension()));
     }
@@ -87,7 +87,7 @@ public abstract class AlgorithmTest {
     }
 
     @Test
-    @Ignore
+    @Ignore("The hour angle range has to be reviewed")
     public void hourAngleInRange() {
         assertTrue(isInRange(-Algorithm.PI, Algorithm.PI, algorithm.getHourAngle()));
     }
