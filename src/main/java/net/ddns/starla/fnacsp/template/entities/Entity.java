@@ -1,13 +1,13 @@
 package net.ddns.starla.fnacsp.template.entities;
 
-public abstract class Entity {
-    final Object value;
+public abstract class Entity<T> {
+    final T t;
 
     /**
-     * @param value notNull
+     * @param t Magnitude notNull
      */
-    public Entity(Object value) {
-        this.value = value;
+    public Entity(T t) {
+        this.t = t;
         assesInput();
     }
 
@@ -19,9 +19,15 @@ public abstract class Entity {
     /**
      * Because of the dependency inversion principle
      *
-     * @return The value or magnitude
+     * @return Magnitude
      */
-    public final Object getValue() {
-        return this.value;
+    public final T getT() {
+        return this.t;
+    }
+}
+
+class EntityException extends RuntimeException {
+    EntityException(String message) {
+        super(message);
     }
 }

@@ -42,11 +42,11 @@ public abstract class Algorithm {
      * @param temperature Instance of Temperature entity class.
      */
     Algorithm(Entity time, Entity longitude, Entity latitude, Entity pressure, Entity temperature) {
-        this.zonedDateTime = (ZonedDateTime) time.getValue();
-        this.longitude = (double) longitude.getValue();
-        this.latitude = (double) latitude.getValue();
-        this.pressure = (double) pressure.getValue();
-        this.temperature = (double) temperature.getValue();
+        this.zonedDateTime = (ZonedDateTime) time.getT();
+        this.longitude = (double) longitude.getT();
+        this.latitude = (double) latitude.getT();
+        this.pressure = (double) pressure.getT();
+        this.temperature = (double) temperature.getT();
     }
 
     /**

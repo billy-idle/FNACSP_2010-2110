@@ -2,14 +2,16 @@ package net.ddns.starla.fnacsp.template.entities;
 
 import org.junit.Test;
 
+import javax.swing.text.html.parser.Entity;
+
 public class TimeTest {
 
-    @Test(expected = TimeException.class)
+    @Test(expected = EntityException.class)
     public void whenBeforeBeginningTimeInterval_ShouldThrowTimeException() {
         new Time(Time.BEGINNING_TIME_INTERVAL.minusNanos(1));
     }
 
-    @Test(expected = TimeException.class)
+    @Test(expected = EntityException.class)
     public void whenAfterEndTimeInterval_ShouldThrowTimeException() {
         new Time(Time.END_TIME_INTERVAL.plusNanos(1));
     }

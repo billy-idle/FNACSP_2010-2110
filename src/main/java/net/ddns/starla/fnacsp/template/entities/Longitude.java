@@ -1,14 +1,14 @@
 package net.ddns.starla.fnacsp.template.entities;
 
-public final class Longitude extends Entity {
+public final class Longitude extends Entity<Double> {
     public static final double MAX_LONGITUDE_RAD = 6.28318530717959;
     public static final double MIN_LONGITUDE_RAD = 0.0;
 
     /**
-     * @param value [0, 2PI] rad
+     * @param angle [0, 2PI] rad
      */
-    public Longitude(double value) {
-        super(value);
+    public Longitude(double angle) {
+        super(angle);
     }
 
     /**
@@ -16,33 +16,10 @@ public final class Longitude extends Entity {
      */
     @Override
     protected void assesInput() {
-        if (isOutOfBounds()) {
-            throw new LongitudeException(
-                    "Longitude must be between [" + Longitude.MIN_LONGITUDE_RAD + ", " + Longitude.MAX_LONGITUDE_RAD + "] rad");
-
+        if (this.t < Longitude.MIN_LONGITUDE_RAD || this.t > Longitude.MAX_LONGITUDE_RAD) {
+            throw new EntityException(
+                    "Longitude must be between [" + Longitude.MIN_LONGITUDE_RAD + ", "
+                            + Longitude.MAX_LONGITUDE_RAD + "] rad");
         }
-    }
-
-    /**
-     * @return true, if it is out of bounds.
-     */
-    private boolean isOutOfBounds() {
-        double longitude = (double) value;
-        return (longitude < Longitude.MIN_LONGITUDE_RAD || longitude > Longitude.MAX_LONGITUDE_RAD);
-    }
-}
-
-class LongitudeException extends RuntimeException {
-    /**
-     * Constructs a new runtime exception with the specified detail message.
-     * The cause is not initialized, and may subsequently be initialized by a
-     * call to {@link #initCause}.
-     *
-     * @param message the detail message. The detail message is saved for
-     *                later retrieval by the {@link #getMessage()} method.
-     */
-    @SuppressWarnings("SameParameterValue")
-    LongitudeException(String message) {
-        super(message);
     }
 }
