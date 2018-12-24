@@ -4,7 +4,7 @@ plugins {
     id "jacoco"
 }
 
-group 'net.ddns.starla'
+group 'com.github.guillesup'
 version '1.0'
 
 repositories {
