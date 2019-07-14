@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/5NACSP.iml" filepath="$PROJECT_DIR$/.idea/modules/5NACSP.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/5NACSP.iml" filepath="$PROJECT_DIR$/.idea/modules/5NACSP.iml" group="5NACSP" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/5NACSP_main.iml" filepath="$PROJECT_DIR$/.idea/modules/5NACSP_main.iml" group="5NACSP" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/5NACSP_test.iml" filepath="$PROJECT_DIR$/.idea/modules/5NACSP_test.iml" group="5NACSP" />
     </modules>

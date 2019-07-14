@@ -8,7 +8,7 @@ public final class AlgorithmFour extends Algorithm {
         super(time, longitude, latitude, atmPressure, temperature);
     }
 
-    public void accuracyLevel() {
+    public void setAccuracyLevel() {
         double wte = 0.0172019715 * te;
         double l = 1.752790 + 1.720279216e-2 * te + 3.3366e-2 * Math.sin(wte - 0.06172) + 3.53e-4 * Math.sin(2.0 * wte - 0.1163);
         double nu = 9.282e-4 * te - 0.8;

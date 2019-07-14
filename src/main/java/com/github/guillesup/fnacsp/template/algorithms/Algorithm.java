@@ -54,13 +54,13 @@ public abstract class Algorithm {
      * Computes the sun position
      */
     public final void compute() {
-        timeScaleComputation();
-        accuracyLevel();
+        computeTimeScale();
+        setAccuracyLevel();
         shiftHourAngleToItsConventionalRange();
         applyFinalComputationallyOptimizedProcedure();
     }
 
-    private void timeScaleComputation() {
+    private void computeTimeScale() {
         zonedDateTimeToUTC();
         double dt = 96.4 + 0.567 * (zonedDateTimeAtUTC.getYear() - 2061);
         t = daysFromTheMidpointOfTheInterval();
@@ -70,7 +70,7 @@ public abstract class Algorithm {
     /**
      * Template Method
      */
-    protected abstract void accuracyLevel();
+    protected abstract void setAccuracyLevel();
 
     private void shiftHourAngleToItsConventionalRange() {
         hourAngle = ((hourAngle + Algorithm.PI) % Algorithm.PI2) - Algorithm.PI;
@@ -143,7 +143,7 @@ public abstract class Algorithm {
     /**
      * @return True if the sun is above the horizon
      */
-    public String getTimeOfDay() {
+    public final String getTimeOfDay() {
         return this.getElevation() > 0.0 ? "Daytime" : "Night";
     }
 

@@ -133,32 +133,29 @@ public final class SunPosition {
     public String toString() {
         StringBuilder table = new StringBuilder();
         StringBuilder row = new StringBuilder();
-        StringBuilder output = new StringBuilder();
 
         String desc = String.format("Sun Ephemeris for %1$s at Long. %3$f and Lat. %4$f on %2$tB %2$te of %2$tY%n%n",
-                algorithm.getZonedDateTime().getZone(), algorithm.getZonedDateTime(), algorithm.getLongitude(), algorithm.getLatitude());
+                getZonedDateTime().getZone(), getZonedDateTime(), getLongitude(), getLatitude());
 
         String tableHeader = String.format("%-10s %-10s %-10s %-13s %-15s %-10s %8s %8s %8s%n", "Time", "Zenith",
                 "Azimuth", "Right Asc.", "Declination", "Hour Angle", "Pres.", "Temp.", "ToD");
 
-        row.append(String.format("%tT", algorithm.getZonedDateTime()));
-        row.append(String.format("%9.3f", algorithm.getZenith()));
-        row.append(String.format("%12.3f", algorithm.getAzimuth()));
-        row.append(String.format("%12.3f", algorithm.getRightAscension()));
-        row.append(String.format("%15.3f", algorithm.getDeclination()));
-        row.append(String.format("%15.3f", algorithm.getHourAngle()));
-        row.append(String.format("%10.1f", algorithm.getPressure()));
-        row.append(String.format("%10.1f", algorithm.getTemperature()));
-        row.append(String.format("%10s%n", algorithm.getTimeOfDay()));
-
-        table.append(tableHeader).append(row);
+        row.append(String.format("%tT", getZonedDateTime()));
+        row.append(String.format("%9.3f", getZenith()));
+        row.append(String.format("%12.3f", getAzimuth()));
+        row.append(String.format("%12.3f", getRightAscension()));
+        row.append(String.format("%15.3f", getDeclination()));
+        row.append(String.format("%15.3f", getHourAngle()));
+        row.append(String.format("%10.1f", getPressure()));
+        row.append(String.format("%10.1f", getTemperature()));
+        row.append(String.format("%10s%n", getTimeOfDay()));
 
         String footer = String.format("%n%s%n%s%n%s%n%s%n", "* angles in radians (rad)",
                 "* Pressure in atmospheres (atm)", "* Temperature in Celsius degrees (°C)",
                 "* ToD stands for \"Time of Day\"");
 
-        output.append(desc).append(table).append(footer);
+        table.append(desc).append(tableHeader).append(row).append(footer);
 
-        return output.toString();
+        return table.toString();
     }
 }

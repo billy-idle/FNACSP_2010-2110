@@ -9,7 +9,7 @@ public final class AlgorithmFive extends Algorithm {
         super(time, longitude, latitude, atmPressure, temperature);
     }
 
-    public void accuracyLevel() {
+    public void setAccuracyLevel() {
         double wte = 0.0172019715 * te;
         double s1 = Math.sin(wte);
         double c1 = Math.cos(wte);

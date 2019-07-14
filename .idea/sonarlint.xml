@@ -3,6 +3,6 @@
   <component name="SonarLintProjectSettings">
     <option name="bindingEnabled" value="true" />
     <option name="projectKey" value="guillesup_FNACSP_2010-2110" />
-    <option name="serverId" value="config_sonarcloud" />
+    <option name="serverId" value="config-sonarcloud" />
   </component>
 </project>
